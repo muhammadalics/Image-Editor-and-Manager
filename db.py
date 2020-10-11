@@ -3,6 +3,7 @@ import os
 import urllib.request
 
 def start_db(json_dict={}, execute='create database'):
+
     connection = psycopg2.connect(database = 'test',
                                         user='postgres',
                                         password='inspiron15',
@@ -13,12 +14,15 @@ def start_db(json_dict={}, execute='create database'):
 
     cur = connection.cursor()
 
-
-    if execute == 'create database':
-        cur.execute('CREATE TABLE test (id serial PRIMARY KEY, copyright varchar, date date, explanation varchar,hdurl varchar, media_type varchar, title varchar, url varchar, img_file varchar);')
+    #This query will return None if table named 'test' is not present
+    cur.execute("SELECT * FROM information_schema.tables WHERE table_name='test';")
+    print(cur.fetchone())
 
     if execute == 'insert':
 
+        if cur.fetchone() is None: #Create table named test if it is not present in db.
+            cur.execute(
+                'CREATE TABLE test (id serial PRIMARY KEY, copyright varchar, date date, explanation varchar,hdurl varchar, media_type varchar, title varchar, url varchar, img_file varchar);')
 
         current_dir = os.getcwd()
         new_dir = current_dir+'/apod/'
@@ -53,7 +57,6 @@ def start_db(json_dict={}, execute='create database'):
                             +"'"+ item['copyright'] + "',"
                             +"'"+ item['date'] + "',"
                             +"'"+ item['explanation'] + "',"
-                            # + "'" + 'none' + "',"
                             +"'"+ item['hdurl'] + "',"
                             +"'"+ item['media_type'] + "',"
                             +"'"+ item['title'] + "',"
