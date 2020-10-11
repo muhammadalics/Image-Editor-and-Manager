@@ -17,6 +17,6 @@ import image_query
 #     date_list.append(date1.isoformat())
 
 start_date = '2006-10-19'
-end_date = '2006-12-20'
+end_date = '2006-10-22'
 
 image_query.query(start_date, end_date)
