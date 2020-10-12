@@ -1,5 +1,7 @@
 import datetime
 import image_query
+import image_editor
+import cv2
 # from datetime import date
 
 # date1 = datetime.date.fromisoformat('2020-10-01')
@@ -19,4 +21,8 @@ import image_query
 start_date = '2006-10-19'
 end_date = '2006-10-22'
 
-image_query.query(start_date, end_date)
+# image_query.query(start_date, end_date)
+
+image = cv2.imread('test.jpg')
+cartoon = image_editor.cartoonify(image, 0, 100)
+cv2.imwrite('cartoon.png', cartoon)
