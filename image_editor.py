@@ -156,8 +156,142 @@ def mask_result_bw(image, mask):
     image[:, :] = image[:, :] * mask
     return image
 
-def blending_using_pyramids(image):
-    pass
+def blending_pyramids(imageA, imageB, mask, levels):
+    dst = np.zeros_like(mask)
+    mask = cv2.normalize(mask,None,0,1,cv2.NORM_MINMAX)
+    # mask=dst
+
+    # mask = np.divide(mask,255)
+
+    print(mask.max())
+
+
+    #make Gaussian pyramids of images A and B
+    imageA_pyr_g = [imageA]
+    imageB_pyr_g = [imageB]
+    mask_pyr_g = [mask]
+
+    pyr_g_img_A = imageA_pyr_g[0]
+    pyr_g_img_B = imageB_pyr_g[0]
+    pyr_g_mask = mask_pyr_g[0]
+
+    for i in range(levels-1):
+        pyr_g_img_A = cv2.pyrDown(pyr_g_img_A)
+        imageA_pyr_g.append(pyr_g_img_A)
+        # print(pyr_g_img_A.shape)
+        pyr_g_img_B = cv2.pyrDown(pyr_g_img_B)
+        imageB_pyr_g.append(pyr_g_img_B)
+        pyr_g_mask = cv2.pyrDown(pyr_g_mask)
+        mask_pyr_g.append(pyr_g_mask)
+
+    for items in imageA_pyr_g:
+        print(items.shape)
+
+    #make Laplacian pyramids of image A and B
+    lap_pyr_a = []
+    lap_pyr_b = []
+    lap_pyr_a.append(imageA_pyr_g[-1])
+    lap_pyr_b.append(imageB_pyr_g[-1])
+
+
+
+    i=len(imageA_pyr_g)-1
+    print('i')
+    print(i)
+
+    while i > -1:
+        # print('i')
+        # print(i)
+
+        la = cv2.pyrUp(imageA_pyr_g[i])
+        # print('la.shape')
+        # print(la.shape)
+        # print('pyr_g_img_A[i-1].shape')
+        # print(pyr_g_img_A[i-1].shape)
+
+        la = la[:imageA_pyr_g[i-1].shape[0], :imageA_pyr_g[i-1].shape[1]]
+
+        # print('la.shape')
+        # print(la.shape)
+
+        # lap_pyr_a.append(imageA_pyr_g[i-1] - la) #i-1
+        lap_pyr_a.append(cv2.subtract(imageA_pyr_g[i - 1],la))  # i-1
+        lb = cv2.pyrUp(imageB_pyr_g[i])
+        lb = lb[:imageB_pyr_g[i-1].shape[0], :imageB_pyr_g[i-1].shape[1]]
+        # lap_pyr_b.append(imageB_pyr_g[i-1] - lb) #i-1
+        lap_pyr_b.append(cv2.subtract(imageB_pyr_g[i - 1], lb))  # i-1
+        i-=1
+
+    # lap_pyr_a.append(pyr_g_img_A[-1])
+    # lap_pyr_b.append(pyr_g_img_B[-1])
+
+    combined = []
+    ci=0
+    for a, b, m in zip(lap_pyr_a, lap_pyr_b, mask_pyr_g[::-1]):
+
+        print('Before shape of m')
+        print(m.shape)
+        print('Before shape of a')
+        print(a.shape)
+        print('Before shape of b')
+        print(b.shape)
+
+
+        if a.shape[0] > m.shape[0]:
+            a = a[:m.shape[0], :]
+        if a.shape[1] > m.shape[1]:
+            a = a[:, :m.shape[1]]
+
+        if a.shape[0] < m.shape[0]:
+            diff = m.shape[0] - a.shape[0]
+            a = cv2.copyMakeBorder(src=a, top=0,bottom=diff, right=0, left=0, borderType=cv2.BORDER_REFLECT101)
+
+        if a.shape[1] < m.shape[1]:
+            diff = m.shape[1] - a.shape[1]
+            a = cv2.copyMakeBorder(src=a, top=0, bottom=0, right=diff, left=0, borderType=cv2.BORDER_REFLECT101)
+
+        if b.shape[0] > m.shape[0]:
+            b = b[:m.shape[0], :]
+        if b.shape[1] > m.shape[1]:
+            b = b[:, :m.shape[1]]
+
+        if b.shape[0] < m.shape[0]:
+            diff = m.shape[0] - b.shape[0]
+            b = cv2.copyMakeBorder(src=b, top=0, bottom=diff, right=0, left=0, borderType=cv2.BORDER_REFLECT101)
+
+        if b.shape[1] < m.shape[1]:
+            diff = m.shape[1] - b.shape[1]
+            b = cv2.copyMakeBorder(src=b, top=0, bottom=0, right=diff, left=0, borderType=cv2.BORDER_REFLECT101)
+
+        cv2.imwrite('img%s.png'%ci, a)
+
+        print('After shape of m')
+        print(m.shape)
+        print('After shape of a')
+        print(a.shape)
+        print('After shape of b')
+        print(b.shape)
+
+
+        ma = cv2.multiply(m,a)
+        one_minus_m_b = cv2.multiply(1-m, b)
+
+        combined.append(cv2.add(ma, one_minus_m_b))
+
+        # combined.append(m*a + (1-m)*b)
+
+        ci+=1
+
+    img = combined[0]
+    cv2.imwrite('img_combined.png', combined[0])
+    for i, c in enumerate(combined):
+        if i !=0:
+            img = cv2.pyrUp(img)
+            img = img[:c.shape[0], :c.shape[1]]
+            img = cv2.add(img,c)
+            # cv2.imwrite('img%s.png'%i, img)
+
+    return img
 
 def ndimage_rotate(image):
     pass
@@ -173,6 +307,14 @@ def pixelate():
 
 def perspective_transform_etc():
     pass
+
+def negative_color_picture():
+    pass
+
+def pseudo_solarised():
+    pass
+
+
 
 
 

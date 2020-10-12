@@ -23,6 +23,15 @@ end_date = '2006-10-22'
 
 # image_query.query(start_date, end_date)
 
-image = cv2.imread('test.jpg')
-cartoon = image_editor.cartoonify(image, 0, 100)
-cv2.imwrite('cartoon.png', cartoon)
+# image = cv2.imread('test.jpg')
+# cartoon = image_editor.cartoonify(image, 0, 100)
+# cv2.imwrite('cartoon.png', cartoon)
+
+apple = cv2.imread('burt_apple.png')
+orange = cv2.imread('burt_orange.png')
+mask1 = cv2.imread('mask1.png')
+mask2 = cv2.imread('mask2.png')
+
+blended = image_editor.blending_pyramids(apple,orange, 255-mask1, 6)
+
+cv2.imwrite('blend.png', blended)
