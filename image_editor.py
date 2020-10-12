@@ -109,16 +109,27 @@ def cartoonify(image, thresh1, thresh2):
     canny = cv2.Canny(gray, thresh1, thresh2)
     canny = cv2.dilate(canny,(2,2))
     #find contours to remove small regions to reduce clutter.
-    # _, contours, _ = cv2.findContours(canny, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
-    #
-    # print(contours)
+    contours, _ = cv2.findContours(canny, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
+
+    print(contours)
+
+    for i, contour in enumerate(contours):
+        if cv2.contourArea(contour) < 10:
+            for points in contour:
+                print(points[0][0])
+                print(canny.shape)
+                # points[0][:,[0,1]] = points[0][:,[1,0]]
+                print([points[0][1],points[0][0]])
+                canny[points[0][1],points[0][0]]  = 0
+
+
     color_image = image[::4, ::4, :]
     for i in range(14):
-        color_image = cv2.bilateralFilter(color_image, 9,0,0)
+        color_image = cv2.bilateralFilter(color_image, 9, 0, 0)
     color_image = cv2.resize(color_image, None, fx=4, fy=4, interpolation = cv2.INTER_LINEAR)
     color_image = cv2.medianBlur(color_image, 7)
     #quantize colors
-    color_image = color_image // 24 *24
+    color_image = color_image // 24 * 24
     #when image is resized above it may get bigger than the original. so cut the extra rows and columns.
     color_image = color_image[0:canny.shape[0],0:canny.shape[1],:]
 
@@ -162,6 +173,8 @@ def pixelate():
 
 def perspective_transform_etc():
     pass
+
+
 
 
 
