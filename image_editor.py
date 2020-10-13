@@ -314,11 +314,27 @@ def negative_color_picture():
 def pseudo_solarised():
     pass
 
-def add_noise01():
-    pass
+def add_Gaussian_noise(image, sigma, channel=-1):
+    random = np.random.normal(loc=0, scale=sigma, size=(image.shape[0], image.shape[1]))
+    if channel !=-1:
+        image[:,:,channel] = image[:,:,channel] + random
+    else:
+        image = image + random
+    return image
 
 def add_noise02():
     pass
+
+def band_noise_horizontal(image, width, period, magnitude):
+    image[::period, :,: ] = image[::period, :,: ] + magnitude
+    return image
+
+def band_noise_vertical():
+    pass
+
+def saltnpepper_noise():
+    pass
+
 
 def dither(image, n):
     # Implements ordered dithering using a 2x2 matrix as described in https://en.wikipedia.org/wiki/Ordered_dithering

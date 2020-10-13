@@ -23,7 +23,7 @@ end_date = '2006-10-22'
 
 # image_query.query(start_date, end_date)
 
-image = cv2.imread('test.jpg',0)
+image = cv2.imread('test.jpg')
 # cartoon = image_editor.cartoonify(image, 0, 100)
 # cv2.imwrite('cartoon.png', cartoon)
 
@@ -36,5 +36,11 @@ image = cv2.imread('test.jpg',0)
 #
 # cv2.imwrite('blend.png', blended)
 
-img = image_editor.dither(image, 500)
-cv2.imwrite('dithered.png', img)
+# img = image_editor.dither(image, 500)
+# cv2.imwrite('dithered.png', img)
+
+# img = image_editor.add_Gaussian_noise(image, 50)
+# cv2.imwrite('noisyimage.png', img)
+
+img = image_editor.band_noise_horizontal(image, 30, 10, 10)
+cv2.imwrite('noisyimage.png', img)
