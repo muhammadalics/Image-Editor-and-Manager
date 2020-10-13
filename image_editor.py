@@ -314,9 +314,26 @@ def negative_color_picture():
 def pseudo_solarised():
     pass
 
+def add_noise01():
+    pass
 
+def add_noise02():
+    pass
 
+def dither(image, n):
+    # Implements ordered dithering using a 2x2 matrix as described in https://en.wikipedia.org/wiki/Ordered_dithering
+    # M = np.array([[0, 0.5], [0.75, 0.25]])
 
+    img = image[::2, ::2]
+    img[img>0] = 255
 
+    img1 = image[::2, 1::2]
+    img1[img1 > 0.5*n] = 255
 
+    img2 = image[1::2, ::2]
+    img2[img2 > 0.75*n] = 255
 
+    img3 = image[1::2, 1::2]
+    img3[img3 > 0.25*n] = 255
+
+    return image
