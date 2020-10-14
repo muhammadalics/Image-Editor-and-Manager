@@ -326,7 +326,40 @@ def add_noise02():
     pass
 
 def band_noise_horizontal(image, width, period, magnitude):
-    image[::period, :,: ] = image[::period, :,: ] + magnitude
+    # image[::period, :,: ] = image[::period, :,: ] + magnitude
+    band = np.arange(width)
+
+    tiled = np.tile(band, int(image.shape[0]/period))
+    tiled = tiled.reshape(-1, width)
+
+    addition_arr = np.arange(period, image.shape[0], period)
+
+    addition_arr = addition_arr.T
+
+    addition_arr = np.expand_dims(addition_arr,axis=1)
+
+    # print(addition_arr)
+
+    addition_arr = np.repeat(addition_arr, tiled.shape[1], axis=1)
+
+    print('add shape')
+    print(addition_arr.shape)
+
+    print('tiled shape')
+    print(tiled.shape)
+
+    tiled = tiled + addition_arr
+
+    tiled = tiled.flatten()
+
+    image[tiled, :, :] = image[tiled, :, :] + magnitude
+
+    print(tiled)
+    # print(tiled.shape)
+
+    print(addition_arr)
+
+
     return image
 
 def band_noise_vertical(image, width, period, magnitude):
