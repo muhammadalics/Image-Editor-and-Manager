@@ -329,8 +329,9 @@ def band_noise_horizontal(image, width, period, magnitude):
     image[::period, :,: ] = image[::period, :,: ] + magnitude
     return image
 
-def band_noise_vertical():
-    pass
+def band_noise_vertical(image, width, period, magnitude):
+    image[:, ::period,: ] = image[:, ::period,: ] + magnitude
+    return image
 
 def saltnpepper_noise():
     pass
