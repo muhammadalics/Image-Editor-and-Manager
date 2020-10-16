@@ -42,5 +42,8 @@ image = cv2.imread('test.jpg')
 # img = image_editor.add_Gaussian_noise(image, 50)
 # cv2.imwrite('noisyimage.png', img)
 
-img = image_editor.band_noise_horizontal(image, 50, 100, -10)
+# img = image_editor.band_noise_horizontal(image, 50, 100, 50)
+# cv2.imwrite('noisyimage.png', img)
+
+img = image_editor.band_noise_vertical(image, 50, 100, 50)
 cv2.imwrite('noisyimage.png', img)

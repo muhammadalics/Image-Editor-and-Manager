@@ -325,14 +325,20 @@ def add_Gaussian_noise(image, sigma, channel=-1):
 def add_noise02():
     pass
 
-def band_noise_horizontal(image, width, period, magnitude):
-    # image[::period, :,: ] = image[::period, :,: ] + magnitude
+def noise_bands(image, width, period, orientation):
+
+    if orientation == 'horizontal':
+        shape_val = image.shape[0]
+
+    if orientation == 'vertical':
+        shape_val = image.shape[1]
+
     band = np.arange(width)
 
-    tiled = np.tile(band, int(image.shape[0]/period))
+    tiled = np.tile(band, int(shape_val/period))
     tiled = tiled.reshape(-1, width)
 
-    addition_arr = np.arange(period, image.shape[0], period)
+    addition_arr = np.arange(period, shape_val, period)
 
     addition_arr = addition_arr.T
 
@@ -352,18 +358,16 @@ def band_noise_horizontal(image, width, period, magnitude):
 
     tiled = tiled.flatten()
 
-    image[tiled, :, :] = image[tiled, :, :] + magnitude
+    return tiled
 
-    print(tiled)
-    # print(tiled.shape)
-
-    print(addition_arr)
-
-
+def band_noise_horizontal(image, width, period, magnitude):
+    bands = noise_bands(image, width, period, 'horizontal')
+    image[bands, :, :] = image[bands, :, :] + magnitude
     return image
 
 def band_noise_vertical(image, width, period, magnitude):
-    image[:, ::period,: ] = image[:, ::period,: ] + magnitude
+    bands = noise_bands(image, width, period, 'vertical')
+    image[:, bands, :] = image[:, bands, :] + magnitude
     return image
 
 def saltnpepper_noise():
