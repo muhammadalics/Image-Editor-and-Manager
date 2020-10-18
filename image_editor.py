@@ -302,8 +302,12 @@ def gamma_correction():
 def sketch_algo():
     pass
 
-def pixelate():
-    pass
+def pixelate(image, n):
+    image_copy= image.copy()
+    for i in range(n):
+        image_copy = cv2.pyrDown(image_copy)
+    pixelated =cv2.resize(src=image_copy, dsize=(image.shape[1], image.shape[0]), interpolation=cv2.INTER_NEAREST)
+    return pixelated
 
 def perspective_transform_etc():
     pass
