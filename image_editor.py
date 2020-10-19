@@ -396,3 +396,18 @@ def dither(image, n):
     img3[img3 > 0.25*n] = 255
 
     return image
+
+def contrast_stretching_bw(image, lower_threshold, upper_threshold):
+    original_copy = image.copy()
+    original_copy[image >= upper_threshold] = 255
+    original_copy[image <= lower_threshold] = 0
+
+    original_copy = 255 * (image - lower_threshold) / (upper_threshold - lower_threshold)
+
+    return original_copy
+
+
+
+
+
+

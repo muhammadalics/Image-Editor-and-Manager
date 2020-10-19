@@ -23,7 +23,7 @@ end_date = '2006-10-22'
 
 # image_query.query(start_date, end_date)
 
-image = cv2.imread('test.jpg')
+image = cv2.imread('test.jpg',0)
 # cartoon = image_editor.cartoonify(image, 0, 100)
 # cv2.imwrite('cartoon.png', cartoon)
 
@@ -51,5 +51,8 @@ image = cv2.imread('test.jpg')
 # img = image_editor.pixelate(image, 1)
 # cv2.imwrite('noisyimage.png', img)
 
-img = image_editor.negative_color_picture(image)
+# img = image_editor.negative_color_picture(image)
+# cv2.imwrite('noisyimage.png', img)
+
+img = image_editor.contrast_stretching_bw(image, 1, 10)
 cv2.imwrite('noisyimage.png', img)
