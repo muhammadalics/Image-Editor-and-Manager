@@ -57,5 +57,9 @@ image = cv2.imread('test.jpg')
 # img = image_editor.gamma_correction(image, 0.5)
 # cv2.imwrite('gamma_corrected.png', img)
 
-img = image_editor.contrast_stretching_RGB_channel()
+# img = image_editor.contrast_stretching_RGB_channel(image, 10, 20)
+# cv2.imwrite('gamma_corrected.png', img)
+
+
+img = image_editor.ndimage_rotate(image, 45)
 cv2.imwrite('gamma_corrected.png', img)

@@ -1,6 +1,7 @@
 import cv2
 import numpy as np
 import sys
+import scipy.ndimage
 np.set_printoptions(threshold=sys.maxsize)
 
 
@@ -293,8 +294,8 @@ def blending_pyramids(imageA, imageB, mask, levels):
 
     return img
 
-def ndimage_rotate(image):
-    pass
+def ndimage_rotate(image, angle, axes=(1,0), reshape=True, output=None, order=3, mode='constant', cval=0.0, prefilter=True):
+    return scipy.ndimage.rotate(image, angle, axes, reshape=True, output=None, order=3, mode='constant', cval=0.0, prefilter=True)
 
 def gamma_correction(image, gamma):
     return 255 * (image/255)**(1/gamma)
@@ -404,11 +405,11 @@ def contrast_stretching_single_channel(image, lower_threshold, upper_threshold):
     original_copy = 255 * (image - lower_threshold) / (upper_threshold - lower_threshold)
     return original_copy
 
-def contrast_stretching_RGB_channel(image, lower_threshold, upper_threshold):
-    image[:, :, 0] = contrast_stretching_single_channel(image[:, :, 0], lower_threshold, upper_threshold)
-    image[:, :, 1] = contrast_stretching_single_channel(image[:, :, 1], lower_threshold, upper_threshold)
-    image[:, :, 2] = contrast_stretching_single_channel(image[:, :, 2], lower_threshold, upper_threshold)
-    return image
+# def contrast_stretching_RGB_channel(image, lower_threshold, upper_threshold):
+#     image[:, :, 0] = contrast_stretching_single_channel(image[:, :, 0], lower_threshold, upper_threshold)
+#     image[:, :, 1] = contrast_stretching_single_channel(image[:, :, 1], lower_threshold, upper_threshold)
+#     image[:, :, 2] = contrast_stretching_single_channel(image[:, :, 2], lower_threshold, upper_threshold)
+#     return image
 
 
 
