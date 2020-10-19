@@ -2,6 +2,7 @@ import cv2
 import numpy as np
 import sys
 import scipy.ndimage
+import random
 np.set_printoptions(threshold=sys.maxsize)
 
 
@@ -376,8 +377,46 @@ def band_noise_vertical(image, width, period, magnitude):
     image[:, bands, :] = image[:, bands, :] + magnitude
     return image
 
-def saltnpepper_noise():
-    pass
+def saltnpepper_noise_single_channel(image, amount, lower_threshold, upper_threshold):
+    #amount should be a float
+    # mask = np.random.rand(image.shape[0], image.shape[1])
+    # empty_image = np.zeros_like(image)
+    # empty_image[mask < amount] = 1
+
+    # flat_empty = empty_image.flatten()
+
+    # flat_image = image.flatten()
+    # print(flat_image[flat_image==0].shape)
+    # sample = random.sample(range(flat_image.shape[0]), int(amount * flat_image.shape[0]))
+    #
+    # print(flat_image.shape)
+    # print(len(sample))
+    #
+    # chosen = flat_image[sample]
+    #
+    # print(chosen.shape)
+    #
+    # print(chosen[chosen==0].shape)
+    # chosen[chosen > upper_threshold] = 0
+    # print(chosen[chosen == 0].shape)
+    # print(flat_image[flat_image == 0].shape)
+    # flat_image[sample][flat_image[sample] > upper_threshold] = 0
+    # print(flat_image[flat_image == 0].shape)
+    # returned_image = flat_image.reshape(image.shape)
+    #
+    # return returned_image
+
+    zero_arr = np.zeros_like(image)
+    flatimage = image.flatten()
+
+    lower_list = [1,255]
+
+    flatimage[flatimage>upper_threshold] = np.random.randint(0,2,flatimage[flatimage>upper_threshold].shape) * flatimage[flatimage>upper_threshold]
+    flatimage[flatimage < lower_threshold] = np.random.choice(lower_list, size=flatimage[flatimage < lower_threshold].shape) * \
+                                             flatimage[flatimage < lower_threshold]
+    flatimage = flatimage.reshape(image.shape)
+
+    return flatimage
 
 
 def dither(image, n):

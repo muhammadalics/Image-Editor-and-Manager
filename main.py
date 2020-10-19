@@ -23,7 +23,7 @@ end_date = '2006-10-22'
 
 # image_query.query(start_date, end_date)
 
-image = cv2.imread('test.jpg')
+image = cv2.imread('test.jpg', 0)
 # cartoon = image_editor.cartoonify(image, 0, 100)
 # cv2.imwrite('cartoon.png', cartoon)
 
@@ -60,6 +60,8 @@ image = cv2.imread('test.jpg')
 # img = image_editor.contrast_stretching_RGB_channel(image, 10, 20)
 # cv2.imwrite('gamma_corrected.png', img)
 
+# img = image_editor.ndimage_rotate(image, 45)
+# cv2.imwrite('gamma_corrected.png', img)
 
-img = image_editor.ndimage_rotate(image, 45)
+img = image_editor.saltnpepper_noise_single_channel(image, 0.6, 255,0)
 cv2.imwrite('gamma_corrected.png', img)
