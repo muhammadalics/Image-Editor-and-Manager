@@ -23,7 +23,7 @@ end_date = '2006-10-22'
 
 # image_query.query(start_date, end_date)
 
-image = cv2.imread('test.jpg',0)
+image = cv2.imread('test.jpg')
 # cartoon = image_editor.cartoonify(image, 0, 100)
 # cv2.imwrite('cartoon.png', cartoon)
 
@@ -54,5 +54,8 @@ image = cv2.imread('test.jpg',0)
 # img = image_editor.negative_color_picture(image)
 # cv2.imwrite('noisyimage.png', img)
 
-img = image_editor.contrast_stretching_bw(image, 1, 10)
-cv2.imwrite('noisyimage.png', img)
+# img = image_editor.gamma_correction(image, 0.5)
+# cv2.imwrite('gamma_corrected.png', img)
+
+img = image_editor.contrast_stretching_RGB_channel()
+cv2.imwrite('gamma_corrected.png', img)

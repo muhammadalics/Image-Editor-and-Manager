@@ -296,8 +296,8 @@ def blending_pyramids(imageA, imageB, mask, levels):
 def ndimage_rotate(image):
     pass
 
-def gamma_correction():
-    pass
+def gamma_correction(image, gamma):
+    return 255 * (image/255)**(1/gamma)
 
 def sketch_algo():
     pass
@@ -397,14 +397,18 @@ def dither(image, n):
 
     return image
 
-def contrast_stretching_bw(image, lower_threshold, upper_threshold):
+def contrast_stretching_single_channel(image, lower_threshold, upper_threshold):
     original_copy = image.copy()
     original_copy[image >= upper_threshold] = 255
     original_copy[image <= lower_threshold] = 0
-
     original_copy = 255 * (image - lower_threshold) / (upper_threshold - lower_threshold)
-
     return original_copy
+
+def contrast_stretching_RGB_channel(image, lower_threshold, upper_threshold):
+    image[:, :, 0] = contrast_stretching_single_channel(image[:, :, 0], lower_threshold, upper_threshold)
+    image[:, :, 1] = contrast_stretching_single_channel(image[:, :, 1], lower_threshold, upper_threshold)
+    image[:, :, 2] = contrast_stretching_single_channel(image[:, :, 2], lower_threshold, upper_threshold)
+    return image
 
 
 
