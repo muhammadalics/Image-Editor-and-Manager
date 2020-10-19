@@ -48,5 +48,8 @@ image = cv2.imread('test.jpg')
 # img = image_editor.band_noise_vertical(image, 50, 100, 50)
 # cv2.imwrite('noisyimage.png', img)
 
-img = image_editor.pixelate(image, 1)
+# img = image_editor.pixelate(image, 1)
+# cv2.imwrite('noisyimage.png', img)
+
+img = image_editor.negative_color_picture(image)
 cv2.imwrite('noisyimage.png', img)

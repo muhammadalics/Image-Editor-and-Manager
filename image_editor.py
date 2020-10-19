@@ -312,8 +312,9 @@ def pixelate(image, n):
 def perspective_transform_etc():
     pass
 
-def negative_color_picture():
-    pass
+def negative_color_picture(image):
+    return 255-image
+
 
 def pseudo_solarised():
     pass
