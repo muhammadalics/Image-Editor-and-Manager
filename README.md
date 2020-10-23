@@ -8,19 +8,19 @@ The image editor can do the following:
 3. Display color histograms.
 4. Convert color image to black and white
 5. Resize
-Mirror
-Flip upside down
-Rotate
-Replace color
-Perform following blurs:
+6. Mirror
+7. Flip upside down
+8. Rotate
+9. Replace color
+10. Perform following blurs:
   - Average
   - Median
   -Gaussian
-Add border
-Display intensity map
-Histogram equalization
-Alpha blending
-Pyramid blending
+11. Add border
+12. Display intensity map
+13. Histogram equalization
+14. Alpha blending
+15. Pyramid blending
 Edge detection
 cartoonification
 extract color
