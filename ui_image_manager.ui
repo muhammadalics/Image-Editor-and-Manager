@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
+    <width>1093</width>
     <height>600</height>
    </rect>
   </property>
@@ -19,7 +19,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>800</width>
+     <width>1093</width>
      <height>21</height>
     </rect>
    </property>
@@ -36,10 +36,17 @@
     <property name="title">
      <string>Size/Position</string>
     </property>
+    <widget class="QMenu" name="menuColor">
+     <property name="title">
+      <string>Color</string>
+     </property>
+    </widget>
     <addaction name="actionReduce_Size"/>
     <addaction name="actionMirror"/>
     <addaction name="actionFlip_Upside_Down"/>
     <addaction name="actionRotate"/>
+    <addaction name="actionAdd_Border"/>
+    <addaction name="menuColor"/>
    </widget>
    <widget class="QMenu" name="menuAdd_Noise">
     <property name="title">
@@ -58,10 +65,40 @@
     <addaction name="actionMedian"/>
     <addaction name="actionAverage"/>
    </widget>
+   <widget class="QMenu" name="menuSpecial">
+    <property name="title">
+     <string>Special</string>
+    </property>
+    <addaction name="actionPixelate"/>
+   </widget>
+   <widget class="QMenu" name="menuColor_2">
+    <property name="title">
+     <string>Color</string>
+    </property>
+    <widget class="QMenu" name="menuSwap_color_channels">
+     <property name="title">
+      <string>Swap color channels</string>
+     </property>
+     <addaction name="actionRed_Green"/>
+     <addaction name="actionGreen_Blue"/>
+     <addaction name="actionBlue_Red"/>
+    </widget>
+    <addaction name="actionBrightness_Increase"/>
+    <addaction name="actionBrightness_Decrease"/>
+    <addaction name="actionContrast_Increase"/>
+    <addaction name="actionContrast_Decrease"/>
+    <addaction name="actionSwap_Color"/>
+    <addaction name="actionBlack_and_White"/>
+    <addaction name="actionExtract_Color"/>
+    <addaction name="actionReplace_Color"/>
+    <addaction name="menuSwap_color_channels"/>
+   </widget>
    <addaction name="menuFile"/>
    <addaction name="menuSize_and_Orientation"/>
    <addaction name="menuAdd_Noise"/>
    <addaction name="menuBlur"/>
+   <addaction name="menuSpecial"/>
+   <addaction name="menuColor_2"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <widget class="QToolBar" name="toolBar">
@@ -84,6 +121,19 @@
    <addaction name="separator"/>
    <addaction name="actionGaussian"/>
    <addaction name="actionSalt_and_Pepper"/>
+   <addaction name="actionHorizontal_Bands"/>
+   <addaction name="actionVertical_Bands"/>
+   <addaction name="separator"/>
+   <addaction name="actionPixelate"/>
+   <addaction name="actionAdd_Border"/>
+   <addaction name="actionBlack_and_White"/>
+   <addaction name="actionBrightness_Increase"/>
+   <addaction name="actionBrightness_Decrease"/>
+   <addaction name="actionContrast_Increase"/>
+   <addaction name="actionContrast_Decrease"/>
+   <addaction name="actionRed_Green"/>
+   <addaction name="actionGreen_Blue"/>
+   <addaction name="actionBlue_Red"/>
   </widget>
   <action name="actionNew">
    <property name="text">
@@ -166,11 +216,21 @@
    </property>
   </action>
   <action name="actionHorizontal_Bands">
+   <property name="icon">
+    <iconset>
+     <normalon>:/icon_/horizontalnoise.png</normalon>
+    </iconset>
+   </property>
    <property name="text">
     <string>Horizontal Bands</string>
    </property>
   </action>
   <action name="actionVertical_Bands">
+   <property name="icon">
+    <iconset>
+     <normalon>:/icon_/verticalnoise.png</normalon>
+    </iconset>
+   </property>
    <property name="text">
     <string>Vertical Bands</string>
    </property>
@@ -198,6 +258,121 @@
   <action name="actionAverage">
    <property name="text">
     <string>Average</string>
+   </property>
+  </action>
+  <action name="actionPixelate">
+   <property name="icon">
+    <iconset>
+     <normalon>:/icon_/pixelate.png</normalon>
+    </iconset>
+   </property>
+   <property name="text">
+    <string>Pixelate</string>
+   </property>
+  </action>
+  <action name="actionAdd_Border">
+   <property name="icon">
+    <iconset>
+     <normalon>:/icon_/border.png</normalon>
+    </iconset>
+   </property>
+   <property name="text">
+    <string>Add Border</string>
+   </property>
+  </action>
+  <action name="actionBlack_and_White">
+   <property name="icon">
+    <iconset>
+     <normalon>:/icon_/bw.png</normalon>
+    </iconset>
+   </property>
+   <property name="text">
+    <string>Black and White</string>
+   </property>
+  </action>
+  <action name="actionExtract_Color">
+   <property name="text">
+    <string>Extract Color</string>
+   </property>
+  </action>
+  <action name="actionBrightness_Increase">
+   <property name="icon">
+    <iconset>
+     <normalon>:/icon_/brightness_up.png</normalon>
+    </iconset>
+   </property>
+   <property name="text">
+    <string>Brightness - Increase</string>
+   </property>
+  </action>
+  <action name="actionBrightness_Decrease">
+   <property name="icon">
+    <iconset>
+     <normalon>:/icon_/brightness_down.png</normalon>
+    </iconset>
+   </property>
+   <property name="text">
+    <string>Brightness - Decrease</string>
+   </property>
+  </action>
+  <action name="actionContrast_Increase">
+   <property name="icon">
+    <iconset>
+     <normalon>:/icon_/contrast-up.png</normalon>
+    </iconset>
+   </property>
+   <property name="text">
+    <string>Contrast - Increase</string>
+   </property>
+  </action>
+  <action name="actionContrast_Decrease">
+   <property name="icon">
+    <iconset>
+     <normalon>:/icon_/contrast-down.png</normalon>
+    </iconset>
+   </property>
+   <property name="text">
+    <string>Contrast Decrease</string>
+   </property>
+  </action>
+  <action name="actionSwap_Color">
+   <property name="text">
+    <string>Swap Color</string>
+   </property>
+  </action>
+  <action name="actionReplace_Color">
+   <property name="text">
+    <string>Replace Color</string>
+   </property>
+  </action>
+  <action name="actionRed_Green">
+   <property name="icon">
+    <iconset>
+     <normalon>:/icon_/swap-red-green.png</normalon>
+    </iconset>
+   </property>
+   <property name="text">
+    <string>Red-Green</string>
+   </property>
+  </action>
+  <action name="actionGreen_Blue">
+   <property name="icon">
+    <iconset>
+     <normalon>:/icon_/swap-green-blue.png</normalon>
+    </iconset>
+   </property>
+   <property name="text">
+    <string>Green-Blue</string>
+   </property>
+  </action>
+  <action name="actionBlue_Red">
+   <property name="icon">
+    <iconset>
+     <normalon>:/icon_/swap-blue-red.png</normalon>
+    </iconset>
+   </property>
+   <property name="text">
+    <string>Blue-Red</string>
    </property>
   </action>
  </widget>

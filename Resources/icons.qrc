@@ -1,8 +1,19 @@
 <RCC>
   <qresource prefix="icon_">
+    <file>contrast-down.png</file>
+    <file>contrast-up.png</file>
+    <file>brightness_up.png</file>
+    <file>swap-blue-red.png</file>
+    <file>swap-green-blue.png</file>
+    <file>swap-red-green.png</file>
+    <file>brightness_down.png</file>
+    <file>bw.png</file>
+    <file>border.png</file>
+    <file>pixelate.png</file>
+    <file>verticalnoise.png</file>
     <file>salt-n-pepper.png</file>
-    <file>horizontalnoise.png</file>
     <file>gaussian noise.png</file>
+    <file>horizontalnoise.png</file>
     <file>decrease.png</file>
     <file>rotate.png</file>
     <file>mirror.png</file>
