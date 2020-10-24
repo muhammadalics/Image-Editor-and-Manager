@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>796</width>
-    <height>591</height>
+    <width>800</width>
+    <height>600</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -19,8 +19,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>796</width>
-     <height>26</height>
+     <width>800</width>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -50,9 +50,18 @@
     <addaction name="actionVertical_Bands"/>
     <addaction name="actionSalt_and_Pepper"/>
    </widget>
+   <widget class="QMenu" name="menuBlur">
+    <property name="title">
+     <string>Blur</string>
+    </property>
+    <addaction name="actionGaussian_2"/>
+    <addaction name="actionMedian"/>
+    <addaction name="actionAverage"/>
+   </widget>
    <addaction name="menuFile"/>
    <addaction name="menuSize_and_Orientation"/>
    <addaction name="menuAdd_Noise"/>
+   <addaction name="menuBlur"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <widget class="QToolBar" name="toolBar">
@@ -72,6 +81,9 @@
    <addaction name="actionMirror"/>
    <addaction name="actionFlip_Upside_Down"/>
    <addaction name="actionRotate"/>
+   <addaction name="separator"/>
+   <addaction name="actionGaussian"/>
+   <addaction name="actionSalt_and_Pepper"/>
   </widget>
   <action name="actionNew">
    <property name="text">
@@ -144,6 +156,11 @@
    </property>
   </action>
   <action name="actionGaussian">
+   <property name="icon">
+    <iconset>
+     <normalon>:/icon_/gaussian noise.png</normalon>
+    </iconset>
+   </property>
    <property name="text">
     <string>Gaussian</string>
    </property>
@@ -159,8 +176,28 @@
    </property>
   </action>
   <action name="actionSalt_and_Pepper">
+   <property name="icon">
+    <iconset>
+     <normalon>:/icon_/salt-n-pepper.png</normalon>
+    </iconset>
+   </property>
    <property name="text">
     <string>Salt and Pepper</string>
+   </property>
+  </action>
+  <action name="actionGaussian_2">
+   <property name="text">
+    <string>Gaussian</string>
+   </property>
+  </action>
+  <action name="actionMedian">
+   <property name="text">
+    <string>Median</string>
+   </property>
+  </action>
+  <action name="actionAverage">
+   <property name="text">
+    <string>Average</string>
    </property>
   </action>
  </widget>

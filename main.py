@@ -23,7 +23,7 @@ end_date = '2006-10-22'
 
 # image_query.query(start_date, end_date)
 
-image = cv2.imread('test.jpg', 0)
+image = cv2.imread('test.jpg', 1)
 # cartoon = image_editor.cartoonify(image, 0, 100)
 # cv2.imwrite('cartoon.png', cartoon)
 
@@ -42,8 +42,8 @@ image = cv2.imread('test.jpg', 0)
 # img = image_editor.add_Gaussian_noise(image, 50)
 # cv2.imwrite('noisyimage.png', img)
 
-# img = image_editor.band_noise_horizontal(image, 50, 100, 50)
-# cv2.imwrite('noisyimage.png', img)
+img = image_editor.band_noise_horizontal(image, 16, 50, 30)
+cv2.imwrite('noisyimage.png', img)
 
 # img = image_editor.band_noise_vertical(image, 50, 100, 50)
 # cv2.imwrite('noisyimage.png', img)
@@ -63,5 +63,5 @@ image = cv2.imread('test.jpg', 0)
 # img = image_editor.ndimage_rotate(image, 45)
 # cv2.imwrite('gamma_corrected.png', img)
 
-img = image_editor.saltnpepper_noise_single_channel(image, 0.6, 255,0)
-cv2.imwrite('gamma_corrected.png', img)
+# img = image_editor.saltnpepper_noise_single_channel(image, 0.6, 255,0)
+# cv2.imwrite('gamma_corrected.png', img)

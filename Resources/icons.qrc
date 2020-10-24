@@ -1,0 +1,13 @@
+<RCC>
+  <qresource prefix="icon_">
+    <file>salt-n-pepper.png</file>
+    <file>horizontalnoise.png</file>
+    <file>gaussian noise.png</file>
+    <file>decrease.png</file>
+    <file>rotate.png</file>
+    <file>mirror.png</file>
+    <file>updown.png</file>
+    <file>add.png</file>
+    <file>save.png</file>
+  </qresource>
+</RCC>

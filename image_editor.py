@@ -365,10 +365,13 @@ def noise_bands(image, width, period, orientation):
 
     tiled = tiled.flatten()
 
+    tiled = tiled[tiled < shape_val]
+
     return tiled
 
 def band_noise_horizontal(image, width, period, magnitude):
     bands = noise_bands(image, width, period, 'horizontal')
+    print(bands)
     image[bands, :, :] = image[bands, :, :] + magnitude
     return image
 
