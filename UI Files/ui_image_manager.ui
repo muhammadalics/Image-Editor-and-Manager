@@ -18,7 +18,7 @@
     <item>
      <widget class="QLabel" name="label">
       <property name="text">
-       <string>TextLabel</string>
+       <string>Image</string>
       </property>
      </widget>
     </item>
@@ -30,7 +30,7 @@
      <x>0</x>
      <y>0</y>
      <width>1047</width>
-     <height>21</height>
+     <height>26</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
