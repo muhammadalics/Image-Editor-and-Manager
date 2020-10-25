@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1093</width>
-    <height>600</height>
+    <width>1349</width>
+    <height>711</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -19,7 +19,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1093</width>
+     <width>1349</width>
      <height>21</height>
     </rect>
    </property>
@@ -36,17 +36,11 @@
     <property name="title">
      <string>Size/Position</string>
     </property>
-    <widget class="QMenu" name="menuColor">
-     <property name="title">
-      <string>Color</string>
-     </property>
-    </widget>
     <addaction name="actionReduce_Size"/>
     <addaction name="actionMirror"/>
     <addaction name="actionFlip_Upside_Down"/>
     <addaction name="actionRotate"/>
     <addaction name="actionAdd_Border"/>
-    <addaction name="menuColor"/>
    </widget>
    <widget class="QMenu" name="menuAdd_Noise">
     <property name="title">
@@ -70,6 +64,10 @@
      <string>Special</string>
     </property>
     <addaction name="actionPixelate"/>
+    <addaction name="actionCartoonify"/>
+    <addaction name="actionDithering"/>
+    <addaction name="actionContrast_Stretching"/>
+    <addaction name="actionEdge_Detection"/>
    </widget>
    <widget class="QMenu" name="menuColor_2">
     <property name="title">
@@ -92,18 +90,46 @@
     <addaction name="actionExtract_Color"/>
     <addaction name="actionReplace_Color"/>
     <addaction name="menuSwap_color_channels"/>
+    <addaction name="actionImage_Histogram"/>
+    <addaction name="actionIntensity_Map"/>
+    <addaction name="actionHistogram_Equalization"/>
+    <addaction name="actionGamma_Correction"/>
+    <addaction name="actionNegative"/>
+    <addaction name="actionApply_Mask"/>
+   </widget>
+   <widget class="QMenu" name="menuBlending">
+    <property name="title">
+     <string>Blending</string>
+    </property>
+    <addaction name="actionAlpha"/>
+    <addaction name="actionPyramid"/>
+   </widget>
+   <widget class="QMenu" name="menuEdit">
+    <property name="title">
+     <string>Edit</string>
+    </property>
+    <addaction name="actionUndo"/>
+    <addaction name="actionRedo"/>
    </widget>
    <addaction name="menuFile"/>
+   <addaction name="menuEdit"/>
    <addaction name="menuSize_and_Orientation"/>
    <addaction name="menuAdd_Noise"/>
    <addaction name="menuBlur"/>
    <addaction name="menuSpecial"/>
    <addaction name="menuColor_2"/>
+   <addaction name="menuBlending"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <widget class="QToolBar" name="toolBar">
    <property name="windowTitle">
     <string>toolBar</string>
+   </property>
+   <property name="iconSize">
+    <size>
+     <width>25</width>
+     <height>25</height>
+    </size>
    </property>
    <attribute name="toolBarArea">
     <enum>TopToolBarArea</enum>
@@ -113,6 +139,8 @@
    </attribute>
    <addaction name="actionOpen"/>
    <addaction name="actionSave"/>
+   <addaction name="actionUndo"/>
+   <addaction name="actionRedo"/>
    <addaction name="separator"/>
    <addaction name="actionReduce_Size"/>
    <addaction name="actionMirror"/>
@@ -131,9 +159,27 @@
    <addaction name="actionBrightness_Decrease"/>
    <addaction name="actionContrast_Increase"/>
    <addaction name="actionContrast_Decrease"/>
+   <addaction name="actionContrast_Stretching"/>
    <addaction name="actionRed_Green"/>
    <addaction name="actionGreen_Blue"/>
    <addaction name="actionBlue_Red"/>
+   <addaction name="actionImage_Histogram"/>
+   <addaction name="actionAverage"/>
+   <addaction name="actionGaussian_2"/>
+   <addaction name="actionMedian"/>
+   <addaction name="separator"/>
+   <addaction name="actionAlpha"/>
+   <addaction name="actionPyramid"/>
+   <addaction name="actionCartoonify"/>
+   <addaction name="actionGamma_Correction"/>
+   <addaction name="actionNegative"/>
+   <addaction name="actionApply_Mask"/>
+   <addaction name="actionReplace_Color"/>
+   <addaction name="actionIntensity_Map"/>
+   <addaction name="actionExtract_Color"/>
+   <addaction name="actionHistogram_Equalization"/>
+   <addaction name="actionDithering"/>
+   <addaction name="actionEdge_Detection"/>
   </widget>
   <action name="actionNew">
    <property name="text">
@@ -188,7 +234,7 @@
   <action name="actionFlip_Upside_Down">
    <property name="icon">
     <iconset>
-     <normalon>:/icon_/updown.png</normalon>
+     <normalon>:/icon_/flip.png</normalon>
     </iconset>
    </property>
    <property name="text">
@@ -246,16 +292,31 @@
    </property>
   </action>
   <action name="actionGaussian_2">
+   <property name="icon">
+    <iconset>
+     <normalon>:/icon_/blur-gaussian.png</normalon>
+    </iconset>
+   </property>
    <property name="text">
     <string>Gaussian</string>
    </property>
   </action>
   <action name="actionMedian">
+   <property name="icon">
+    <iconset>
+     <normalon>:/icon_/blur-median.png</normalon>
+    </iconset>
+   </property>
    <property name="text">
     <string>Median</string>
    </property>
   </action>
   <action name="actionAverage">
+   <property name="icon">
+    <iconset>
+     <normalon>:/icon_/blur-average.png</normalon>
+    </iconset>
+   </property>
    <property name="text">
     <string>Average</string>
    </property>
@@ -291,6 +352,11 @@
    </property>
   </action>
   <action name="actionExtract_Color">
+   <property name="icon">
+    <iconset>
+     <normalon>:/icon_/extract_color.png</normalon>
+    </iconset>
+   </property>
    <property name="text">
     <string>Extract Color</string>
    </property>
@@ -341,6 +407,11 @@
    </property>
   </action>
   <action name="actionReplace_Color">
+   <property name="icon">
+    <iconset>
+     <normalon>:/icon_/replace_color.png</normalon>
+    </iconset>
+   </property>
    <property name="text">
     <string>Replace Color</string>
    </property>
@@ -373,6 +444,146 @@
    </property>
    <property name="text">
     <string>Blue-Red</string>
+   </property>
+  </action>
+  <action name="actionImage_Histogram">
+   <property name="icon">
+    <iconset>
+     <normalon>:/icon_/hist.png</normalon>
+    </iconset>
+   </property>
+   <property name="text">
+    <string>Image Histogram</string>
+   </property>
+  </action>
+  <action name="actionIntensity_Map">
+   <property name="icon">
+    <iconset>
+     <normalon>:/icon_/heatmap.png</normalon>
+    </iconset>
+   </property>
+   <property name="text">
+    <string>Intensity Map</string>
+   </property>
+  </action>
+  <action name="actionHistogram_Equalization">
+   <property name="icon">
+    <iconset>
+     <normalon>:/icon_/histequal.png</normalon>
+    </iconset>
+   </property>
+   <property name="text">
+    <string>Histogram Equalization</string>
+   </property>
+  </action>
+  <action name="actionCartoonify">
+   <property name="icon">
+    <iconset>
+     <normalon>:/icon_/cartoonify.png</normalon>
+    </iconset>
+   </property>
+   <property name="text">
+    <string>Cartoonify</string>
+   </property>
+  </action>
+  <action name="actionAlpha">
+   <property name="icon">
+    <iconset>
+     <normalon>:/icon_/alpha_blending.png</normalon>
+    </iconset>
+   </property>
+   <property name="text">
+    <string>Alpha</string>
+   </property>
+  </action>
+  <action name="actionPyramid">
+   <property name="icon">
+    <iconset>
+     <normalon>:/icon_/pyramid blending.png</normalon>
+    </iconset>
+   </property>
+   <property name="text">
+    <string>Pyramid</string>
+   </property>
+  </action>
+  <action name="actionDithering">
+   <property name="icon">
+    <iconset>
+     <normalon>:/icon_/dithered.png</normalon>
+    </iconset>
+   </property>
+   <property name="text">
+    <string>Dithering</string>
+   </property>
+  </action>
+  <action name="actionContrast_Stretching">
+   <property name="icon">
+    <iconset>
+     <normalon>:/icon_/stretch.png</normalon>
+    </iconset>
+   </property>
+   <property name="text">
+    <string>Contrast Stretching</string>
+   </property>
+  </action>
+  <action name="actionGamma_Correction">
+   <property name="icon">
+    <iconset>
+     <normalon>:/icon_/gamma_correction.png</normalon>
+    </iconset>
+   </property>
+   <property name="text">
+    <string>Gamma Correction</string>
+   </property>
+  </action>
+  <action name="actionNegative">
+   <property name="icon">
+    <iconset>
+     <normalon>:/icon_/neg.png</normalon>
+    </iconset>
+   </property>
+   <property name="text">
+    <string>Negative</string>
+   </property>
+  </action>
+  <action name="actionEdge_Detection">
+   <property name="icon">
+    <iconset>
+     <normalon>:/icon_/canny.png</normalon>
+    </iconset>
+   </property>
+   <property name="text">
+    <string>Edge Detection</string>
+   </property>
+  </action>
+  <action name="actionApply_Mask">
+   <property name="icon">
+    <iconset>
+     <normalon>:/icon_/mask.png</normalon>
+    </iconset>
+   </property>
+   <property name="text">
+    <string>Apply Mask</string>
+   </property>
+  </action>
+  <action name="actionUndo">
+   <property name="icon">
+    <iconset>
+     <normalon>:/icon_/undo.png</normalon>
+    </iconset>
+   </property>
+   <property name="text">
+    <string>Undo</string>
+   </property>
+  </action>
+  <action name="actionRedo">
+   <property name="icon">
+    <iconset>
+     <normalon>:/icon_/redo.png</normalon>
+    </iconset>
+   </property>
+   <property name="text">
+    <string>Redo</string>
    </property>
   </action>
  </widget>

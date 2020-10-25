@@ -23,7 +23,7 @@ end_date = '2006-10-22'
 
 # image_query.query(start_date, end_date)
 
-image = cv2.imread('test.jpg', 0)
+image = cv2.imread('car.jpg', 0)
 # cartoon = image_editor.cartoonify(image, 0, 100)
 # cv2.imwrite('cartoon.png', cartoon)
 
@@ -36,7 +36,7 @@ image = cv2.imread('test.jpg', 0)
 #
 # cv2.imwrite('blend.png', blended)
 
-# img = image_editor.dither(image, 500)
+# img = image_editor.dither(image, 80)
 # cv2.imwrite('dithered.png', img)
 
 # img = image_editor.add_Gaussian_noise(image, 50)
@@ -52,7 +52,7 @@ image = cv2.imread('test.jpg', 0)
 # cv2.imwrite('noisyimage.png', img)
 
 # img = image_editor.negative_color_picture(image)
-# cv2.imwrite('noisyimage.png', img)
+# cv2.imwrite('neg.png', img)
 
 # img = image_editor.gamma_correction(image, 0.5)
 # cv2.imwrite('gamma_corrected.png', img)
@@ -66,4 +66,10 @@ image = cv2.imread('test.jpg', 0)
 # img = image_editor.saltnpepper_noise_single_channel(image, 0.6, 255,0)
 # cv2.imwrite('gamma_corrected.png', img)
 
-cv2.imwrite('bw.png', image)
+# cv2.imwrite('bw.png', image)
+
+# img = image_editor.intensity_map(image, 11)
+# cv2.imwrite('heatmap.png', img)
+
+img = image_editor.edge_detection(image, 100, 200)
+cv2.imwrite('canny.png', img)
