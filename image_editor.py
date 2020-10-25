@@ -9,6 +9,9 @@ np.set_printoptions(threshold=sys.maxsize)
 def brightness_up(image, contrast, brightness):
     return contrast * image + brightness
 
+def brightness_down(image, contrast, brightness):
+    return contrast * image - brightness
+
 def swap_bg(image):
     image[:,:,[0,1]] = image[:,:,[1,0]]
     return image
@@ -32,7 +35,10 @@ def hist_bw(image):
     return hist, bins
 
 def convert_to_bw(image):
-    return cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+    if len(image.shape) == 3:
+        return cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+    else: #if image has one channel just return the same
+        return image
 
 def resize_down(image,w, h):
     w_step = 100 / w

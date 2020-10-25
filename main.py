@@ -18,7 +18,15 @@ class MainProgram(QtWidgets.QMainWindow):
         self.ui.actionOpen.triggered.connect(self.clicked_open)
         self.ui.actionMirror.triggered.connect(self.clicked_mirror)
         self.ui.actionFlip_Upside_Down.triggered.connect(self.clicked_flip)
-
+        self.ui.actionBrightness_Increase.triggered.connect(self.clicked_brightnessup)
+        self.ui.actionBrightness_Decrease.triggered.connect(self.clicked_brightnessdown)
+        self.ui.actionContrast_Increase.triggered.connect(self.clicked_contrastup)
+        self.ui.actionContrast_Decrease.triggered.connect(self.clicked_contrastdown)
+        self.ui.actionRed_Green.triggered.connect(self.clicked_swap_rg)
+        self.ui.actionGreen_Blue.triggered.connect(self.clicked_swap_gb)
+        self.ui.actionBlue_Red.triggered.connect(self.clicked_swap_br)
+        self.ui.actionNegative.triggered.connect(self.clicked_negative)
+        self.ui.actionBlack_and_White.triggered.connect(self.clicked_converttobw)
 
         self.original = None #Original Image
         self.current = None # this is the image in progress
@@ -29,11 +37,6 @@ class MainProgram(QtWidgets.QMainWindow):
     def update_imagebox(self):
 
         if len(self.current.shape) == 3: #for color images
-            print('yes')
-            # self.current = np.require(self.current, np.uint8, 'C')
-            print(self.current.shape[1])
-            print(self.current.shape[0])
-            print(self.current.shape[1]*3)
             copyofcurrent = self.current.copy()
             self.updated_pic = QtGui.QImage(copyofcurrent,
                                       copyofcurrent.shape[1],
@@ -41,7 +44,16 @@ class MainProgram(QtWidgets.QMainWindow):
                                       copyofcurrent.shape[1]*3,
                                       QtGui.QImage.Format_BGR888)#.QtGui.QImage.rgbSwapped()
 
-        print('here')
+        elif len(self.current.shape) == 2: #for color images
+            print('here')
+            copyofcurrent = self.current.copy()
+            self.updated_pic = QtGui.QImage(copyofcurrent,
+                                      copyofcurrent.shape[1],
+                                      copyofcurrent.shape[0],
+                                      copyofcurrent.shape[1]*1,
+                                      QtGui.QImage.Format_Grayscale8)#.QtGui.QImage.rgbSwapped()
+
+
         self.updated_pic = QtGui.QPixmap(self.updated_pic)
         self.ui.label_imagebox.setPixmap(self.updated_pic)
 
@@ -67,6 +79,50 @@ class MainProgram(QtWidgets.QMainWindow):
         self.update_current(img)
         self.update_imagebox()
 
+    def clicked_brightnessup(self):
+        img = image_editor.brightness_up(self.current, 1, 1)
+        self.update_current(img)
+        self.update_imagebox()
+
+    def clicked_brightnessdown(self):
+        img = image_editor.brightness_down(self.current, 1, 1)
+        self.update_current(img)
+        self.update_imagebox()
+
+    def clicked_contrastup(self):
+        img = image_editor.brightness_up(self.current, 1.01, 0)
+        self.update_current(img)
+        self.update_imagebox()
+
+    def clicked_contrastdown(self):
+        img = image_editor.brightness_down(self.current, 0.99, 0)
+        self.update_current(img)
+        self.update_imagebox()
+
+    def clicked_swap_rg(self):
+        img = image_editor.swap_gr(self.current)
+        self.update_current(img)
+        self.update_imagebox()
+
+    def clicked_swap_gb(self):
+        img = image_editor.swap_bg(self.current)
+        self.update_current(img)
+        self.update_imagebox()
+
+    def clicked_swap_br(self):
+        img = image_editor.swap_rb(self.current)
+        self.update_current(img)
+        self.update_imagebox()
+
+    def clicked_negative(self):
+        img = image_editor.negative_color_picture(self.current)
+        self.update_current(img)
+        self.update_imagebox()
+
+    def clicked_converttobw(self):
+        img = image_editor.convert_to_bw(self.current)
+        self.update_current(img)
+        self.update_imagebox()
 
 if __name__ == '__main__':
     app = QtWidgets.QApplication([])
