@@ -1,75 +1,77 @@
-import datetime
-import image_query
-import image_editor
+from main_gui import Ui_MainWindow
+
+from PyQt5 import QtWidgets
+from PyQt5 import QtCore
+from PyQt5 import QtGui
 import cv2
-# from datetime import date
+import image_editor
+import scipy
+import numpy as np
 
-# date1 = datetime.date.fromisoformat('2020-10-01')
-# date2 = datetime.date.fromisoformat('2020-10-09')
-#
-# # datetime.timedelta(date1,date2)
-#
-# num_days=date2-date1
-#
-# date_list = [date1.isoformat()]
-#
-# for day in range(num_days.days):
-#     date1 = date1 + datetime.timedelta(days=1)
-#     image_query.query(date1.isoformat())
-#     date_list.append(date1.isoformat())
+class MainProgram(QtWidgets.QMainWindow):
 
-start_date = '2006-10-19'
-end_date = '2006-10-22'
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.ui = Ui_MainWindow()
+        self.ui.setupUi(self)
 
-# image_query.query(start_date, end_date)
+        self.ui.actionOpen.triggered.connect(self.clicked_open)
+        self.ui.actionMirror.triggered.connect(self.clicked_mirror)
+        self.ui.actionFlip_Upside_Down.triggered.connect(self.clicked_flip)
 
-image = cv2.imread('car.jpg', 0)
-# cartoon = image_editor.cartoonify(image, 0, 100)
-# cv2.imwrite('cartoon.png', cartoon)
 
-# apple = cv2.imread('burt_apple.png')
-# orange = cv2.imread('burt_orange.png')
-# mask1 = cv2.imread('mask1.png')
-# mask2 = cv2.imread('mask2.png')
-#
-# blended = image_editor.blending_pyramids(apple,orange, 255-mask1, 6)
-#
-# cv2.imwrite('blend.png', blended)
+        self.original = None #Original Image
+        self.current = None # this is the image in progress
 
-# img = image_editor.dither(image, 80)
-# cv2.imwrite('dithered.png', img)
+    def update_current(self, image):
+        self.current = image
 
-# img = image_editor.add_Gaussian_noise(image, 50)
-# cv2.imwrite('noisyimage.png', img)
+    def update_imagebox(self):
 
-# img = image_editor.band_noise_horizontal(image, 50, 100, 50)
-# cv2.imwrite('noisyimage.png', img)
+        if len(self.current.shape) == 3: #for color images
+            print('yes')
+            # self.current = np.require(self.current, np.uint8, 'C')
+            print(self.current.shape[1])
+            print(self.current.shape[0])
+            print(self.current.shape[1]*3)
+            copyofcurrent = self.current.copy()
+            self.updated_pic = QtGui.QImage(copyofcurrent,
+                                      copyofcurrent.shape[1],
+                                      copyofcurrent.shape[0],
+                                      copyofcurrent.shape[1]*3,
+                                      QtGui.QImage.Format_BGR888)#.QtGui.QImage.rgbSwapped()
 
-# img = image_editor.band_noise_vertical(image, 50, 100, 50)
-# cv2.imwrite('noisyimage.png', img)
+        print('here')
+        self.updated_pic = QtGui.QPixmap(self.updated_pic)
+        self.ui.label_imagebox.setPixmap(self.updated_pic)
 
-# img = image_editor.pixelate(image, 4)
-# cv2.imwrite('noisyimage.png', img)
+    def clicked_open(self):
+        options = QtWidgets.QFileDialog.Options()
+        fileName, _ = QtWidgets.QFileDialog.getOpenFileName(self, "QFileDialog.getOpenFileName()", "", "All Files (*)",
+                                                  options=options)
 
-# img = image_editor.negative_color_picture(image)
-# cv2.imwrite('neg.png', img)
+        self.original = cv2.imread(fileName)
+        self.update_current(self.original)
+        print(self.original.dtype)
 
-# img = image_editor.gamma_correction(image, 0.5)
-# cv2.imwrite('gamma_corrected.png', img)
+        self.pixmap = QtGui.QPixmap(fileName)
+        self.ui.label_imagebox.setPixmap(self.pixmap)
 
-# img = image_editor.contrast_stretching_RGB_channel(image, 10, 20)
-# cv2.imwrite('gamma_corrected.png', img)
+    def clicked_mirror(self):
+        img = image_editor.mirror(self.current)
+        self.update_current(img)
+        self.update_imagebox()
 
-# img = image_editor.ndimage_rotate(image, 45)
-# cv2.imwrite('gamma_corrected.png', img)
+    def clicked_flip(self):
+        img = image_editor.flip_upsidedown(self.current)
+        self.update_current(img)
+        self.update_imagebox()
 
-# img = image_editor.saltnpepper_noise_single_channel(image, 0.6, 255,0)
-# cv2.imwrite('gamma_corrected.png', img)
 
-# cv2.imwrite('bw.png', image)
+if __name__ == '__main__':
+    app = QtWidgets.QApplication([])
 
-# img = image_editor.intensity_map(image, 11)
-# cv2.imwrite('heatmap.png', img)
+    mainwin = MainProgram()
+    mainwin.show()
 
-img = image_editor.edge_detection(image, 100, 200)
-cv2.imwrite('canny.png', img)
+    app.exec_()

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1047</width>
-    <height>743</height>
+    <width>968</width>
+    <height>764</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -16,9 +16,12 @@
   <widget class="QWidget" name="centralwidget">
    <layout class="QHBoxLayout" name="horizontalLayout">
     <item>
-     <widget class="QLabel" name="label">
+     <widget class="QLabel" name="label_imagebox">
       <property name="text">
-       <string>Image</string>
+       <string/>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
       </property>
      </widget>
     </item>
@@ -29,7 +32,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1047</width>
+     <width>968</width>
      <height>26</height>
     </rect>
    </property>
@@ -598,7 +601,7 @@
   </action>
  </widget>
  <resources>
-  <include location="Resources/icons.qrc"/>
+  <include location="../Resources/icons.qrc"/>
  </resources>
  <connections/>
 </ui>

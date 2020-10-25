@@ -1,0 +1,44 @@
+<RCC>
+  <qresource prefix="icon_">
+    <file>canny.png</file>
+    <file>flip.png</file>
+    <file>stretch.png</file>
+    <file>histequal.png</file>
+    <file>dithered.png</file>
+    <file>redo.png</file>
+    <file>undo.png</file>
+    <file>extract_color.png</file>
+    <file>hist.png</file>
+    <file>heatmap.png</file>
+    <file>replace_color.png</file>
+    <file>mask.png</file>
+    <file>neg.png</file>
+    <file>gamma_correction.png</file>
+    <file>cartoonify.png</file>
+    <file>pyramid blending.png</file>
+    <file>alpha_blending.png</file>
+    <file>blur-gaussian.png</file>
+    <file>contrast-down.png</file>
+    <file>contrast-up.png</file>
+    <file>brightness_up.png</file>
+    <file>blur-median.png</file>
+    <file>swap-blue-red.png</file>
+    <file>swap-green-blue.png</file>
+    <file>swap-red-green.png</file>
+    <file>brightness_down.png</file>
+    <file>blur-average.png</file>
+    <file>bw.png</file>
+    <file>border.png</file>
+    <file>pixelate.png</file>
+    <file>verticalnoise.png</file>
+    <file>salt-n-pepper.png</file>
+    <file>gaussian noise.png</file>
+    <file>horizontalnoise.png</file>
+    <file>decrease.png</file>
+    <file>rotate.png</file>
+    <file>mirror.png</file>
+    <file>updown.png</file>
+    <file>add.png</file>
+    <file>save.png</file>
+  </qresource>
+</RCC>
