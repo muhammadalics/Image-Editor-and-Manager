@@ -19,6 +19,7 @@ import dither
 import canny
 import noise_gaussian
 import verticalnoisebands
+import horizontalnoisebands
 
 class MainProgram(QtWidgets.QMainWindow):
 
@@ -51,6 +52,7 @@ class MainProgram(QtWidgets.QMainWindow):
         self.ui.actionEdge_Detection.triggered.connect(self.clicked_canny)
         self.ui.actionGaussian.triggered.connect(self.clicked_gaussian_noise)
         self.ui.actionVertical_Bands.triggered.connect(self.clicked_vertical_noise_bands)
+        self.ui.actionHorizontal_Bands.triggered.connect(self.clicked_horizontal_noise_bands)
 
         self.original = None #Original Image
         self.current = None # this is the image in progress
@@ -328,6 +330,17 @@ class MainProgram(QtWidgets.QMainWindow):
     def clicked_vertical_noise_bands(self):
         Dialog = QtWidgets.QDialog()
         ui = verticalnoisebands.Ui_Dialog_noiseband_vertical()
+        ui.setupUi(Dialog)
+        Dialog.show()
+        result = Dialog.exec_()
+
+        img = image_editor.band_noise_vertical(self.current, ui.spinBox_width.text(), ui.spinBox_period.text(), ui.spinBox_magnitude.text())
+        self.update_current(img)
+        self.update_imagebox()
+
+    def clicked_horizontal_noise_bands(self):
+        Dialog = QtWidgets.QDialog()
+        ui = horizontalnoisebands.Ui_Dialog_noiseband_horizontal()
         ui.setupUi(Dialog)
         Dialog.show()
         result = Dialog.exec_()
