@@ -50,9 +50,9 @@
   <widget class="QWidget" name="">
    <property name="geometry">
     <rect>
-     <x>40</x>
+     <x>100</x>
      <y>20</y>
-     <width>177</width>
+     <width>113</width>
      <height>55</height>
     </rect>
    </property>
@@ -65,7 +65,14 @@
      </widget>
     </item>
     <item row="0" column="1">
-     <widget class="QLineEdit" name="lineEdit_threshold1"/>
+     <widget class="QSpinBox" name="spinBox_thresh1">
+      <property name="maximum">
+       <number>255</number>
+      </property>
+      <property name="singleStep">
+       <number>10</number>
+      </property>
+     </widget>
     </item>
     <item row="1" column="0">
      <widget class="QLabel" name="label_2">
@@ -75,7 +82,14 @@
      </widget>
     </item>
     <item row="1" column="1">
-     <widget class="QLineEdit" name="lineEdit_threshold2"/>
+     <widget class="QSpinBox" name="spinBox_thresh2">
+      <property name="maximum">
+       <number>255</number>
+      </property>
+      <property name="singleStep">
+       <number>10</number>
+      </property>
+     </widget>
     </item>
    </layout>
   </widget>

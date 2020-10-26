@@ -24,8 +24,8 @@ end_date = '2006-10-22'
 # image_query.query(start_date, end_date)
 
 image = cv2.imread('test.jpg', 1)
-# cartoon = image_editor.cartoonify(image, 0, 100)
-# cv2.imwrite('cartoon.png', cartoon)
+cartoon = image_editor.cartoonify(image, 0, 100)
+cv2.imwrite('cartoon.png', cartoon)
 
 # apple = cv2.imread('burt_apple.png')
 # orange = cv2.imread('burt_orange.png')
@@ -36,8 +36,8 @@ image = cv2.imread('test.jpg', 1)
 #
 # cv2.imwrite('blend.png', blended)
 
-# img = image_editor.dither(image, 80)
-# cv2.imwrite('dithered.png', img)
+img = image_editor.dither(image, 80)
+cv2.imwrite('dithered.png', img)
 
 # img = image_editor.add_Gaussian_noise(image, 50)
 # cv2.imwrite('noisyimage.png', img)
@@ -68,11 +68,12 @@ image = cv2.imread('test.jpg', 1)
 
 # cv2.imwrite('bw.png', image)
 
-# img = image_editor.intensity_map(image, 11)
+# img = image_editor.intensity_map(image, 'jet')
 # cv2.imwrite('heatmap.png', img)
 
 # img = image_editor.edge_detection(image, 100, 200)
 # cv2.imwrite('canny.png', img)
 
-img = image_editor.replace_color(image, '255,255,255', '0,0,0')
-cv2.imwrite('replaced.png', img)
+# img = image_editor.replace_color(image, '255,255,255', '0,0,0')
+# cv2.imwrite('replaced.png', img)
+

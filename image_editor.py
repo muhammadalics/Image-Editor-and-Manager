@@ -3,6 +3,7 @@ import numpy as np
 import sys
 import scipy.ndimage
 import random
+import ast
 np.set_printoptions(threshold=sys.maxsize)
 
 
@@ -74,11 +75,15 @@ def replace_color(image, color_to_replace, target_color):
     return image
 
 def avg_blur(image, k, times):
+    k=int(k)
+    times=int(times)
     for i in range(times):
         image = cv2.blur(image, (k,k))
     return image
 
 def gaussian_blur(image, k, times):
+    k=int(k)
+    times=int(times)
     for i in range(times):
         image = cv2.GaussianBlur(image, (k,k), 0)
     return image
@@ -95,8 +100,36 @@ def add_border(image, top=0, bottom=0, left=0, right=0, bordertype=cv2.BORDER_CO
     return image
 
 def intensity_map(image, map):
-    return cv2.applyColorMap(image, map)
-    #NOTE: get list of colormaps
+    map = 'COLORMAP_'+ map.upper().replace(' ', '_')
+
+    map_dict = {
+         'COLORMAP_AUTUMN' : 0,
+          'COLORMAP_BONE' : 1,
+          'COLORMAP_JET' : 2,
+          'COLORMAP_WINTER' : 3,
+          'COLORMAP_RAINBOW' : 4,
+          'COLORMAP_OCEAN' : 5,
+          'COLORMAP_SUMMER' : 6,
+          'COLORMAP_SPRING' : 7,
+          'COLORMAP_COOL' : 8,
+          'COLORMAP_HSV' : 9,
+          'COLORMAP_PINK' : 10,
+          'COLORMAP_HOT' : 11,
+          'COLORMAP_PARULA' : 12,
+          'COLORMAP_MAGMA' : 13,
+          'COLORMAP_INFERNO' : 14,
+          'COLORMAP_PLASMA' : 15,
+          'COLORMAP_VIRIDIS' : 16,
+          'COLORMAP_CIVIDIS' : 17,
+          'COLORMAP_TWILIGHT' : 18,
+          'COLORMAP_TWILIGHT_SHIFTED' : 19,
+          'COLORMAP_TURBO' : 20,
+          'COLORMAP_DEEPGREEN' : 21
+                }
+    print(map)
+    return cv2.applyColorMap(image, map_dict[map])
+
+
 
 def histogram_equalization_bw(image):
     return cv2.equalizeHist(image)
@@ -125,7 +158,12 @@ def edge_detection(image, threshold1, threshold2):
 
 def cartoonify(image, thresh1, thresh2):
     # https: // stacks.stanford.edu / file / druid: yt916dh6570 / Dade_Toonify.pdf
-    gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+    thresh1 = int(thresh1)
+    thresh2 = int(thresh2)
+    if len(image.shape) ==3:
+        gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+    else:
+        gray = image
     gray = cv2.medianBlur(gray, 7)
     canny = cv2.Canny(gray, thresh1, thresh2)
     canny = cv2.dilate(canny,(2,2))
@@ -143,8 +181,11 @@ def cartoonify(image, thresh1, thresh2):
                 print([points[0][1],points[0][0]])
                 canny[points[0][1],points[0][0]]  = 0
 
+    if len(image.shape)==3:
+        color_image = image[::4, ::4, :]
+    else:
+        color_image = image[::4, ::4]
 
-    color_image = image[::4, ::4, :]
     for i in range(14):
         color_image = cv2.bilateralFilter(color_image, 9, 0, 0)
     color_image = cv2.resize(color_image, None, fx=4, fy=4, interpolation = cv2.INTER_LINEAR)
@@ -152,10 +193,16 @@ def cartoonify(image, thresh1, thresh2):
     #quantize colors
     color_image = color_image // 24 * 24
     #when image is resized above it may get bigger than the original. so cut the extra rows and columns.
-    color_image = color_image[0:canny.shape[0],0:canny.shape[1],:]
+    if len(color_image.shape) == 3:
+        color_image = color_image[0:canny.shape[0],0:canny.shape[1],:]
+    else:
+        color_image = color_image[0:canny.shape[0], 0:canny.shape[1]]
 
     #combining edges and color image
-    color_image[canny == 255, :] = 0
+    if len(color_image.shape) ==3:
+        color_image[canny == 255, :] = 0
+    else:
+        color_image[canny == 255] = 0
 
     return color_image
 
@@ -318,12 +365,14 @@ def ndimage_rotate(image, angle, axes=(1,0), reshape=True, output=None, order=3,
     return scipy.ndimage.rotate(image, angle, axes, reshape=True, output=None, order=3, mode='constant', cval=0.0, prefilter=True)
 
 def gamma_correction(image, gamma):
+    gamma= float(gamma)
     return 255 * (image/255)**(1/gamma)
 
 def sketch_algo():
     pass
 
 def pixelate(image, n):
+    n = int(n)
     image_copy= image.copy()
     for i in range(n):
         image_copy = cv2.pyrDown(image_copy)
@@ -444,6 +493,8 @@ def saltnpepper_noise_single_channel(image, amount, lower_threshold, upper_thres
 def dither(image, n):
     # Implements ordered dithering using a 2x2 matrix as described in https://en.wikipedia.org/wiki/Ordered_dithering
     # M = np.array([[0, 0.5], [0.75, 0.25]])
+
+    n = int(n)
 
     img = image[::2, ::2]
     img[img>0] = 255
