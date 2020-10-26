@@ -23,7 +23,7 @@ end_date = '2006-10-22'
 
 # image_query.query(start_date, end_date)
 
-image = cv2.imread('car.jpg', 0)
+image = cv2.imread('test.jpg', 1)
 # cartoon = image_editor.cartoonify(image, 0, 100)
 # cv2.imwrite('cartoon.png', cartoon)
 
@@ -71,5 +71,8 @@ image = cv2.imread('car.jpg', 0)
 # img = image_editor.intensity_map(image, 11)
 # cv2.imwrite('heatmap.png', img)
 
-img = image_editor.edge_detection(image, 100, 200)
-cv2.imwrite('canny.png', img)
+# img = image_editor.edge_detection(image, 100, 200)
+# cv2.imwrite('canny.png', img)
+
+img = image_editor.replace_color(image, '255,255,255', '0,0,0')
+cv2.imwrite('replaced.png', img)

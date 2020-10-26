@@ -7,6 +7,9 @@ import cv2
 import image_editor
 import scipy
 import numpy as np
+import replace_color
+import blur_median
+
 
 class MainProgram(QtWidgets.QMainWindow):
 
@@ -27,6 +30,8 @@ class MainProgram(QtWidgets.QMainWindow):
         self.ui.actionBlue_Red.triggered.connect(self.clicked_swap_br)
         self.ui.actionNegative.triggered.connect(self.clicked_negative)
         self.ui.actionBlack_and_White.triggered.connect(self.clicked_converttobw)
+        self.ui.actionReplace_Color.triggered.connect(self.clicked_replacecolor)
+        self.ui.actionMedian.triggered.connect(self.clicked_blur_median)
 
         self.original = None #Original Image
         self.current = None # this is the image in progress
@@ -123,6 +128,43 @@ class MainProgram(QtWidgets.QMainWindow):
         img = image_editor.convert_to_bw(self.current)
         self.update_current(img)
         self.update_imagebox()
+
+    def clicked_replacecolor(self):
+        Dialog_replacecolor = QtWidgets.QDialog()
+        dialog = replace_color.Ui_Dialog_replacecolor()
+        dialog.setupUi(Dialog_replacecolor)
+        Dialog_replacecolor.show()
+        Dialog_replacecolor.exec_()
+
+        if Dialog_replacecolor.accept:
+            img = image_editor.replace_color(self.current, dialog.lineEdit.text(), dialog.lineEdit_2.text())
+            print(dialog.lineEdit.text())
+            self.update_current(img)
+            self.update_imagebox()
+
+    def clicked_blur_median(self):
+
+        Dialog = QtWidgets.QDialog()
+        ui = blur_median.Ui_Dialog()
+        ui.setupUi(Dialog)
+        Dialog.show()
+        result = Dialog.exec_()
+
+        if result==False:
+            print('rejected')
+            return
+
+        elif result and int(ui.spinBox_kernelsize.text()) % 2 == 0:
+            print('try again')
+            error = 'Kernel size can only be odd.'
+            QtWidgets.QMessageBox.warning(self, 'Error', error)
+            self.clicked_blur_median()
+
+        elif result:
+            img = image_editor.median_blur(self.current, ui.spinBox_kernelsize.text(), ui.spinBox_numberofapplications.text())
+            print('accepted')
+            self.update_current(img)
+            self.update_imagebox()
 
 if __name__ == '__main__':
     app = QtWidgets.QApplication([])

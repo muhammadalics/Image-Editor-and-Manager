@@ -59,7 +59,18 @@ def rotate_image(image):
     return np.rot90(image)
 
 def replace_color(image, color_to_replace, target_color):
+    color_to_replace = color_to_replace.split(sep=',')
+    color_to_replace = [int(x) for x in color_to_replace]
+
+    target_color = target_color.split(sep=',')
+    target_color = [int(x) for x in target_color]
+
+    print(color_to_replace)
+    print(target_color)
+
     image[np.all(image[:,:,0] == color_to_replace[0], image[:,:,1] == color_to_replace[1], image[:,:,2] == color_to_replace[2])] = target_color
+    print(image[np.all(image[:,:,0] == color_to_replace[0], image[:,:,1] == color_to_replace[1], image[:,:,2] == color_to_replace[2])])
+    print('returning')
     return image
 
 def avg_blur(image, k, times):
@@ -73,6 +84,8 @@ def gaussian_blur(image, k, times):
     return image
 
 def median_blur(image, k, times):
+    k=int(k)
+    times=int(times)
     for i in range(times):
         image = cv2.medianBlur(image, k)
     return image
