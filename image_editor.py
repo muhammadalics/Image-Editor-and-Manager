@@ -451,12 +451,20 @@ def noise_bands(image, width, period, orientation):
     return tiled
 
 def band_noise_horizontal(image, width, period, magnitude):
+    width = int(width)
+    period = int(period)
+    magnitude = int(magnitude)
+
     bands = noise_bands(image, width, period, 'horizontal')
     print(bands)
     image[bands, :, :] = image[bands, :, :] + magnitude
     return image
 
 def band_noise_vertical(image, width, period, magnitude):
+    width = int(width)
+    period = int(period)
+    magnitude = int(magnitude)
+
     bands = noise_bands(image, width, period, 'vertical')
     image[:, bands, :] = image[:, bands, :] + magnitude
     return image
