@@ -39,8 +39,8 @@ image = cv2.imread('test.jpg', 1)
 # img = image_editor.dither(image, 80)
 # cv2.imwrite('dithered.png', img)
 
-img = image_editor.add_Gaussian_noise(image, 50, 'Red')
-cv2.imwrite('noisyimage.png', img)
+# img = image_editor.add_Gaussian_noise(image, 50, 'Red')
+# cv2.imwrite('noisyimage.png', img)
 
 # img = image_editor.band_noise_horizontal(image, 50, 100, 50)
 # cv2.imwrite('noisyimage.png', img)
@@ -77,3 +77,5 @@ cv2.imwrite('noisyimage.png', img)
 # img = image_editor.replace_color(image, '255,255,255', '0,0,0')
 # cv2.imwrite('replaced.png', img)
 
+img = image_editor.extract_color(image, '255, 255, 255')
+cv2.imwrite('extracted_color.png', img)

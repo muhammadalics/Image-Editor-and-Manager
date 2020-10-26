@@ -20,6 +20,8 @@ import canny
 import noise_gaussian
 import verticalnoisebands
 import horizontalnoisebands
+import extractcolor
+import addborder
 
 class MainProgram(QtWidgets.QMainWindow):
 
@@ -53,15 +55,35 @@ class MainProgram(QtWidgets.QMainWindow):
         self.ui.actionGaussian.triggered.connect(self.clicked_gaussian_noise)
         self.ui.actionVertical_Bands.triggered.connect(self.clicked_vertical_noise_bands)
         self.ui.actionHorizontal_Bands.triggered.connect(self.clicked_horizontal_noise_bands)
+        self.ui.actionExtract_Color.triggered.connect(self.clicked_extract_color)
+        self.ui.actionAdd_Border.triggered.connect(self.clicked_add_border)
+        self.ui.actionHistogram_Equalization.triggered.connect(self.clicked_histogramequalization)
+        self.ui.actionUndo.triggered.connect(self.clicked_undo)
+        self.ui.actionRedo.triggered.connect(self.clicked_redo)
+
 
         self.original = None #Original Image
         self.current = None # this is the image in progress
+        self.redo = None
+        self.counter_undo = 0
+        self.counter_redo = 0
+
+    def perform_updates(self, current):
+        self.update_current_minus_one(self.current.copy())
+        self.update_current(current)
+        self.update_imagebox()
+
+    def update_current_minus_one(self, image):
+        self.currentminusone = image
+
+    # def update_for_redo(self):
+    #     self.redo_image = self.current
 
     def update_current(self, image):
         self.current = image
 
     def update_imagebox(self):
-
+        print('inside updatebox')
         if len(self.current.shape) == 3: #for color images
             copyofcurrent = self.current.copy()
             self.updated_pic = QtGui.QImage(copyofcurrent,
@@ -83,6 +105,20 @@ class MainProgram(QtWidgets.QMainWindow):
         self.updated_pic = QtGui.QPixmap(self.updated_pic)
         self.ui.label_imagebox.setPixmap(self.updated_pic)
 
+    def clicked_undo(self):
+        if self.counter_redo == self.counter_undo:
+            self.redo = self.current.copy()
+            self.update_current(self.currentminusone)
+            self.update_imagebox()
+            self.counter_undo += 1
+
+    def clicked_redo(self):
+        if self.counter_undo != 0 and self.counter_undo > self.counter_redo:
+            self.currentminusone = self.current.copy()
+            self.update_current(self.redo)
+            self.update_imagebox()
+            self.counter_redo += 1
+
     def clicked_open(self):
         options = QtWidgets.QFileDialog.Options()
         fileName, _ = QtWidgets.QFileDialog.getOpenFileName(self, "QFileDialog.getOpenFileName()", "", "All Files (*)",
@@ -97,33 +133,41 @@ class MainProgram(QtWidgets.QMainWindow):
 
     def clicked_mirror(self):
         img = image_editor.mirror(self.current)
-        self.update_current(img)
-        self.update_imagebox()
+        # self.update_current_minus_one(self.current.copy())
+        # self.update_current(img)
+        # self.update_imagebox()
+        self.perform_updates(img)
 
     def clicked_flip(self):
         img = image_editor.flip_upsidedown(self.current)
-        self.update_current(img)
-        self.update_imagebox()
+        # self.update_current(img)
+        # self.update_imagebox()
+        self.perform_updates(img)
+
 
     def clicked_brightnessup(self):
         img = image_editor.brightness_up(self.current, 1, 1)
-        self.update_current(img)
-        self.update_imagebox()
+        # self.update_current(img)
+        # self.update_imagebox()
+        self.perform_updates(img)
 
     def clicked_brightnessdown(self):
         img = image_editor.brightness_down(self.current, 1, 1)
-        self.update_current(img)
-        self.update_imagebox()
+        # self.update_current(img)
+        # self.update_imagebox()
+        self.perform_updates(img)
 
     def clicked_contrastup(self):
         img = image_editor.brightness_up(self.current, 1.01, 0)
-        self.update_current(img)
-        self.update_imagebox()
+        # self.update_current(img)
+        # self.update_imagebox()
+        self.perform_updates(img)
 
     def clicked_contrastdown(self):
         img = image_editor.brightness_down(self.current, 0.99, 0)
-        self.update_current(img)
-        self.update_imagebox()
+        # self.update_current(img)
+        # self.update_imagebox()
+        self.perform_updates(img)
 
     def clicked_swap_rg(self):
         if len(self.current.shape) ==2:
@@ -131,8 +175,9 @@ class MainProgram(QtWidgets.QMainWindow):
             QtWidgets.QMessageBox.warning(self, 'Image is grayscale.', error)
         else:
             img = image_editor.swap_gr(self.current)
-            self.update_current(img)
-            self.update_imagebox()
+            # self.update_current(img)
+            # self.update_imagebox()
+            self.perform_updates(img)
 
     def clicked_swap_gb(self):
         if len(self.current.shape) ==2:
@@ -140,8 +185,9 @@ class MainProgram(QtWidgets.QMainWindow):
             QtWidgets.QMessageBox.warning(self, 'Image is grayscale.', error)
         else:
             img = image_editor.swap_bg(self.current)
-            self.update_current(img)
-            self.update_imagebox()
+            # self.update_current(img)
+            # self.update_imagebox()
+            self.perform_updates(img)
 
     def clicked_swap_br(self):
         if len(self.current.shape) ==2:
@@ -149,18 +195,21 @@ class MainProgram(QtWidgets.QMainWindow):
             QtWidgets.QMessageBox.warning(self, 'Image is grayscale.', error)
         else:
             img = image_editor.swap_rb(self.current)
-            self.update_current(img)
-            self.update_imagebox()
+            # self.update_current(img)
+            # self.update_imagebox()
+            self.perform_updates(img)
 
     def clicked_negative(self):
         img = image_editor.negative_color_picture(self.current)
-        self.update_current(img)
-        self.update_imagebox()
+        # self.update_current(img)
+        # self.update_imagebox()
+        self.perform_updates(img)
 
     def clicked_converttobw(self):
         img = image_editor.convert_to_bw(self.current)
-        self.update_current(img)
-        self.update_imagebox()
+        # self.update_current(img)
+        # self.update_imagebox()
+        self.perform_updates(img)
 
     def clicked_replacecolor(self):
         Dialog_replacecolor = QtWidgets.QDialog()
@@ -172,8 +221,9 @@ class MainProgram(QtWidgets.QMainWindow):
         if Dialog_replacecolor.accept:
             img = image_editor.replace_color(self.current, dialog.lineEdit.text(), dialog.lineEdit_2.text())
             print(dialog.lineEdit.text())
-            self.update_current(img)
-            self.update_imagebox()
+            # self.update_current(img)
+            # self.update_imagebox()
+            self.perform_updates(img)
 
     def clicked_blur_median(self):
         Dialog = QtWidgets.QDialog()
@@ -193,8 +243,9 @@ class MainProgram(QtWidgets.QMainWindow):
         elif result:
             img = image_editor.median_blur(self.current, ui.spinBox_kernelsize.text(), ui.spinBox_numberofapplications.text())
             print('accepted')
-            self.update_current(img)
-            self.update_imagebox()
+            # self.update_current(img)
+            # self.update_imagebox()
+            self.perform_updates(img)
 
     def clicked_blur_gaussian(self):
         Dialog = QtWidgets.QDialog()
@@ -214,8 +265,9 @@ class MainProgram(QtWidgets.QMainWindow):
         elif result:
             img = image_editor.gaussian_blur(self.current, ui.spinBox_kernelsize.text(), ui.spinBox_numberofapplications.text())
             print('accepted')
-            self.update_current(img)
-            self.update_imagebox()
+            # self.update_current(img)
+            # self.update_imagebox()
+            self.perform_updates(img)
 
     def clicked_blur_average(self):
         Dialog = QtWidgets.QDialog()
@@ -235,8 +287,9 @@ class MainProgram(QtWidgets.QMainWindow):
         elif result:
             img = image_editor.avg_blur(self.current, ui.spinBox_kernelsize.text(), ui.spinBox_numberofapplications.text())
             print('accepted')
-            self.update_current(img)
-            self.update_imagebox()
+            # self.update_current(img)
+            # self.update_imagebox()
+            self.perform_updates(img)
 
     def clicked_intensity_map(self):
         Dialog = QtWidgets.QDialog()
@@ -246,8 +299,9 @@ class MainProgram(QtWidgets.QMainWindow):
         result = Dialog.exec_()
 
         img = image_editor.intensity_map(self.current, ui.comboBox_heatmap.currentText())
-        self.update_current(img)
-        self.update_imagebox()
+        # self.update_current(img)
+        # self.update_imagebox()
+        self.perform_updates(img)
 
     def clicked_pixelate(self):
         Dialog = QtWidgets.QDialog()
@@ -257,8 +311,9 @@ class MainProgram(QtWidgets.QMainWindow):
         result = Dialog.exec_()
 
         img = image_editor.pixelate(self.current, ui.spinBox_pixelate.text())
-        self.update_current(img)
-        self.update_imagebox()
+        # self.update_current(img)
+        # self.update_imagebox()
+        self.perform_updates(img)
 
     def clicked_cartoonify(self):
         Dialog = QtWidgets.QDialog()
@@ -268,8 +323,9 @@ class MainProgram(QtWidgets.QMainWindow):
         result = Dialog.exec_()
 
         img = image_editor.cartoonify(self.current, ui.spinBox_thresh1.text(), ui.spinBox_thresh2.text())
-        self.update_current(img)
-        self.update_imagebox()
+        # self.update_current(img)
+        # self.update_imagebox()
+        self.perform_updates(img)
 
     def clicked_gamma(self):
         Dialog = QtWidgets.QDialog()
@@ -279,8 +335,9 @@ class MainProgram(QtWidgets.QMainWindow):
         result = Dialog.exec_()
 
         img = image_editor.gamma_correction(self.current, ui.doubleSpinBox_gamma.text())
-        self.update_current(img)
-        self.update_imagebox()
+        # self.update_current(img)
+        # self.update_imagebox()
+        self.perform_updates(img)
 
     def clicked_dither(self):
         Dialog = QtWidgets.QDialog()
@@ -290,8 +347,9 @@ class MainProgram(QtWidgets.QMainWindow):
         result = Dialog.exec_()
 
         img = image_editor.dither(self.current, ui.spinBox_order.text())
-        self.update_current(img)
-        self.update_imagebox()
+        # self.update_current(img)
+        # self.update_imagebox()
+        self.perform_updates(img)
 
     def clicked_canny(self):
         Dialog = QtWidgets.QDialog()
@@ -313,8 +371,9 @@ class MainProgram(QtWidgets.QMainWindow):
 
         else:
             img = image_editor.edge_detection(self.current, ui.spinBox_thresh1.text(), ui.spinBox_thresh2.text(), ui.spinBox_kernelsize.text(), ui.comboBox.currentText())
-            self.update_current(img)
-            self.update_imagebox()
+            # self.update_current(img)
+            # self.update_imagebox()
+            self.perform_updates(img)
 
     def clicked_gaussian_noise(self):
         Dialog = QtWidgets.QDialog()
@@ -324,8 +383,9 @@ class MainProgram(QtWidgets.QMainWindow):
         result = Dialog.exec_()
 
         img = image_editor.add_Gaussian_noise(self.current, ui.doubleSpinBox_sigma.text(), ui.comboBox_channel.currentText())
-        self.update_current(img)
-        self.update_imagebox()
+        # self.update_current(img)
+        # self.update_imagebox()
+        self.perform_updates(img)
 
     def clicked_vertical_noise_bands(self):
         Dialog = QtWidgets.QDialog()
@@ -335,8 +395,9 @@ class MainProgram(QtWidgets.QMainWindow):
         result = Dialog.exec_()
 
         img = image_editor.band_noise_vertical(self.current, ui.spinBox_width.text(), ui.spinBox_period.text(), ui.spinBox_magnitude.text())
-        self.update_current(img)
-        self.update_imagebox()
+        # self.update_current(img)
+        # self.update_imagebox()
+        self.perform_updates(img)
 
     def clicked_horizontal_noise_bands(self):
         Dialog = QtWidgets.QDialog()
@@ -346,8 +407,51 @@ class MainProgram(QtWidgets.QMainWindow):
         result = Dialog.exec_()
 
         img = image_editor.band_noise_vertical(self.current, ui.spinBox_width.text(), ui.spinBox_period.text(), ui.spinBox_magnitude.text())
-        self.update_current(img)
-        self.update_imagebox()
+        # self.update_current(img)
+        # self.update_imagebox()
+        self.perform_updates(img)
+
+    def clicked_extract_color(self):
+        Dialog = QtWidgets.QDialog()
+        ui = extractcolor.Ui_Dialog_extractcolor()
+        ui.setupUi(Dialog)
+        Dialog.show()
+        result = Dialog.exec_()
+
+        img = image_editor.extract_color(self.current, ui.lineEdit_extractcolor.text())
+        # self.update_current(img)
+        # self.update_imagebox()
+        self.perform_updates(img)
+
+    def clicked_add_border(self):
+        Dialog = QtWidgets.QDialog()
+        ui = addborder.Ui_Dialog_addborder()
+        ui.setupUi(Dialog)
+        Dialog.show()
+        result = Dialog.exec_()
+
+        img = image_editor.add_border(self.current,
+                                      top=ui.spinBox_top.text(),
+                                      bottom=ui.spinBox_bottom.text(),
+                                      left=ui.spinBox_left.text(),
+                                      right=ui.spinBox_right.text(),
+                                      bordertype=ui.comboBox.currentText(),
+                                      value=ui.spinBox_top.text())
+
+        # self.update_current(img)
+        # self.update_imagebox()
+        self.perform_updates(img)
+
+
+    def clicked_histogramequalization(self):
+        img = image_editor.histogram_equalization_bw(self.current)
+        # self.update_current(img)
+        # self.update_imagebox()
+        self.perform_updates(img)
+
+
+
+
 
 
 if __name__ == '__main__':

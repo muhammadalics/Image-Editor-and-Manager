@@ -96,7 +96,21 @@ def median_blur(image, k, times):
     return image
 
 def add_border(image, top=0, bottom=0, left=0, right=0, bordertype=cv2.BORDER_CONSTANT, value=0):
-    image = cv2.copyMakeBorder(image, top, bottom, left, right, bordertype, value)
+    top =int(top)
+    bottom=int(bottom)
+    left=int(left)
+    right=int(right)
+    bordertype_dict={'cv2.BORDER_CONSTANT': cv2.BORDER_CONSTANT,
+                     'cv2.BORDER_REFLECT101': cv2. BORDER_REFLECT101,
+                     'cv2.BORDER_REFLECT': cv2.BORDER_REFLECT,
+                     'cv2.BORDER_REPLICATE': cv2.BORDER_REPLICATE,
+                     'cv2.BORDER_WRAP': cv2.BORDER_WRAP
+                     }
+    if bordertype_dict[bordertype] == cv2.BORDER_CONSTANT:
+        image = cv2.copyMakeBorder(image, top, bottom, left, right, bordertype_dict[bordertype], value)
+    else:
+        image = cv2.copyMakeBorder(image, top, bottom, left, right, bordertype_dict[bordertype])
+
     return image
 
 def intensity_map(image, map):
@@ -132,7 +146,12 @@ def intensity_map(image, map):
 
 
 def histogram_equalization_bw(image):
-    return cv2.equalizeHist(image)
+    if len(image.shape) == 2:
+        return cv2.equalizeHist(image)
+    else:
+        image = cv2.cvtColor(image, cv2.COLOR_BGR2YUV)
+        image[:,:,0] = cv2.equalizeHist(image[:,:,0])
+        return cv2.cvtColor(image, cv2.COLOR_YUV2BGR)
 
 # def histogram_equalization_color(image):
 #     YCrCb_image  = cv2.cvtColor(image, cv2.COLOR_BGR2YCrCb)
@@ -213,6 +232,9 @@ def cartoonify(image, thresh1, thresh2):
 
 def extract_color(image, color):
     # extract single color from image
+    color = color.split(sep=',')
+    color = [int(x) for x in color]
+
     extracted = np.zeros_like(image)
     extracted[np.all(image[:,:,0] == color[0], image[:,:,1] == color[1], image[:,:,2] == color[2])] = image[np.all(image[:,:,0] == color[0], image[:,:,1] == color[1], image[:,:,2] == color[2])]
     return extracted
