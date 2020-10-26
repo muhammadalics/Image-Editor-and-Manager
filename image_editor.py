@@ -152,8 +152,13 @@ def non_linear_blend(image1, image2, percentage):
 
     pass
 
-def edge_detection(image, threshold1, threshold2):
-    edges = cv2.Canny(image, threshold1, threshold2)
+def edge_detection(image, threshold1, threshold2, kernelsize, L2grad):
+    threshold1 = int(threshold1)
+    threshold2 = int(threshold2)
+    kernelsize = int(kernelsize)
+    if L2grad == 'True': L2grad = True
+    else: L2grad = False
+    edges = cv2.Canny(image, threshold1, threshold2, apertureSize=kernelsize, L2gradient=L2grad)
     return edges
 
 def cartoonify(image, thresh1, thresh2):
@@ -389,11 +394,19 @@ def negative_color_picture(image):
 def pseudo_solarised():
     pass
 
-def add_Gaussian_noise(image, sigma, channel=-1):
-    random = np.random.normal(loc=0, scale=sigma, size=(image.shape[0], image.shape[1]))
-    if channel !=-1:
-        image[:,:,channel] = image[:,:,channel] + random
+def add_Gaussian_noise(image, sigma, channel):
+    sigma = float(sigma)
+
+    if len(image.shape) == 2: channel = -1 #check if image is grayscale
     else:
+        if channel == 'Blue': channel = 0
+        if channel == 'Green': channel = 1
+        if channel == 'Red': channel = 2
+
+    random = np.random.normal(loc=0, scale=sigma, size=(image.shape[0], image.shape[1]))
+    if channel !=-1: #if color
+        image[:,:,channel] = image[:,:,channel] + random
+    else: #if grayscale
         image = image + random
     return image
 

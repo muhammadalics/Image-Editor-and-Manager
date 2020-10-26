@@ -47,13 +47,13 @@
     <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
    </property>
   </widget>
-  <widget class="QWidget" name="">
+  <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
      <x>110</x>
      <y>20</y>
-     <width>98</width>
-     <height>51</height>
+     <width>114</width>
+     <height>53</height>
     </rect>
    </property>
    <layout class="QGridLayout" name="gridLayout">
@@ -97,6 +97,9 @@
     </item>
     <item row="1" column="1">
      <widget class="QDoubleSpinBox" name="doubleSpinBox_sigma">
+      <property name="singleStep">
+       <double>0.250000000000000</double>
+      </property>
       <property name="stepType">
        <enum>QAbstractSpinBox::DefaultStepType</enum>
       </property>

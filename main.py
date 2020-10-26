@@ -16,6 +16,8 @@ import pixelate
 import cartoonify
 import gamma
 import dither
+import canny
+import noise_gaussian
 
 class MainProgram(QtWidgets.QMainWindow):
 
@@ -45,6 +47,8 @@ class MainProgram(QtWidgets.QMainWindow):
         self.ui.actionCartoonify.triggered.connect(self.clicked_cartoonify)
         self.ui.actionGamma_Correction.triggered.connect(self.clicked_gamma)
         self.ui.actionDithering.triggered.connect(self.clicked_dither)
+        self.ui.actionEdge_Detection.triggered.connect(self.clicked_canny)
+        self.ui.actionGaussian.triggered.connect(self.clicked_gaussian_noise)
 
         self.original = None #Original Image
         self.current = None # this is the image in progress
@@ -285,6 +289,39 @@ class MainProgram(QtWidgets.QMainWindow):
         self.update_current(img)
         self.update_imagebox()
 
+    def clicked_canny(self):
+        Dialog = QtWidgets.QDialog()
+        ui = canny.Ui_Dialog_canny()
+        ui.setupUi(Dialog)
+        Dialog.show()
+        result = Dialog.exec_()
+
+        if result and int(ui.spinBox_kernelsize.text()) % 2 == 0:
+            print('try again')
+            error = 'Kernel size can only be odd.'
+            QtWidgets.QMessageBox.warning(self, 'Error', error)
+            self.clicked_canny()
+        elif result and int(ui.spinBox_thresh1.text()) == int(ui.spinBox_thresh2.text()):
+            print('try again')
+            error = 'Thresholds cannot be equal.'
+            QtWidgets.QMessageBox.warning(self, 'Error', error)
+            self.clicked_canny()
+
+        else:
+            img = image_editor.edge_detection(self.current, ui.spinBox_thresh1.text(), ui.spinBox_thresh2.text(), ui.spinBox_kernelsize.text(), ui.comboBox.currentText())
+            self.update_current(img)
+            self.update_imagebox()
+
+    def clicked_gaussian_noise(self):
+        Dialog = QtWidgets.QDialog()
+        ui = noise_gaussian.Ui_Dialog_gaussian_noise()
+        ui.setupUi(Dialog)
+        Dialog.show()
+        result = Dialog.exec_()
+
+        img = image_editor.add_Gaussian_noise(self.current, ui.doubleSpinBox_sigma.text(), ui.comboBox_channel.currentText())
+        self.update_current(img)
+        self.update_imagebox()
 
 if __name__ == '__main__':
     app = QtWidgets.QApplication([])
