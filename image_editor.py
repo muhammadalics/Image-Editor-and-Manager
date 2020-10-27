@@ -218,7 +218,8 @@ def histogram_equalization_bw(image):
 #     return YCrCb_image
 
 def blend_images_bw(image1, image2, percentage):
-    return image1*percentage + image2*(1-percentage)
+    return cv2.weighted(image1, percentage, image2, (1-percentage), 0)
+    # return image1*percentage + image2*(1-percentage)
 
 def blend_images_color(image1, image2, percentage):
     image1[:,:,0] = image1[:,:,0]*percentage + image2[:,:,0]*(1-percentage)
