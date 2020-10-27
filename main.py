@@ -25,8 +25,9 @@ import horizontalnoisebands
 import extractcolor
 import addborder
 import image_histogram
-import pyramidblending
+import pyramidblending_modified
 import alphablending
+import resize_ui
 
 class MainProgram(QtWidgets.QMainWindow):
 
@@ -65,8 +66,9 @@ class MainProgram(QtWidgets.QMainWindow):
         self.ui.actionHistogram_Equalization.triggered.connect(self.clicked_histogramequalization)
         self.ui.actionImage_Histogram.triggered.connect(self.clicked_image_histogram)
         self.ui.actionSave.triggered.connect(self.clicked_save)
-        self.ui.actionPyramid.triggered.connect(self.clicked_pyramid_blending)
+        self.ui.actionPyramid.triggered.connect(self.clicked_pyramid_blending_loadfiles)
         self.ui.actionAlpha.triggered.connect(self.clicked_alpha_blending)
+        self.ui.actionResize.triggered.connect(self.resize_image)
 
         self.ui.actionUndo.triggered.connect(self.clicked_undo)
         self.ui.actionRedo.triggered.connect(self.clicked_redo)
@@ -94,6 +96,8 @@ class MainProgram(QtWidgets.QMainWindow):
         print('inside updatebox')
         if len(self.current.shape) == 3: #for color images
             copyofcurrent = self.current.copy()
+            # copyofcurrent[:,:,[0,2]] = copyofcurrent[:,:,[2,0]]
+            print(copyofcurrent.dtype)
             self.updated_pic = QtGui.QImage(copyofcurrent,
                                       copyofcurrent.shape[1],
                                       copyofcurrent.shape[0],
@@ -170,27 +174,20 @@ class MainProgram(QtWidgets.QMainWindow):
 
 
     def clicked_brightnessup(self):
-        img = image_editor.brightness_up(self.current, 1, 1)
-        # self.update_current(img)
-        # self.update_imagebox()
+        img = image_editor.brightness_contrast(self.current, 1, 1)
         self.perform_updates(img)
 
     def clicked_brightnessdown(self):
-        img = image_editor.brightness_down(self.current, 1, 1)
-        # self.update_current(img)
-        # self.update_imagebox()
+        img = image_editor.brightness_contrast(self.current, 1, -1)
+        # img = image_editor.brightness_down(self.current, 1, 1)
         self.perform_updates(img)
 
     def clicked_contrastup(self):
-        img = image_editor.brightness_up(self.current, 1.01, 0)
-        # self.update_current(img)
-        # self.update_imagebox()
-        self.perform_updates(img)
+        img = image_editor.brightness_contrast(self.current, 1.01, 0)
+        self.perform_updates(img.astype(np.uint8))
 
     def clicked_contrastdown(self):
-        img = image_editor.brightness_down(self.current, 0.99, 0)
-        # self.update_current(img)
-        # self.update_imagebox()
+        img = image_editor.brightness_contrast(self.current, 0.99, 0)
         self.perform_updates(img)
 
     def clicked_swap_rg(self):
@@ -498,64 +495,75 @@ class MainProgram(QtWidgets.QMainWindow):
         win.show()
         win.exec_()
 
+    def clicked_pyramid_blending_loadfiles(self):
+        self.filenames_pyramidblend = self.get_filenames()
+        while len(self.filenames_pyramidblend) != 3 and len(self.filenames_pyramidblend) != 0: #program continues if user selects none or 2
+            error = 'Please load exactly three files.'
+            QtWidgets.QMessageBox.warning(self, 'Error loading files', error)
+            filenames = self.get_filenames()
 
+        if len(self.filenames_pyramidblend) == 0:
+            return
+
+        self.image0 = cv2.imread(self.filenames_pyramidblend[0])
+        self.image1 = cv2.imread(self.filenames_pyramidblend[1])
+        self.image2 = cv2.imread(self.filenames_pyramidblend[2])
+
+        self.clicked_pyramid_blending()
 
     def clicked_pyramid_blending(self):
-        Dialog = QtWidgets.QDialog()
-
-        ui__ = pyramidblending.Ui_Dialog()
-        ui__.setupUi(Dialog)
-        # Dialog.show()
-        # result = Dialog.exec_()
-
-
-        def get_filename(self):
-            print('get file name')
-            options = QtWidgets.QFileDialog.Options()
-            fileName, _ = QtWidgets.QFileDialog.getOpenFileName(self, "QFileDialog.getOpenFileName()", "",
-                                                                "All Files (*)",
-                                                                options=options)
-            self.image1_name = fileName
-
-        ui__.pushButton_browse_image1.clicked.connect(self.clicked_pyramid_blending.get_filename)
-
-        # image1_name = ui__.pushButton_browse_image1.clicked.connect(self.get_filename)
-        # image2_name = ui__.pushButton_browse_image2.clicked.connect(self.get_filename)
-        # mask_name = ui__.pushButton_browse_mask.clicked.connect(self.get_filename)
+        # filenames = self.get_filenames()
+        # while len(filenames) != 3 and len(filenames) != 0: #program continues if user selects none or 2
+        #     error = 'Please load exactly three files.'
+        #     QtWidgets.QMessageBox.warning(self, 'Error loading files', error)
+        #     filenames = self.get_filenames()
         #
-        # ui__.lineEdit_image1.setText(image1_name)
-        # ui__.lineEdit_image2.setText(image2_name)
-        # ui__.lineEdit_mask.setText(mask_name)
-
-        image1 = cv2.imread(self.image1_name)
-        # image2 = cv2.imread(image2_name)
-        # mask = cv2.imread(mask_name)
-
-        levels = int(ui__.spinBox_levels.text())
+        # if len(filenames) == 0:
+        #     return
+        #
+        # image0 = cv2.imread(filenames[0])
+        # image1 = cv2.imread(filenames[1])
+        # image2 = cv2.imread(filenames[2])
 
 
+
+        Dialog = QtWidgets.QDialog()
+        ui = pyramidblending_modified.Ui_Dialog()
+        ui.setupUi(Dialog)
+        ui.label_image0.setText('....' + self.filenames_pyramidblend[0][-30:])
+        ui.label_image1.setText('....' + self.filenames_pyramidblend[1][-30:])
+        ui.label_image2.setText('....' + self.filenames_pyramidblend[2][-30:])
         Dialog.show()
-        result = Dialog.exec()
+        result = Dialog.exec_()
+
+        if result and (ui.comboBox_image0.currentText() == ui.comboBox_image1.currentText() or \
+            ui.comboBox_image1.currentText() == ui.comboBox_image2.currentText() or \
+                ui.comboBox_image2.currentText() == ui.comboBox_image0.currentText()):
+            QtWidgets.QMessageBox.warning(self, 'Error', 'An image could either be Top, Bottom or Mask')
+            self.clicked_pyramid_blending()
 
 
-        # if result:
-        #     img = image_editor.blending_pyramids(image1, image2, mask, levels)
-        #     self.perform_updates(img)
+        levels = int(ui.spinBox_levels.text())
+
+        choice_dict = {ui.comboBox_image0.currentText(): self.image0,
+                       ui.comboBox_image1.currentText(): self.image1,
+                       ui.comboBox_image2.currentText(): self.image2}
+
+        img = image_editor.blending_pyramids(choice_dict['Top'], choice_dict['Bottom'], choice_dict['Mask'], levels)
+        self.perform_updates(img)
+
 
     def get_filenames(self):
         filenames, _ = QtWidgets.QFileDialog.getOpenFileNames(self, 'Load two images only', '', )
         print(filenames)
-        # print(_)
         return filenames
 
     def clicked_alpha_blending(self):
         filenames = self.get_filenames()
-
         while len(filenames) != 2 and len(filenames) != 0: #program continues if user selects none or 2
             error = 'Please load exactly two files.'
             QtWidgets.QMessageBox.warning(self, 'Error loading files', error)
             filenames = self.get_filenames()
-
 
         if len(filenames) == 0:
             return
@@ -579,8 +587,19 @@ class MainProgram(QtWidgets.QMainWindow):
             self.perform_updates(img)
 
 
+    def resize_image(self):
+        Dialog = QtWidgets.QDialog()
+        ui = resize_ui.Ui_Dialog_resize()
+        ui.setupUi(Dialog)
+        Dialog.show()
+        result = Dialog.exec_()
 
+        h = ui.doubleSpinBox_height.text()
+        w = ui.doubleSpinBox_width.text()
 
+        if result:
+            img = image_editor.resize_image(self.current, w, h)
+            self.perform_updates(img)
 
 if __name__ == '__main__':
     app = QtWidgets.QApplication([])

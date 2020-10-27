@@ -9,12 +9,14 @@ from matplotlib.backends.backend_agg import FigureCanvas
 
 np.set_printoptions(threshold=sys.maxsize)
 
+def brightness_contrast(image, contrast, brightness):
+    return cv2.addWeighted(image, contrast, image, 0, brightness)
 
-def brightness_up(image, contrast, brightness):
-    return contrast * image + brightness
-
-def brightness_down(image, contrast, brightness):
-    return contrast * image - brightness
+# def brightness_up(image, contrast, brightness):
+#     return contrast * image + brightness
+#
+# def brightness_down(image, contrast, brightness):
+#     return contrast * image - brightness
 
 def swap_bg(image):
     image[:,:,[0,1]] = image[:,:,[1,0]]
@@ -86,14 +88,26 @@ def convert_to_bw(image):
     else: #if image has one channel just return the same
         return image
 
-def resize_down(image,w, h):
-    w_step = 100 / w
-    h_step = 100 / h
-    image[:, :, 0] = image[::h_step,::w_step,0]
-    image[:, :, 1] = image[::h_step, ::w_step, 1]
-    image[:, :, 2] = image[::h_step, ::w_step, 2]
+# def resize_down(image,w, h):
+#     w_step = 100 / w
+#     h_step = 100 / h
+#     image[:, :, 0] = image[::h_step,::w_step,0]
+#     image[:, :, 1] = image[::h_step, ::w_step, 1]
+#     image[:, :, 2] = image[::h_step, ::w_step, 2]
+#
+#     return image
 
-    return image
+def resize_image(image, fx, fy):
+    fx=float(fx)
+    fy=float(fy)
+
+    if fx < 1 or fy < 1:
+        interpolation_method = cv2.INTER_AREA
+    else:
+        interpolation_method = cv2.INTER_LINEAR
+
+    return cv2.resize(image, None, fx=fx, fy=fy, interpolation=interpolation_method)
+
 
 def mirror(image):
     return np.fliplr(image)

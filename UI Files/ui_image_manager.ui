@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>968</width>
+    <width>1290</width>
     <height>764</height>
    </rect>
   </property>
@@ -32,7 +32,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>968</width>
+     <width>1290</width>
      <height>26</height>
     </rect>
    </property>
@@ -49,7 +49,7 @@
     <property name="title">
      <string>Size/Position</string>
     </property>
-    <addaction name="actionReduce_Size"/>
+    <addaction name="actionResize"/>
     <addaction name="actionMirror"/>
     <addaction name="actionFlip_Upside_Down"/>
     <addaction name="actionRotate"/>
@@ -155,7 +155,7 @@
    <addaction name="actionUndo"/>
    <addaction name="actionRedo"/>
    <addaction name="separator"/>
-   <addaction name="actionReduce_Size"/>
+   <addaction name="actionResize"/>
    <addaction name="actionMirror"/>
    <addaction name="actionFlip_Upside_Down"/>
    <addaction name="actionRotate"/>
@@ -224,14 +224,14 @@
     <string>Exit</string>
    </property>
   </action>
-  <action name="actionReduce_Size">
+  <action name="actionResize">
    <property name="icon">
     <iconset>
-     <normalon>:/icon_/decrease.png</normalon>
+     <normalon>:/icon_/resize.png</normalon>
     </iconset>
    </property>
    <property name="text">
-    <string>Reduce Size</string>
+    <string>Resize</string>
    </property>
   </action>
   <action name="actionMirror">

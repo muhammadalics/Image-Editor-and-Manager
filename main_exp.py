@@ -80,4 +80,7 @@ image = cv2.imread('test.jpg', 1)
 # img = image_editor.extract_color(image, '255, 255, 255')
 # cv2.imwrite('extracted_color.png', img)
 
-image_editor.image_histogram(image)
+img = image_editor.brightness_up(image, 1.1, 0)
+cv2.imwrite('contrast.png', img)
+
+# image_editor.image_histogram(image)
