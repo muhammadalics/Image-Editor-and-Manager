@@ -22,6 +22,7 @@ import verticalnoisebands
 import horizontalnoisebands
 import extractcolor
 import addborder
+import image_histogram
 
 class MainProgram(QtWidgets.QMainWindow):
 
@@ -58,10 +59,11 @@ class MainProgram(QtWidgets.QMainWindow):
         self.ui.actionExtract_Color.triggered.connect(self.clicked_extract_color)
         self.ui.actionAdd_Border.triggered.connect(self.clicked_add_border)
         self.ui.actionHistogram_Equalization.triggered.connect(self.clicked_histogramequalization)
+        self.ui.actionImage_Histogram.triggered.connect(self.clicked_image_histogram)
+
+
         self.ui.actionUndo.triggered.connect(self.clicked_undo)
         self.ui.actionRedo.triggered.connect(self.clicked_redo)
-
-
         self.original = None #Original Image
         self.current = None # this is the image in progress
         self.redo = None
@@ -90,7 +92,7 @@ class MainProgram(QtWidgets.QMainWindow):
                                       copyofcurrent.shape[1],
                                       copyofcurrent.shape[0],
                                       copyofcurrent.shape[1]*3,
-                                      QtGui.QImage.Format_BGR888)#.QtGui.QImage.rgbSwapped()
+                                      QtGui.QImage.Format_BGR888) #QtGui.QImage.Format_BGR888)
 
         elif len(self.current.shape) == 2: #for color images
             print('here')
@@ -104,6 +106,7 @@ class MainProgram(QtWidgets.QMainWindow):
 
         self.updated_pic = QtGui.QPixmap(self.updated_pic)
         self.ui.label_imagebox.setPixmap(self.updated_pic)
+
 
     def clicked_undo(self):
         if self.counter_redo == self.counter_undo:
@@ -124,7 +127,7 @@ class MainProgram(QtWidgets.QMainWindow):
         fileName, _ = QtWidgets.QFileDialog.getOpenFileName(self, "QFileDialog.getOpenFileName()", "", "All Files (*)",
                                                   options=options)
 
-        self.original = cv2.imread(fileName)
+        self.original = cv2.imread(fileName)#.astype(np.float32)
         self.update_current(self.original)
         print(self.original.dtype)
 
@@ -401,12 +404,12 @@ class MainProgram(QtWidgets.QMainWindow):
 
     def clicked_horizontal_noise_bands(self):
         Dialog = QtWidgets.QDialog()
-        ui = horizontalnoisebands.Ui_Dialog_noiseband_horizontal()
+        ui = horizontalnoisebands.Ui_Dialog_horizontalnoise()
         ui.setupUi(Dialog)
         Dialog.show()
         result = Dialog.exec_()
 
-        img = image_editor.band_noise_vertical(self.current, ui.spinBox_width.text(), ui.spinBox_period.text(), ui.spinBox_magnitude.text())
+        img = image_editor.band_noise_horizontal(self.current, ui.spinBox_width.text(), ui.spinBox_period.text(), ui.spinBox_magnitude.text())
         # self.update_current(img)
         # self.update_imagebox()
         self.perform_updates(img)
@@ -449,10 +452,30 @@ class MainProgram(QtWidgets.QMainWindow):
         # self.update_imagebox()
         self.perform_updates(img)
 
+    def clicked_image_histogram(self):
+        img = image_editor.image_histogram(self.current)
+        # img[:,:,[0,3]] = img[:,:,[3,0]]
+        print(img[:,:,0].max())
+        print(img[:, :, 1].max())
+        print(img[:, :, 2].max())
+        print(img[:, :, 3].max())
+        print(img.dtype)
+        # img[:,:,3] = np.ones_like(img[:,:,3]) * 255
 
+        win = QtWidgets.QDialog()
+        ui_ = image_histogram.Ui_Dialog()
+        ui_.setupUi(win)
 
+        hist_ = QtGui.QImage(img.data,
+                            img.shape[1],
+                            img.shape[0],
+                            img.shape[1]*4,
+                            QtGui.QImage.Format_RGBX8888)
 
-
+        hist = QtGui.QPixmap(hist_)
+        ui_.label_hist.setPixmap(hist)
+        win.show()
+        win.exec_()
 
 if __name__ == '__main__':
     app = QtWidgets.QApplication([])

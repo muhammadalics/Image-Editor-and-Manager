@@ -3,7 +3,10 @@ import numpy as np
 import sys
 import scipy.ndimage
 import random
-import ast
+import matplotlib.pyplot as plt
+from matplotlib.figure import Figure
+from matplotlib.backends.backend_agg import FigureCanvas
+
 np.set_printoptions(threshold=sys.maxsize)
 
 
@@ -25,14 +28,56 @@ def swap_rb(image):
     image[:,:,[0,2]] = image[:,:,[2,0]]
     return image
 
+def image_histogram(image):
+    plt.style.use('ggplot')
+
+    fig = Figure()
+    canvas = FigureCanvas(fig)
+    ax = fig.subplots()
+    ax.margins(x=0)
+
+    if len(image.shape) == 3:
+        # hist_b, bins_b, hist_g, bins_g, hist_r, bins_r = hist_color(image)
+        # plt.plot(bins_b, hist_b, color='blue')
+        # plt.plot(bins_g, hist_g, color='green')
+        # plt.plot(bins_r, hist_r, color='red')
+        # plt.show()
+        ax.hist(image[:,:,0].flatten(), np.arange(256), color='blue', label='blue', histtype='step', linewidth=1)
+        ax.hist(image[:, :, 1].flatten(), np.arange(256), color='green', label='green', histtype='step', linewidth=1)
+        ax.hist(image[:, :, 2].flatten(), np.arange(256), color='red', label='red', histtype='step', linewidth=1)
+        ax.set_xlabel('Intensity')
+        ax.set_ylabel('Count')
+        ax.set_xticks([0,51,51*2,51*3,51*4, 51*5])
+        canvas.draw()
+        histogram_image = np.array(canvas.renderer.buffer_rgba())
+        print(histogram_image.shape)
+        # histogram_image[:,:, [0,2]] = histogram_image[:,:, [2,0]] #histogram_image is being converted to BGR
+
+    else:
+        # hist, bins = hist_bw(image)
+        # plt.plot(bins, hist)
+        # plt.show()
+        ax.hist(image.flatten(), np.arange(256), histtype='step', linewidth=1, color='black')
+        ax.set_xlabel('Intensity')
+        ax.set_ylabel('Count')
+        ax.set_xticks([0,51,51*2,51*3,51*4, 51*5])
+        canvas.draw()
+        histogram_image = np.array(canvas.renderer.buffer_rgba())
+
+    cv2.imwrite('hist.png', histogram_image)
+
+    return histogram_image
+
+
+
 def hist_color(image):
-    hist_b, bins_b = np.histogram(image[:, :, 0])
-    hist_g, bins_g = np.histogram(image[:, :, 1])
-    hist_r, bins_r = np.histogram(image[:, :, 2])
+    hist_b, bins_b = np.histogram(image[:, :, 0], bins=255, range=(0,256))
+    hist_g, bins_g = np.histogram(image[:, :, 1], bins=255, range=(0,256))
+    hist_r, bins_r = np.histogram(image[:, :, 2], bins=255, range=(0,256))
     return hist_b, bins_b, hist_g, bins_g, hist_r, bins_r
 
 def hist_bw(image):
-    hist, bins = np.histogram(image)
+    hist, bins = np.histogram(image, bins=255, range=(0,256))
     return hist, bins
 
 def convert_to_bw(image):
