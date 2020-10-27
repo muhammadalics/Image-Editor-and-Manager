@@ -1,3 +1,5 @@
+from PyQt5.QtCore import pyqtSlot
+
 from main_gui import Ui_MainWindow
 
 from PyQt5 import QtWidgets
@@ -23,6 +25,8 @@ import horizontalnoisebands
 import extractcolor
 import addborder
 import image_histogram
+import pyramidblending
+import alphablending
 
 class MainProgram(QtWidgets.QMainWindow):
 
@@ -60,7 +64,9 @@ class MainProgram(QtWidgets.QMainWindow):
         self.ui.actionAdd_Border.triggered.connect(self.clicked_add_border)
         self.ui.actionHistogram_Equalization.triggered.connect(self.clicked_histogramequalization)
         self.ui.actionImage_Histogram.triggered.connect(self.clicked_image_histogram)
-
+        self.ui.actionSave.triggered.connect(self.clicked_save)
+        self.ui.actionPyramid.triggered.connect(self.clicked_pyramid_blending)
+        self.ui.actionAlpha.triggered.connect(self.clicked_alpha_blending)
 
         self.ui.actionUndo.triggered.connect(self.clicked_undo)
         self.ui.actionRedo.triggered.connect(self.clicked_redo)
@@ -122,10 +128,19 @@ class MainProgram(QtWidgets.QMainWindow):
             self.update_imagebox()
             self.counter_redo += 1
 
-    def clicked_open(self):
+    def get_filename(self):
+        print('get file name')
         options = QtWidgets.QFileDialog.Options()
         fileName, _ = QtWidgets.QFileDialog.getOpenFileName(self, "QFileDialog.getOpenFileName()", "", "All Files (*)",
                                                   options=options)
+        return fileName
+
+    def clicked_open(self):
+        # options = QtWidgets.QFileDialog.Options()
+        # fileName, _ = QtWidgets.QFileDialog.getOpenFileName(self, "QFileDialog.getOpenFileName()", "", "All Files (*)",
+        #                                           options=options)
+
+        fileName = self.get_filename()
 
         self.original = cv2.imread(fileName)#.astype(np.float32)
         self.update_current(self.original)
@@ -133,6 +148,12 @@ class MainProgram(QtWidgets.QMainWindow):
 
         self.pixmap = QtGui.QPixmap(fileName)
         self.ui.label_imagebox.setPixmap(self.pixmap)
+
+    def clicked_save(self):
+        filePath, _ = QtWidgets.QFileDialog.getSaveFileName(self, "Save Image", "",
+                         "PNG(*.png);;JPEG(*.jpg *.jpeg);;All Files(*.*) ")
+
+        self.updated_pic.save(filePath)
 
     def clicked_mirror(self):
         img = image_editor.mirror(self.current)
@@ -476,6 +497,90 @@ class MainProgram(QtWidgets.QMainWindow):
         ui_.label_hist.setPixmap(hist)
         win.show()
         win.exec_()
+
+
+
+    def clicked_pyramid_blending(self):
+        Dialog = QtWidgets.QDialog()
+
+        ui__ = pyramidblending.Ui_Dialog()
+        ui__.setupUi(Dialog)
+        # Dialog.show()
+        # result = Dialog.exec_()
+
+
+        def get_filename(self):
+            print('get file name')
+            options = QtWidgets.QFileDialog.Options()
+            fileName, _ = QtWidgets.QFileDialog.getOpenFileName(self, "QFileDialog.getOpenFileName()", "",
+                                                                "All Files (*)",
+                                                                options=options)
+            self.image1_name = fileName
+
+        ui__.pushButton_browse_image1.clicked.connect(self.clicked_pyramid_blending.get_filename)
+
+        # image1_name = ui__.pushButton_browse_image1.clicked.connect(self.get_filename)
+        # image2_name = ui__.pushButton_browse_image2.clicked.connect(self.get_filename)
+        # mask_name = ui__.pushButton_browse_mask.clicked.connect(self.get_filename)
+        #
+        # ui__.lineEdit_image1.setText(image1_name)
+        # ui__.lineEdit_image2.setText(image2_name)
+        # ui__.lineEdit_mask.setText(mask_name)
+
+        image1 = cv2.imread(self.image1_name)
+        # image2 = cv2.imread(image2_name)
+        # mask = cv2.imread(mask_name)
+
+        levels = int(ui__.spinBox_levels.text())
+
+
+        Dialog.show()
+        result = Dialog.exec()
+
+
+        # if result:
+        #     img = image_editor.blending_pyramids(image1, image2, mask, levels)
+        #     self.perform_updates(img)
+
+    def get_filenames(self):
+        filenames, _ = QtWidgets.QFileDialog.getOpenFileNames(self, 'Load two images only', '', )
+        print(filenames)
+        # print(_)
+        return filenames
+
+    def clicked_alpha_blending(self):
+        filenames = self.get_filenames()
+
+        while len(filenames) != 2 and len(filenames) != 0: #program continues if user selects none or 2
+            error = 'Please load exactly two files.'
+            QtWidgets.QMessageBox.warning(self, 'Error loading files', error)
+            filenames = self.get_filenames()
+
+
+        if len(filenames) == 0:
+            return
+
+        image1 = cv2.imread(filenames[0])
+        image2 = cv2.imread(filenames[1])
+
+        if image1.shape != image2.shape:
+            QtWidgets.QMessageBox.warning(self, 'Cannot blend files', 'Images are not the same shape.')
+            return
+
+        Dialog = QtWidgets.QDialog()
+        ui = alphablending.Ui_Dialog_alphablending()
+        ui.setupUi(Dialog)
+        Dialog.show()
+        result = Dialog.exec_()
+
+        if result:
+            alpha= float(ui.doubleSpinBox_alpha.text())
+            img = image_editor.blend_images_color(image1, image2, alpha)
+            self.perform_updates(img)
+
+
+
+
 
 if __name__ == '__main__':
     app = QtWidgets.QApplication([])
