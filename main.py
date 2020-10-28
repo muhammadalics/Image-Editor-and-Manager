@@ -573,21 +573,6 @@ class MainProgram(QtWidgets.QMainWindow):
         self.clicked_pyramid_blending()
 
     def clicked_pyramid_blending(self):
-        # filenames = self.get_filenames()
-        # while len(filenames) != 3 and len(filenames) != 0: #program continues if user selects none or 2
-        #     error = 'Please load exactly three files.'
-        #     QtWidgets.QMessageBox.warning(self, 'Error loading files', error)
-        #     filenames = self.get_filenames()
-        #
-        # if len(filenames) == 0:
-        #     return
-        #
-        # image0 = cv2.imread(filenames[0])
-        # image1 = cv2.imread(filenames[1])
-        # image2 = cv2.imread(filenames[2])
-
-
-
         Dialog = QtWidgets.QDialog()
         ui = pyramidblending_modified.Ui_Dialog()
         ui.setupUi(Dialog)
@@ -601,7 +586,7 @@ class MainProgram(QtWidgets.QMainWindow):
             ui.comboBox_image1.currentText() == ui.comboBox_image2.currentText() or \
                 ui.comboBox_image2.currentText() == ui.comboBox_image0.currentText()):
             QtWidgets.QMessageBox.warning(self, 'Error', 'An image could either be Top, Bottom or Mask')
-            self.clicked_pyramid_blending()
+            return self.clicked_pyramid_blending()
 
 
         levels = int(ui.spinBox_levels.text())
