@@ -122,7 +122,8 @@ def flip_upsidedown(image):
 def rotate_image(image):
     return np.rot90(image)
 
-def replace_color(image, color_to_replace, target_color, operator):
+def replace_color(image_, color_to_replace, target_color, operator):
+    image = image_.copy()
     color_to_replace = color_to_replace.split(sep=',')
     color_to_replace = [int(x) for x in color_to_replace]
 
@@ -612,9 +613,11 @@ def saltnpepper_noise_single_channel(image, amount, lower_threshold, upper_thres
     return flatimage
 
 
-def dither(image, n):
+def dither(image_, n):
     # Implements ordered dithering using a 2x2 matrix as described in https://en.wikipedia.org/wiki/Ordered_dithering
     # M = np.array([[0, 0.5], [0.75, 0.25]])
+
+    image = image_.copy()
 
     n = int(n)
 

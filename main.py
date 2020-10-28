@@ -143,11 +143,12 @@ class MainProgram(QtWidgets.QMainWindow):
             self.update_imagebox()
             self.counter_redo += 1
 
-    def get_filename(self):
+    def get_filename(self, msg):
         print('get file name')
         options = QtWidgets.QFileDialog.Options()
-        fileName, _ = QtWidgets.QFileDialog.getOpenFileName(self, "QFileDialog.getOpenFileName()", "", "All Files (*)",
+        fileName, _ = QtWidgets.QFileDialog.getOpenFileName(self, msg, "", "All Files (*)",
                                                   options=options)
+
 
         return fileName
 
@@ -156,7 +157,7 @@ class MainProgram(QtWidgets.QMainWindow):
         # fileName, _ = QtWidgets.QFileDialog.getOpenFileName(self, "QFileDialog.getOpenFileName()", "", "All Files (*)",
         #                                           options=options)
 
-        fileName = self.get_filename()
+        fileName = self.get_filename('Load image')
 
         if len(fileName) == 0:
             return
@@ -251,9 +252,8 @@ class MainProgram(QtWidgets.QMainWindow):
             self.perform_updates(img)
 
     def clicked_negative(self):
+        if self.check_canvas() == None: return
         img = image_editor.negative_color_picture(self.current)
-        # self.update_current(img)
-        # self.update_imagebox()
         self.perform_updates(img)
 
     def clicked_converttobw(self):
@@ -262,11 +262,12 @@ class MainProgram(QtWidgets.QMainWindow):
         self.perform_updates(img)
 
     def clicked_replacecolor(self):
+        if self.check_canvas() == None: return
         Dialog_replacecolor = QtWidgets.QDialog()
         dialog = replace_color.Ui_Dialog_replacecolor()
         dialog.setupUi(Dialog_replacecolor)
         Dialog_replacecolor.show()
-        Dialog_replacecolor.exec_()
+        result = Dialog_replacecolor.exec_()
 
         if dialog.radioButton_greater.isChecked():
             operator = '>'
@@ -275,11 +276,8 @@ class MainProgram(QtWidgets.QMainWindow):
         else:
             operator ='='
 
-        if Dialog_replacecolor.accept:
+        if result:
             img = image_editor.replace_color(self.current, dialog.lineEdit.text(), dialog.lineEdit_2.text(), operator)
-            print(dialog.lineEdit.text())
-            # self.update_current(img)
-            # self.update_imagebox()
             self.perform_updates(img)
 
     def clicked_blur_median(self):
@@ -359,16 +357,16 @@ class MainProgram(QtWidgets.QMainWindow):
             self.perform_updates(img)
 
     def clicked_intensity_map(self):
+        if self.check_canvas() == None: return
         Dialog = QtWidgets.QDialog()
         ui = heatmap.Ui_Dialog_heatmap()
         ui.setupUi(Dialog)
         Dialog.show()
         result = Dialog.exec_()
 
-        img = image_editor.intensity_map(self.current, ui.comboBox_heatmap.currentText())
-        # self.update_current(img)
-        # self.update_imagebox()
-        self.perform_updates(img)
+        if result:
+            img = image_editor.intensity_map(self.current, ui.comboBox_heatmap.currentText())
+            self.perform_updates(img)
 
     def clicked_pixelate(self):
         if self.check_canvas() == None: return
@@ -385,42 +383,43 @@ class MainProgram(QtWidgets.QMainWindow):
             self.perform_updates(img)
 
     def clicked_cartoonify(self):
+        if self.check_canvas() == None: return
         Dialog = QtWidgets.QDialog()
         ui = cartoonify.Ui_Dialog_cartoonify()
         ui.setupUi(Dialog)
         Dialog.show()
         result = Dialog.exec_()
 
-        img = image_editor.cartoonify(self.current, ui.spinBox_thresh1.text(), ui.spinBox_thresh2.text())
-        # self.update_current(img)
-        # self.update_imagebox()
-        self.perform_updates(img)
+        if result:
+            img = image_editor.cartoonify(self.current, ui.spinBox_thresh1.text(), ui.spinBox_thresh2.text())
+            self.perform_updates(img)
 
     def clicked_gamma(self):
+        if self.check_canvas() == None: return
         Dialog = QtWidgets.QDialog()
         ui = gamma.Ui_Dialog()
         ui.setupUi(Dialog)
         Dialog.show()
         result = Dialog.exec_()
 
-        img = image_editor.gamma_correction(self.current, ui.doubleSpinBox_gamma.text())
-        # self.update_current(img)
-        # self.update_imagebox()
-        self.perform_updates(img)
+        if result:
+            img = image_editor.gamma_correction(self.current, ui.doubleSpinBox_gamma.text())
+            self.perform_updates(img)
 
     def clicked_dither(self):
+        if self.check_canvas() == None: return
         Dialog = QtWidgets.QDialog()
         ui = dither.Ui_Dialog_dither()
         ui.setupUi(Dialog)
         Dialog.show()
         result = Dialog.exec_()
 
-        img = image_editor.dither(self.current, ui.spinBox_order.text())
-        # self.update_current(img)
-        # self.update_imagebox()
-        self.perform_updates(img)
+        if result:
+            img = image_editor.dither(self.current, ui.spinBox_order.text())
+            self.perform_updates(img)
 
     def clicked_canny(self):
+        if self.check_canvas() == None: return
         Dialog = QtWidgets.QDialog()
         ui = canny.Ui_Dialog_canny()
         ui.setupUi(Dialog)
@@ -438,10 +437,8 @@ class MainProgram(QtWidgets.QMainWindow):
             QtWidgets.QMessageBox.warning(self, 'Error', error)
             self.clicked_canny()
 
-        else:
+        elif result:
             img = image_editor.edge_detection(self.current, ui.spinBox_thresh1.text(), ui.spinBox_thresh2.text(), ui.spinBox_kernelsize.text(), ui.comboBox.currentText())
-            # self.update_current(img)
-            # self.update_imagebox()
             self.perform_updates(img)
 
     def clicked_gaussian_noise(self):
@@ -488,16 +485,16 @@ class MainProgram(QtWidgets.QMainWindow):
             self.perform_updates(img)
 
     def clicked_extract_color(self):
+        if self.check_canvas() == None: return
         Dialog = QtWidgets.QDialog()
         ui = extractcolor.Ui_Dialog_extractcolor()
         ui.setupUi(Dialog)
         Dialog.show()
         result = Dialog.exec_()
 
-        img = image_editor.extract_color(self.current, ui.lineEdit_extractcolor.text())
-        # self.update_current(img)
-        # self.update_imagebox()
-        self.perform_updates(img)
+        if result:
+            img = image_editor.extract_color(self.current, ui.lineEdit_extractcolor.text())
+            self.perform_updates(img)
 
     def clicked_add_border(self):
         if self.check_canvas() == None: return
@@ -529,9 +526,8 @@ class MainProgram(QtWidgets.QMainWindow):
 
 
     def clicked_histogramequalization(self):
+        if self.check_canvas() == None: return
         img = image_editor.histogram_equalization_bw(self.current)
-        # self.update_current(img)
-        # self.update_imagebox()
         self.perform_updates(img)
 
     def clicked_image_histogram(self):
@@ -561,11 +557,11 @@ class MainProgram(QtWidgets.QMainWindow):
         win.exec_()
 
     def clicked_pyramid_blending_loadfiles(self):
-        self.filenames_pyramidblend = self.get_filenames()
+        self.filenames_pyramidblend = self.get_filenames('Load three images: two for blending and one mask')
         while len(self.filenames_pyramidblend) != 3 and len(self.filenames_pyramidblend) != 0: #program continues if user selects none or 2
             error = 'Please load exactly three files.'
             QtWidgets.QMessageBox.warning(self, 'Error loading files', error)
-            filenames = self.get_filenames()
+            self.filenames_pyramidblend = self.get_filenames('Load three images: two for blending and one mask')
 
         if len(self.filenames_pyramidblend) == 0:
             return
@@ -614,21 +610,23 @@ class MainProgram(QtWidgets.QMainWindow):
                        ui.comboBox_image1.currentText(): self.image1,
                        ui.comboBox_image2.currentText(): self.image2}
 
-        img = image_editor.blending_pyramids(choice_dict['Top'], choice_dict['Bottom'], choice_dict['Mask'], levels)
-        self.perform_updates(img)
+        if result:
+            img = image_editor.blending_pyramids(choice_dict['Top'], choice_dict['Bottom'], choice_dict['Mask'], levels)
+            cv2.imwrite('saved_image.png',img)
+            self.perform_updates(img)
 
 
-    def get_filenames(self):
-        filenames, _ = QtWidgets.QFileDialog.getOpenFileNames(self, 'Load two images only', '', )
+    def get_filenames(self, msg):
+        filenames, _ = QtWidgets.QFileDialog.getOpenFileNames(self, msg, '', )
         print(filenames)
         return filenames
 
     def clicked_alpha_blending(self):
-        filenames = self.get_filenames()
+        filenames = self.get_filenames('Load two images only')
         while len(filenames) != 2 and len(filenames) != 0: #program continues if user selects none or 2
             error = 'Please load exactly two files.'
             QtWidgets.QMessageBox.warning(self, 'Error loading files', error)
-            filenames = self.get_filenames()
+            filenames = self.get_filenames('Load two images only')
 
         if len(filenames) == 0:
             return
@@ -649,7 +647,8 @@ class MainProgram(QtWidgets.QMainWindow):
         if result:
             alpha= float(ui.doubleSpinBox_alpha.text())
             img = image_editor.blend_images(image1, image2, alpha)
-            self.perform_updates(img)
+            self.perform_updates(img.astype(np.uint8))
+
 
 
     def resize_image(self):
@@ -678,11 +677,15 @@ class MainProgram(QtWidgets.QMainWindow):
         self.perform_updates(img)
 
     def clicked_apply_mask(self):
-        filename = self.get_filename()
+        if self.check_canvas() == None: return 1
+        filename = self.get_filename('Load mask image')
+        if len(filename) == 0:
+            return
+
         mask = cv2.imread(filename, 0)
 
         if (self.current.shape[0], self.current.shape[1])  != (mask.shape[0], mask.shape[1]):
-            QtWidgets.QMessageBox.Warning(self, "Can't apply mask", 'Images are not the same shape.')
+            QtWidgets.QMessageBox.warning(self, "Can't apply mask", 'Images are not the same shape.')
             return
 
         if len(self.current.shape) > 2:
