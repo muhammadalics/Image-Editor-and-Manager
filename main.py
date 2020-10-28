@@ -453,7 +453,7 @@ class MainProgram(QtWidgets.QMainWindow):
             img = image_editor.add_Gaussian_noise(self.current, ui.doubleSpinBox_sigma.text(), ui.comboBox_channel.currentText())
             # self.update_current(img)
             # self.update_imagebox()
-            self.perform_updates(img)
+            self.perform_updates(img.astype(np.uint8))
 
     def clicked_vertical_noise_bands(self):
         if self.check_canvas() == None: return
