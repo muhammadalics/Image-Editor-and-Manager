@@ -8,8 +8,13 @@ The image editor can do the following:
 3. Display color histograms.
 4. Convert color image to black and white
 5. Resize
-6. Mirror
-7. Flip upside down
+### Mirror
+
+![Mirror](https://github.com/muhammadalics/Image-Manager-and-Editor/blob/main/Images%20for%20ReadMe/mirror.gif)
+
+### Flip upside down
+![Flip](https://github.com/muhammadalics/Image-Manager-and-Editor/blob/main/Images%20for%20ReadMe/flip.gif)
+
 8. Rotate
 9. Replace color
 10. Perform following blurs:
