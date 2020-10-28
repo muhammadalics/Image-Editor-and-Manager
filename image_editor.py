@@ -142,21 +142,24 @@ def replace_color(image_, color_to_replace, target_color, operator):
     print('returning')
     return image
 
-def avg_blur(image, k, times):
+def avg_blur(image_, k, times):
+    image = image_.copy()
     k=int(k)
     times=int(times)
     for i in range(times):
         image = cv2.blur(image, (k,k))
     return image
 
-def gaussian_blur(image, k, times):
+def gaussian_blur(image_, k, times):
+    image = image_.copy()
     k=int(k)
     times=int(times)
     for i in range(times):
         image = cv2.GaussianBlur(image, (k,k), 0)
     return image
 
-def median_blur(image, k, times):
+def median_blur(image_, k, times):
+    image = image_.copy()
     k=int(k)
     times=int(times)
     for i in range(times):
@@ -250,8 +253,9 @@ def edge_detection(image, threshold1, threshold2, kernelsize, L2grad):
     edges = cv2.Canny(image, threshold1, threshold2, apertureSize=kernelsize, L2gradient=L2grad)
     return edges
 
-def cartoonify(image, thresh1, thresh2):
+def cartoonify(image_, thresh1, thresh2):
     # https: // stacks.stanford.edu / file / druid: yt916dh6570 / Dade_Toonify.pdf
+    image = image_.copy()
     thresh1 = int(thresh1)
     thresh2 = int(thresh2)
     if len(image.shape) ==3:

@@ -1,5 +1,6 @@
 <RCC>
   <qresource prefix="icon_">
+    <file>cam.png</file>
     <file>canny.png</file>
     <file>flip.png</file>
     <file>stretch.png</file>
@@ -11,7 +12,6 @@
     <file>hist.png</file>
     <file>heatmap.png</file>
     <file>replace_color.png</file>
-    <file>mask.png</file>
     <file>neg.png</file>
     <file>gamma_correction.png</file>
     <file>cartoonify.png</file>
@@ -25,6 +25,7 @@
     <file>swap-blue-red.png</file>
     <file>swap-green-blue.png</file>
     <file>swap-red-green.png</file>
+    <file>mask_button.png</file>
     <file>brightness_down.png</file>
     <file>blur-average.png</file>
     <file>bw.png</file>

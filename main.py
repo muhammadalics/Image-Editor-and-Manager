@@ -28,6 +28,7 @@ import image_histogram
 import pyramidblending_modified
 import alphablending
 import resize_ui
+import sys
 
 class MainProgram(QtWidgets.QMainWindow):
 
@@ -71,6 +72,7 @@ class MainProgram(QtWidgets.QMainWindow):
         self.ui.actionResize.triggered.connect(self.resize_image)
         self.ui.actionRotate.triggered.connect(self.clicked_rotate_image)
         self.ui.actionApply_Mask.triggered.connect(self.clicked_apply_mask)
+        self.ui.actionExit.triggered.connect(self.clicked_exit)
 
         self.ui.actionUndo.triggered.connect(self.clicked_undo)
         self.ui.actionRedo.triggered.connect(self.clicked_redo)
@@ -94,6 +96,9 @@ class MainProgram(QtWidgets.QMainWindow):
 
     # def update_for_redo(self):
     #     self.redo_image = self.current
+
+    def clicked_exit(self):
+        sys.exit()
 
     def update_current(self, image):
         self.current = image
