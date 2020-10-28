@@ -558,7 +558,11 @@ def band_noise_horizontal(image_, width, period, magnitude):
 
     bands = noise_bands(image, width, period, 'horizontal')
     print(bands)
-    image[bands, :, :] = image[bands, :, :] + magnitude
+    if len(image.shape) > 2:
+        image[bands, :, :] = image[bands, :, :] + magnitude
+    else:
+        image[bands, :] = image[bands, :] + magnitude
+
     return image
 
 def band_noise_vertical(image_, width, period, magnitude):
@@ -568,7 +572,11 @@ def band_noise_vertical(image_, width, period, magnitude):
     magnitude = int(magnitude)
 
     bands = noise_bands(image, width, period, 'vertical')
-    image[:, bands, :] = image[:, bands, :] + magnitude
+    if len(image.shape) > 2:
+        image[:, bands, :] = image[:, bands, :] + magnitude
+    else:
+        image[:, bands] = image[:, bands] + magnitude
+
     return image
 
 def saltnpepper_noise_single_channel(image, amount, lower_threshold, upper_threshold):
