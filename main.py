@@ -485,23 +485,32 @@ class MainProgram(QtWidgets.QMainWindow):
         self.perform_updates(img)
 
     def clicked_add_border(self):
+        if self.check_canvas() == None: return
         Dialog = QtWidgets.QDialog()
         ui = addborder.Ui_Dialog_addborder()
         ui.setupUi(Dialog)
         Dialog.show()
         result = Dialog.exec_()
 
-        img = image_editor.add_border(self.current,
-                                      top=ui.spinBox_top.text(),
-                                      bottom=ui.spinBox_bottom.text(),
-                                      left=ui.spinBox_left.text(),
-                                      right=ui.spinBox_right.text(),
-                                      bordertype=ui.comboBox.currentText(),
-                                      value=ui.spinBox_top.text())
+        if result:
+            top = int(ui.spinBox_top.text())
+            bottom = int(ui.spinBox_bottom.text())
+            left = int(ui.spinBox_left.text())
+            right = int(ui.spinBox_right.text())
+            value = [int(ui.spinBox_blue.text()), int(ui.spinBox_green.text()), int(ui.spinBox_red.text())]
 
-        # self.update_current(img)
-        # self.update_imagebox()
-        self.perform_updates(img)
+            if top == 0 and bottom ==0 and left ==0 and right ==0:
+                return
+
+            img = image_editor.add_border(self.current,
+                                          top=top,
+                                          bottom=bottom,
+                                          left=left,
+                                          right=right,
+                                          bordertype=ui.comboBox.currentText(),
+                                          value=value)
+
+            self.perform_updates(img)
 
 
     def clicked_histogramequalization(self):

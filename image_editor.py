@@ -158,19 +158,17 @@ def median_blur(image, k, times):
         image = cv2.medianBlur(image, k)
     return image
 
-def add_border(image, top=0, bottom=0, left=0, right=0, bordertype=cv2.BORDER_CONSTANT, value=0):
-    top =int(top)
-    bottom=int(bottom)
-    left=int(left)
-    right=int(right)
+def add_border(image, top=0, bottom=0, left=0, right=0, bordertype=cv2.BORDER_CONSTANT, value=[0,0,0]):
+
     bordertype_dict={'cv2.BORDER_CONSTANT': cv2.BORDER_CONSTANT,
-                     'cv2.BORDER_REFLECT101': cv2. BORDER_REFLECT101,
+                     'cv2.BORDER_REFLECT_101': cv2.BORDER_REFLECT_101,
                      'cv2.BORDER_REFLECT': cv2.BORDER_REFLECT,
                      'cv2.BORDER_REPLICATE': cv2.BORDER_REPLICATE,
                      'cv2.BORDER_WRAP': cv2.BORDER_WRAP
                      }
     if bordertype_dict[bordertype] == cv2.BORDER_CONSTANT:
-        image = cv2.copyMakeBorder(image, top, bottom, left, right, bordertype_dict[bordertype], value)
+        image = cv2.copyMakeBorder(image, top, bottom, left, right, bordertype_dict[bordertype], value=value)
+        # image = cv2.copyMakeBorder(image, borderType=bordertype_dict[bordertype], value=value)
     else:
         image = cv2.copyMakeBorder(image, top, bottom, left, right, bordertype_dict[bordertype])
 
