@@ -489,7 +489,7 @@ def pseudo_solarised():
 
 def add_Gaussian_noise(image, sigma, channel):
     sigma = float(sigma)
-
+    image = image.copy()
     if len(image.shape) == 2: channel = -1 #check if image is grayscale
     else:
         if channel == 'Blue': channel = 0
@@ -506,7 +506,8 @@ def add_Gaussian_noise(image, sigma, channel):
 def add_noise02():
     pass
 
-def noise_bands(image, width, period, orientation):
+def noise_bands(image_, width, period, orientation):
+    image = image_.copy()
 
     if orientation == 'horizontal':
         shape_val = image.shape[0]
@@ -543,7 +544,8 @@ def noise_bands(image, width, period, orientation):
 
     return tiled
 
-def band_noise_horizontal(image, width, period, magnitude):
+def band_noise_horizontal(image_, width, period, magnitude):
+    image = image_.copy()
     width = int(width)
     period = int(period)
     magnitude = int(magnitude)
@@ -553,7 +555,8 @@ def band_noise_horizontal(image, width, period, magnitude):
     image[bands, :, :] = image[bands, :, :] + magnitude
     return image
 
-def band_noise_vertical(image, width, period, magnitude):
+def band_noise_vertical(image_, width, period, magnitude):
+    image = image_.copy()
     width = int(width)
     period = int(period)
     magnitude = int(magnitude)

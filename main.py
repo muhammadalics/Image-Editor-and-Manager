@@ -120,6 +120,11 @@ class MainProgram(QtWidgets.QMainWindow):
         self.updated_pic = QtGui.QPixmap(self.updated_pic)
         self.ui.label_imagebox.setPixmap(self.updated_pic)
 
+    def check_canvas(self):
+        if self.current is None:
+            QtWidgets.QMessageBox.warning(self, 'No image found', 'Please load an image first.')
+            return
+        return 1
 
     def clicked_undo(self):
         if self.counter_redo == self.counter_undo and self.current is not None and self.currentminusone is not None:
@@ -140,6 +145,7 @@ class MainProgram(QtWidgets.QMainWindow):
         options = QtWidgets.QFileDialog.Options()
         fileName, _ = QtWidgets.QFileDialog.getOpenFileName(self, "QFileDialog.getOpenFileName()", "", "All Files (*)",
                                                   options=options)
+
         return fileName
 
     def clicked_open(self):
@@ -148,6 +154,9 @@ class MainProgram(QtWidgets.QMainWindow):
         #                                           options=options)
 
         fileName = self.get_filename()
+
+        if len(fileName) == 0:
+            return
 
         self.original = cv2.imread(fileName)#.astype(np.float32)
         self.update_current(self.original)
@@ -173,6 +182,7 @@ class MainProgram(QtWidgets.QMainWindow):
 
 
     def clicked_mirror(self):
+        if self.check_canvas() == None: return
         img = image_editor.mirror(self.current)
         # self.update_current_minus_one(self.current.copy())
         # self.update_current(img)
@@ -180,6 +190,7 @@ class MainProgram(QtWidgets.QMainWindow):
         self.perform_updates(img)
 
     def clicked_flip(self):
+        if self.check_canvas() == None: return
         img = image_editor.flip_upsidedown(self.current)
         # self.update_current(img)
         # self.update_imagebox()
@@ -345,16 +356,18 @@ class MainProgram(QtWidgets.QMainWindow):
         self.perform_updates(img)
 
     def clicked_pixelate(self):
+        if self.check_canvas() == None: return
         Dialog = QtWidgets.QDialog()
         ui = pixelate.Ui_Dialog_pixelate()
         ui.setupUi(Dialog)
         Dialog.show()
         result = Dialog.exec_()
 
-        img = image_editor.pixelate(self.current, ui.spinBox_pixelate.text())
-        # self.update_current(img)
-        # self.update_imagebox()
-        self.perform_updates(img)
+        if result:
+            if ui.spinBox_pixelate.text() == 0:
+                return
+            img = image_editor.pixelate(self.current, ui.spinBox_pixelate.text())
+            self.perform_updates(img)
 
     def clicked_cartoonify(self):
         Dialog = QtWidgets.QDialog()
@@ -417,40 +430,47 @@ class MainProgram(QtWidgets.QMainWindow):
             self.perform_updates(img)
 
     def clicked_gaussian_noise(self):
+        if self.check_canvas() == None: return
         Dialog = QtWidgets.QDialog()
         ui = noise_gaussian.Ui_Dialog_gaussian_noise()
         ui.setupUi(Dialog)
         Dialog.show()
         result = Dialog.exec_()
 
-        img = image_editor.add_Gaussian_noise(self.current, ui.doubleSpinBox_sigma.text(), ui.comboBox_channel.currentText())
-        # self.update_current(img)
-        # self.update_imagebox()
-        self.perform_updates(img)
+        if result:
+            img = image_editor.add_Gaussian_noise(self.current, ui.doubleSpinBox_sigma.text(), ui.comboBox_channel.currentText())
+            # self.update_current(img)
+            # self.update_imagebox()
+            self.perform_updates(img)
 
     def clicked_vertical_noise_bands(self):
+        if self.check_canvas() == None: return
         Dialog = QtWidgets.QDialog()
         ui = verticalnoisebands.Ui_Dialog_noiseband_vertical()
         ui.setupUi(Dialog)
         Dialog.show()
         result = Dialog.exec_()
 
-        img = image_editor.band_noise_vertical(self.current, ui.spinBox_width.text(), ui.spinBox_period.text(), ui.spinBox_magnitude.text())
-        # self.update_current(img)
-        # self.update_imagebox()
-        self.perform_updates(img)
+        if result:
+            if float(ui.spinBox_width.text()) == 0 or float(ui.spinBox_period.text()) == 0 or float(ui.spinBox_magnitude.text()) ==0:
+                return
+            img = image_editor.band_noise_vertical(self.current, ui.spinBox_width.text(), ui.spinBox_period.text(), ui.spinBox_magnitude.text())
+            self.perform_updates(img)
 
     def clicked_horizontal_noise_bands(self):
+        if self.check_canvas() == None: return
         Dialog = QtWidgets.QDialog()
         ui = horizontalnoisebands.Ui_Dialog_horizontalnoise()
         ui.setupUi(Dialog)
         Dialog.show()
         result = Dialog.exec_()
 
-        img = image_editor.band_noise_horizontal(self.current, ui.spinBox_width.text(), ui.spinBox_period.text(), ui.spinBox_magnitude.text())
-        # self.update_current(img)
-        # self.update_imagebox()
-        self.perform_updates(img)
+        if result:
+            if float(ui.spinBox_width.text()) == 0 or float(ui.spinBox_period.text()) == 0 or float(ui.spinBox_magnitude.text()) ==0:
+                return
+
+            img = image_editor.band_noise_horizontal(self.current, ui.spinBox_width.text(), ui.spinBox_period.text(), ui.spinBox_magnitude.text())
+            self.perform_updates(img)
 
     def clicked_extract_color(self):
         Dialog = QtWidgets.QDialog()
@@ -608,6 +628,8 @@ class MainProgram(QtWidgets.QMainWindow):
 
 
     def resize_image(self):
+        if self.check_canvas() == None: return
+
         Dialog = QtWidgets.QDialog()
         ui = resize_ui.Ui_Dialog_resize()
         ui.setupUi(Dialog)
@@ -618,10 +640,15 @@ class MainProgram(QtWidgets.QMainWindow):
         w = ui.doubleSpinBox_width.text()
 
         if result:
-            img = image_editor.resize_image(self.current, w, h)
+            try:
+                img = image_editor.resize_image(self.current, w, h)
+            except:
+                QtWidgets.QMessageBox.warning(self, "Can't resize image.", 'Please try again.')
+                return
             self.perform_updates(img)
 
     def clicked_rotate_image(self):
+        if self.check_canvas() == None: return
         img = image_editor.rotate_image(self.current)
         self.perform_updates(img)
 
