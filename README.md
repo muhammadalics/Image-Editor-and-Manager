@@ -4,12 +4,15 @@ The Image Manager and Editor aims to deliver fundamental image processing tools 
 
 The image editor can do the following:
 1. Adjust image brightness and contrast.
-2. Swap color channels.
+### Swap color channels
+![Swap Color Channels](https://github.com/muhammadalics/Image-Manager-and-Editor/blob/main/Images%20for%20ReadMe/swapcolorchannels.gif)
+
 3. Display color histograms.
 4. Convert color image to black and white
-5. Resize
-### Mirror
+### Resize
+![Resize](https://github.com/muhammadalics/Image-Manager-and-Editor/blob/main/Images%20for%20ReadMe/resize.gif)
 
+### Mirror
 ![Mirror](https://github.com/muhammadalics/Image-Manager-and-Editor/blob/main/Images%20for%20ReadMe/mirror.gif)
 
 ### Flip upside down
@@ -21,8 +24,12 @@ The image editor can do the following:
   - Average
   - Median
   -Gaussian
-11. Add border
-12. Display intensity map
+### Add border
+![Add Border](https://github.com/muhammadalics/Image-Manager-and-Editor/blob/main/Images%20for%20ReadMe/addborder.gif)
+
+### Display intensity map
+![Intenstity Maps](https://github.com/muhammadalics/Image-Manager-and-Editor/blob/main/Images%20for%20ReadMe/colormap.gif)
+
 13. Histogram equalization
 14. Alpha blending
 15. Pyramid blending
@@ -30,7 +37,9 @@ Edge detection
 cartoonification
 extract color
 Gamma correction
-Pixelate
+### Pixelate
+![Pixelate](https://github.com/muhammadalics/Image-Manager-and-Editor/blob/main/Images%20for%20ReadMe/pixelate.gif)
+
 Negative
 Noise:
   - Gaussian
