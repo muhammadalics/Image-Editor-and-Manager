@@ -18,15 +18,18 @@ def brightness_contrast(image, contrast, brightness):
 # def brightness_down(image, contrast, brightness):
 #     return contrast * image - brightness
 
-def swap_bg(image):
+def swap_bg(image_):
+    image = image_.copy()
     image[:,:,[0,1]] = image[:,:,[1,0]]
     return image
 
-def swap_gr(image):
+def swap_gr(image_):
+    image = image_.copy()
     image[:,:,[1,2]] = image[:,:,[2,1]]
     return image
 
-def swap_rb(image):
+def swap_rb(image_):
+    image = image_.copy()
     image[:,:,[0,2]] = image[:,:,[2,0]]
     return image
 
@@ -83,6 +86,7 @@ def hist_bw(image):
     return hist, bins
 
 def convert_to_bw(image):
+
     if len(image.shape) == 3:
         return cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
     else: #if image has one channel just return the same
@@ -218,6 +222,9 @@ def histogram_equalization_bw(image):
 #     YCrCb_image  = cv2.cvtColor(image, cv2.COLOR_BGR2YCrCb)
 #     YCrCb_image[:,:,intensity channel] = cv2.equalizeHist(YCrCb_image[:,:,intensity channel])
 #     return YCrCb_image
+
+def blend_images(image1, image2, alpha):
+    return cv2.addWeighted(image1, alpha, image2, (1-alpha), 0)
 
 def blend_images_bw(image1, image2, percentage):
     return cv2.weighted(image1, percentage, image2, (1-percentage), 0)

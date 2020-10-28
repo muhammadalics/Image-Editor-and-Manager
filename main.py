@@ -82,8 +82,11 @@ class MainProgram(QtWidgets.QMainWindow):
         self.counter_redo = 0
 
     def perform_updates(self, current):
-        self.update_current_minus_one(self.current.copy())
+        print('inside perform updates')
+        if self.current is not None:
+            self.update_current_minus_one(self.current.copy())
         self.update_current(current)
+        print('progressing inside perform updates')
         self.update_imagebox()
 
     def update_current_minus_one(self, image):
@@ -215,6 +218,7 @@ class MainProgram(QtWidgets.QMainWindow):
         self.perform_updates(img)
 
     def clicked_swap_rg(self):
+        if self.check_canvas() == None: return
         if len(self.current.shape) ==2:
             error = 'No colors to swap.'
             QtWidgets.QMessageBox.warning(self, 'Image is grayscale.', error)
@@ -225,6 +229,7 @@ class MainProgram(QtWidgets.QMainWindow):
             self.perform_updates(img)
 
     def clicked_swap_gb(self):
+        if self.check_canvas() == None: return
         if len(self.current.shape) ==2:
             error = 'No colors to swap.'
             QtWidgets.QMessageBox.warning(self, 'Image is grayscale.', error)
@@ -235,6 +240,7 @@ class MainProgram(QtWidgets.QMainWindow):
             self.perform_updates(img)
 
     def clicked_swap_br(self):
+        if self.check_canvas() == None: return
         if len(self.current.shape) ==2:
             error = 'No colors to swap.'
             QtWidgets.QMessageBox.warning(self, 'Image is grayscale.', error)
@@ -251,9 +257,8 @@ class MainProgram(QtWidgets.QMainWindow):
         self.perform_updates(img)
 
     def clicked_converttobw(self):
+        if self.check_canvas() == None: return
         img = image_editor.convert_to_bw(self.current)
-        # self.update_current(img)
-        # self.update_imagebox()
         self.perform_updates(img)
 
     def clicked_replacecolor(self):
@@ -278,6 +283,7 @@ class MainProgram(QtWidgets.QMainWindow):
             self.perform_updates(img)
 
     def clicked_blur_median(self):
+        if self.check_canvas() == None: return
         Dialog = QtWidgets.QDialog()
         ui = blur_median.Ui_Dialog()
         ui.setupUi(Dialog)
@@ -287,6 +293,10 @@ class MainProgram(QtWidgets.QMainWindow):
         if result==False:
             print('rejected')
             return
+
+        elif result and (int(ui.spinBox_kernelsize.text()) == 0 or int(ui.spinBox_numberofapplications.text()) == 0):
+            return
+
         elif result and int(ui.spinBox_kernelsize.text()) % 2 == 0:
             print('try again')
             error = 'Kernel size can only be odd.'
@@ -300,6 +310,7 @@ class MainProgram(QtWidgets.QMainWindow):
             self.perform_updates(img)
 
     def clicked_blur_gaussian(self):
+        if self.check_canvas() == None: return
         Dialog = QtWidgets.QDialog()
         ui = blur_gaussian.Ui_Dialog()
         ui.setupUi(Dialog)
@@ -309,6 +320,10 @@ class MainProgram(QtWidgets.QMainWindow):
         if result==False:
             print('rejected')
             return
+
+        elif result and (int(ui.spinBox_kernelsize.text()) == 0 or int(ui.spinBox_numberofapplications.text()) == 0):
+            return
+
         elif result and int(ui.spinBox_kernelsize.text()) % 2 == 0:
             print('try again')
             error = 'Kernel size can only be odd.'
@@ -322,6 +337,7 @@ class MainProgram(QtWidgets.QMainWindow):
             self.perform_updates(img)
 
     def clicked_blur_average(self):
+        if self.check_canvas() == None: return
         Dialog = QtWidgets.QDialog()
         ui = blur_average.Ui_Dialog_avgblur()
         ui.setupUi(Dialog)
@@ -331,11 +347,10 @@ class MainProgram(QtWidgets.QMainWindow):
         if result==False:
             print('rejected')
             return
-        # elif result and int(ui.spinBox_kernelsize.text()) % 2 == 0:
-        #     print('try again')
-        #     error = 'Kernel size can only be odd.'
-        #     QtWidgets.QMessageBox.warning(self, 'Error', error)
-        #     self.clicked_blur_average()
+
+        if result and (int(ui.spinBox_kernelsize.text()) == 0 or  int(ui.spinBox_numberofapplications.text() == 0)):
+            return
+
         elif result:
             img = image_editor.avg_blur(self.current, ui.spinBox_kernelsize.text(), ui.spinBox_numberofapplications.text())
             print('accepted')
@@ -520,6 +535,7 @@ class MainProgram(QtWidgets.QMainWindow):
         self.perform_updates(img)
 
     def clicked_image_histogram(self):
+        if self.check_canvas() == None: return
         img = image_editor.image_histogram(self.current)
         # img[:,:,[0,3]] = img[:,:,[3,0]]
         print(img[:,:,0].max())
@@ -632,7 +648,7 @@ class MainProgram(QtWidgets.QMainWindow):
 
         if result:
             alpha= float(ui.doubleSpinBox_alpha.text())
-            img = image_editor.blend_images_color(image1, image2, alpha)
+            img = image_editor.blend_images(image1, image2, alpha)
             self.perform_updates(img)
 
 
