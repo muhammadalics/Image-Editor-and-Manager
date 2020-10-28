@@ -166,8 +166,8 @@ def median_blur(image_, k, times):
         image = cv2.medianBlur(image, k)
     return image
 
-def add_border(image, top=0, bottom=0, left=0, right=0, bordertype=cv2.BORDER_CONSTANT, value=[0,0,0]):
-
+def add_border(image_, top=0, bottom=0, left=0, right=0, bordertype=cv2.BORDER_CONSTANT, value=[0,0,0]):
+    image = image_.copy()
     bordertype_dict={'cv2.BORDER_CONSTANT': cv2.BORDER_CONSTANT,
                      'cv2.BORDER_REFLECT_101': cv2.BORDER_REFLECT_101,
                      'cv2.BORDER_REFLECT': cv2.BORDER_REFLECT,
@@ -182,7 +182,8 @@ def add_border(image, top=0, bottom=0, left=0, right=0, bordertype=cv2.BORDER_CO
 
     return image
 
-def intensity_map(image, map):
+def intensity_map(image_, map):
+    image = image_.copy()
     map = 'COLORMAP_'+ map.upper().replace(' ', '_')
 
     map_dict = {

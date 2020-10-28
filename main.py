@@ -83,11 +83,13 @@ class MainProgram(QtWidgets.QMainWindow):
         self.counter_undo = 0
         self.counter_redo = 0
 
-    def perform_updates(self, current):
+    def perform_updates(self, current_):
         print('inside perform updates')
         if self.current is not None:
             self.update_current_minus_one(self.current.copy())
-        self.update_current(current)
+        elif self.current is None:
+            self.update_current_minus_one(current_)
+        self.update_current(current_)
         print('progressing inside perform updates')
         self.update_imagebox()
 
@@ -97,11 +99,26 @@ class MainProgram(QtWidgets.QMainWindow):
     # def update_for_redo(self):
     #     self.redo_image = self.current
 
-    def clicked_exit(self):
-        sys.exit()
+    def clicked_undo(self):
+        # if self.counter_redo == self.counter_undo and self.current is not None and self.currentminusone is not None:
+        if self.current is not None and self.currentminusone is not None:
+            self.redo = self.current.copy()
+            self.update_current(self.currentminusone)
+            self.update_imagebox()
+            self.counter_undo += 1
+
+    def clicked_redo(self):
+        if self.counter_undo != 0 and self.counter_undo > self.counter_redo:
+            self.currentminusone = self.current.copy()
+            self.update_current(self.redo)
+            self.update_imagebox()
+            self.counter_redo += 1
 
     def update_current(self, image):
         self.current = image
+
+    def clicked_exit(self):
+        sys.exit()
 
     def update_imagebox(self):
         print('inside updatebox')
@@ -134,19 +151,7 @@ class MainProgram(QtWidgets.QMainWindow):
             return
         return 1
 
-    def clicked_undo(self):
-        if self.counter_redo == self.counter_undo and self.current is not None and self.currentminusone is not None:
-            self.redo = self.current.copy()
-            self.update_current(self.currentminusone)
-            self.update_imagebox()
-            self.counter_undo += 1
 
-    def clicked_redo(self):
-        if self.counter_undo != 0 and self.counter_undo > self.counter_redo:
-            self.currentminusone = self.current.copy()
-            self.update_current(self.redo)
-            self.update_imagebox()
-            self.counter_redo += 1
 
     def get_filename(self, msg):
         print('get file name')
