@@ -77,6 +77,7 @@ class MainProgram(QtWidgets.QMainWindow):
         self.original = None #Original Image
         self.current = None # this is the image in progress
         self.redo = None
+        self.currentminusone = None
         self.counter_undo = 0
         self.counter_redo = 0
 
@@ -121,7 +122,7 @@ class MainProgram(QtWidgets.QMainWindow):
 
 
     def clicked_undo(self):
-        if self.counter_redo == self.counter_undo:
+        if self.counter_redo == self.counter_undo and self.current is not None and self.currentminusone is not None:
             self.redo = self.current.copy()
             self.update_current(self.currentminusone)
             self.update_imagebox()
