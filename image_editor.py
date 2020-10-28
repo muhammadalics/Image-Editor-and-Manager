@@ -628,14 +628,18 @@ def contrast_stretching_single_channel(image, lower_threshold, upper_threshold):
     original_copy = image.copy()
     original_copy[image >= upper_threshold] = 255
     original_copy[image <= lower_threshold] = 0
-    original_copy = 255 * (image - lower_threshold) / (upper_threshold - lower_threshold)
-    return original_copy
+    original_copy = 255*((image - lower_threshold) / (upper_threshold - lower_threshold))
+    # print(original_copy)
+    return original_copy#.astype(np.uint8)
 
-# def contrast_stretching_RGB_channel(image, lower_threshold, upper_threshold):
-#     image[:, :, 0] = contrast_stretching_single_channel(image[:, :, 0], lower_threshold, upper_threshold)
-#     image[:, :, 1] = contrast_stretching_single_channel(image[:, :, 1], lower_threshold, upper_threshold)
-#     image[:, :, 2] = contrast_stretching_single_channel(image[:, :, 2], lower_threshold, upper_threshold)
-#     return image
+def contrast_stretching_RGB_channel(image, lower_threshold, upper_threshold):
+    image[:, :, 0] = contrast_stretching_single_channel(image[:, :, 0], lower_threshold, upper_threshold)
+    image[:, :, 1] = contrast_stretching_single_channel(image[:, :, 1], lower_threshold, upper_threshold)
+    image[:, :, 2] = contrast_stretching_single_channel(image[:, :, 2], lower_threshold, upper_threshold)
+
+    # image = 255 * cv2.normalize(image, None, alpha=0, beta=1.2, norm_type=cv2.NORM_MINMAX, dtype=cv2.CV_32F)
+
+    return image.astype(np.uint8)
 
 
 

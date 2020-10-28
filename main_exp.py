@@ -23,8 +23,8 @@ end_date = '2006-10-22'
 
 # image_query.query(start_date, end_date)
 
-image = cv2.imread('burt.png', 1)
-mask = cv2.imread('mask.png', 0)
+image = cv2.imread('test.jpg', 1)
+# mask = cv2.imread('mask.png', 0)
 # cartoon = image_editor.cartoonify(image, 0, 100)
 # cv2.imwrite('cartoon.png', cartoon)
 
@@ -86,8 +86,11 @@ mask = cv2.imread('mask.png', 0)
 
 # image_editor.image_histogram(image)
 
-print(image.shape)
-print(mask.shape)
+# print(image.shape)
+# print(mask.shape)
+#
+# img = image_editor.mask_result_color(image, mask)
+# cv2.imwrite('masked_applied.png', img)
 
-img = image_editor.mask_result_color(image, mask)
-cv2.imwrite('masked_applied.png', img)
+img = image_editor.contrast_stretching_RGB_channel(image, 10, 230)
+cv2.imwrite('contrast stretching.png', img)

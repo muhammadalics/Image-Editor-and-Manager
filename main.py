@@ -156,10 +156,20 @@ class MainProgram(QtWidgets.QMainWindow):
         self.ui.label_imagebox.setPixmap(self.pixmap)
 
     def clicked_save(self):
+        if self.current is None:
+            QtWidgets.QMessageBox.warning(self, "No file to save", "File can't be saved.")
+            return
+
         filePath, _ = QtWidgets.QFileDialog.getSaveFileName(self, "Save Image", "",
                          "PNG(*.png);;JPEG(*.jpg *.jpeg);;All Files(*.*) ")
+        print('filepath')
+        print(len(filePath))
+        print(filePath)
+        print('_')
+        print(_)
+        if len(filePath) != 0:
+            cv2.imwrite(filePath, self.current)
 
-        self.updated_pic.save(filePath)
 
     def clicked_mirror(self):
         img = image_editor.mirror(self.current)
