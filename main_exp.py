@@ -23,7 +23,8 @@ end_date = '2006-10-22'
 
 # image_query.query(start_date, end_date)
 
-image = cv2.imread('test.jpg', 1)
+image = cv2.imread('burt.png', 1)
+mask = cv2.imread('mask.png', 0)
 # cartoon = image_editor.cartoonify(image, 0, 100)
 # cv2.imwrite('cartoon.png', cartoon)
 
@@ -74,13 +75,19 @@ image = cv2.imread('test.jpg', 1)
 # img = image_editor.edge_detection(image, 100, 200)
 # cv2.imwrite('canny.png', img)
 
-# img = image_editor.replace_color(image, '255,255,255', '0,0,0')
+# img = image_editor.replace_color(image, '200,200,200', '0,0,0')
 # cv2.imwrite('replaced.png', img)
 
 # img = image_editor.extract_color(image, '255, 255, 255')
 # cv2.imwrite('extracted_color.png', img)
 
-img = image_editor.brightness_up(image, 1.1, 0)
-cv2.imwrite('contrast.png', img)
+# img = image_editor.brightness_up(image, 1.1, 0)
+# cv2.imwrite('contrast.png', img)
 
 # image_editor.image_histogram(image)
+
+print(image.shape)
+print(mask.shape)
+
+img = image_editor.mask_result_color(image, mask)
+cv2.imwrite('masked_applied.png', img)

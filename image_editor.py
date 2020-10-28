@@ -118,18 +118,22 @@ def flip_upsidedown(image):
 def rotate_image(image):
     return np.rot90(image)
 
-def replace_color(image, color_to_replace, target_color):
+def replace_color(image, color_to_replace, target_color, operator):
     color_to_replace = color_to_replace.split(sep=',')
     color_to_replace = [int(x) for x in color_to_replace]
 
     target_color = target_color.split(sep=',')
     target_color = [int(x) for x in target_color]
 
-    print(color_to_replace)
-    print(target_color)
+    if operator == '=':
+        image[(image[:, :, 0] == color_to_replace[0]) & (image[:, :, 1] == color_to_replace[1]) & (image[:, :, 2] == color_to_replace[2])] = target_color
+    elif operator == '<':
+        image[(image[:, :, 0] < color_to_replace[0]) & (image[:, :, 1] < color_to_replace[1]) & (
+                image[:, :, 2] < color_to_replace[2])] = target_color
+    else:
+        image[(image[:, :, 0] > color_to_replace[0]) & (image[:, :, 1] > color_to_replace[1]) & (
+                image[:, :, 2] > color_to_replace[2])] = target_color
 
-    image[np.all(image[:,:,0] == color_to_replace[0], image[:,:,1] == color_to_replace[1], image[:,:,2] == color_to_replace[2])] = target_color
-    print(image[np.all(image[:,:,0] == color_to_replace[0], image[:,:,1] == color_to_replace[1], image[:,:,2] == color_to_replace[2])])
     print('returning')
     return image
 
@@ -296,18 +300,25 @@ def extract_color(image, color):
     color = [int(x) for x in color]
 
     extracted = np.zeros_like(image)
-    extracted[np.all(image[:,:,0] == color[0], image[:,:,1] == color[1], image[:,:,2] == color[2])] = image[np.all(image[:,:,0] == color[0], image[:,:,1] == color[1], image[:,:,2] == color[2])]
+    extracted[(image[:, :, 0] == color[0]) & (image[:, :, 1] == color[1]) & (
+                 image[:, :, 2] == color[2])] = image[(image[:, :, 0] == color[0]) & (image[:, :, 1] == color[1]) & (
+                 image[:, :, 2] == color[2])]
+
+    # extracted[np.all(image[:,:,0] == color[0], image[:,:,1] == color[1], image[:,:,2] == color[2])] = image[np.all(image[:,:,0] == color[0], image[:,:,1] == color[1], image[:,:,2] == color[2])]
     return extracted
 
 def mask_result_color(image, mask):
     #when a mask is given, show the resulting image.
+    mask[mask>0]=1
     image[:, :, 0] = image[:, :, 0] * mask
     image[:, :, 1] = image[:, :, 1] * mask
     image[:, :, 2] = image[:, :, 2] * mask
+
     return image
 
 def mask_result_bw(image, mask):
     #when a mask is given, show the resulting image.
+    mask[mask > 0] = 1
     image[:, :] = image[:, :] * mask
     return image
 
@@ -453,7 +464,7 @@ def ndimage_rotate(image, angle, axes=(1,0), reshape=True, output=None, order=3,
 
 def gamma_correction(image, gamma):
     gamma= float(gamma)
-    return 255 * (image/255)**(1/gamma)
+    return (255 * (image/255)**(1/gamma)).astype(np.uint8)
 
 def sketch_algo():
     pass

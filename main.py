@@ -69,6 +69,8 @@ class MainProgram(QtWidgets.QMainWindow):
         self.ui.actionPyramid.triggered.connect(self.clicked_pyramid_blending_loadfiles)
         self.ui.actionAlpha.triggered.connect(self.clicked_alpha_blending)
         self.ui.actionResize.triggered.connect(self.resize_image)
+        self.ui.actionRotate.triggered.connect(self.clicked_rotate_image)
+        self.ui.actionApply_Mask.triggered.connect(self.clicked_apply_mask)
 
         self.ui.actionUndo.triggered.connect(self.clicked_undo)
         self.ui.actionRedo.triggered.connect(self.clicked_redo)
@@ -239,8 +241,15 @@ class MainProgram(QtWidgets.QMainWindow):
         Dialog_replacecolor.show()
         Dialog_replacecolor.exec_()
 
+        if dialog.radioButton_greater.isChecked():
+            operator = '>'
+        elif dialog.radioButton_lesser.isChecked():
+            operator = '<'
+        else:
+            operator ='='
+
         if Dialog_replacecolor.accept:
-            img = image_editor.replace_color(self.current, dialog.lineEdit.text(), dialog.lineEdit_2.text())
+            img = image_editor.replace_color(self.current, dialog.lineEdit.text(), dialog.lineEdit_2.text(), operator)
             print(dialog.lineEdit.text())
             # self.update_current(img)
             # self.update_imagebox()
@@ -600,6 +609,24 @@ class MainProgram(QtWidgets.QMainWindow):
         if result:
             img = image_editor.resize_image(self.current, w, h)
             self.perform_updates(img)
+
+    def clicked_rotate_image(self):
+        img = image_editor.rotate_image(self.current)
+        self.perform_updates(img)
+
+    def clicked_apply_mask(self):
+        filename = self.get_filename()
+        mask = cv2.imread(filename, 0)
+
+        if (self.current.shape[0], self.current.shape[1])  != (mask.shape[0], mask.shape[1]):
+            QtWidgets.QMessageBox.Warning(self, "Can't apply mask", 'Images are not the same shape.')
+            return
+
+        if len(self.current.shape) > 2:
+            img = image_editor.mask_result_color(self.current, mask)
+        else:
+            img = image_editor.mask_result_bw(self.current, mask)
+        self.perform_updates(img)
 
 if __name__ == '__main__':
     app = QtWidgets.QApplication([])
