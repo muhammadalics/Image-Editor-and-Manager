@@ -1,6 +1,6 @@
-# Image-Manager-and-Editor
+# Image Editor and Manager
 
-The Image Manager and Editor aims to deliver fundamental image processing tools using graphical user interface. Below are the demonstration gifs to show how to use the program. Result images are also included.
+The Image Editor and Manager aims to deliver fundamental image processing tools using graphical user interface. Below are the demonstration gifs to show how to use the program. Result images are also included.
 
 The image editor can do the following:
 
@@ -48,6 +48,11 @@ Toonification output:
 ![Intenstity Maps](https://github.com/muhammadalics/Image-Manager-and-Editor/blob/main/Images%20for%20ReadMe/colormap.gif)
 
 ### Histogram equalization
+![Histogram Equalization](https://github.com/muhammadalics/Image-Editor-and-Manager/blob/main/Images%20for%20ReadMe/hist_equal.gif)
+
+Output Image:
+![After Histogram Equalization](https://github.com/muhammadalics/Image-Editor-and-Manager/blob/main/Test%20Images/Result/Histogram%20Equalization/after_hist_equalization.jpg)
+
 ### Edge detection
 
 ### extract color
@@ -86,4 +91,9 @@ Noise added to the colored image:
 
 ### Dither
 Contrast Stretching
+
+The following functions are shown in the gif below:
+Show image intensity histogram, convert to black and white, perform histogram equalization and then 
+
+
 
