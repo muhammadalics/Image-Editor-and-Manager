@@ -90,38 +90,15 @@ Original             |  Output
 ### Add border
 ![Add Border](https://github.com/muhammadalics/Image-Manager-and-Editor/blob/main/Images%20for%20ReadMe/addborder.gif)
 
+In addition to the above the desktop app can perform the following operations:
 
-### Edge detection
-
-### extract color
-
-
-### Gamma correction
-
-
-Negative
-
-#### Salt and Pepper
-
-
-### Alpha blending
-
-### Adjust image brightness and contrast.
-
-Contrast Stretching
-
-### Display color histograms.
-4. Convert color image to black and white
-
-8. Rotate
-9. Replace color
-10. Perform following blurs:
-  - Average
-  - Median
-  -Gaussian
-
-The following functions are shown in the gif below:
-Show image intensity histogram, convert to black and white, perform histogram equalization and then 
-
-
-
+* Edge detection using Canny 
+* Extract colors from images
+* Gamma correction
+* Negative image
+* Alpha blending
+* Adjust image brightness and contrast
+* Convert color image to black and white
+* Rotate image
+* Replace color
+* Average, Median and Gaussian blurs
