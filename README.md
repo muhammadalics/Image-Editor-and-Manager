@@ -6,6 +6,7 @@ The image editor can do the following:
 
 ### Pyramid blending
 Pyramid blending as described in A Multiresolution Spline With Application to Image Mosaics by Burt and Adelson was implemented.
+
 ![Pyramid Blending](https://github.com/muhammadalics/Image-Editor-and-Manager/blob/main/Images%20for%20ReadMe/pyramid_blending.gif)
 
 Blended Image Ouput:
@@ -15,15 +16,27 @@ Blended Image Ouput:
 The toonification algorithm as described in Toonify: Cartoon Photo Effect Application by Dade was implemented.
 ![Cartoonification](https://github.com/muhammadalics/Image-Editor-and-Manager/blob/main/Images%20for%20ReadMe/cartoonification.gif)
 
-### Toonification output:
+Toonification output:
 <p float="center">
   <img src="https://github.com/muhammadalics/Image-Editor-and-Manager/blob/main/Test%20Images/cars.jpg" width="500" /> 
   <img src="https://github.com/muhammadalics/Image-Editor-and-Manager/blob/main/Test%20Images/Result/Cartoonification/cartoon.jpg" width="500" />
 </p>
 
-### Alpha blending
 
-### Adjust image brightness and contrast.
+### Noise Addition
+Currently three different types of noises can be added to the images. 
+![Noise](https://github.com/muhammadalics/Image-Editor-and-Manager/blob/main/Images%20for%20ReadMe/noise.gif)
+
+
+<p float="center">
+  <img src="https://github.com/muhammadalics/Image-Editor-and-Manager/blob/main/Test%20Images/water.jpg" width="450" />
+  <img src="https://github.com/muhammadalics/Image-Editor-and-Manager/blob/main/Test%20Images/Result/Noise/gaussian_noise_color.jpg" width="450" />
+  <img src="https://github.com/muhammadalics/Image-Editor-and-Manager/blob/main/Test%20Images/Result/Noise/vertical%20bands.jpg" width="450" /> 
+  <img src="https://github.com/muhammadalics/Image-Editor-and-Manager/blob/main/Test%20Images/Result/Noise/horizontal%20bands.jpg" width="450" />
+</p>
+
+Top Left: Original, Top Right: Gaussian Noise, Bottom Left: Vertical Noise bands, Bottom Right: Horizontal Noise bands
+
 
 ### Swap color channels
 ![Swap Color Channels](https://github.com/muhammadalics/Image-Manager-and-Editor/blob/main/Images%20for%20ReadMe/swapcolorchannels.gif)
@@ -82,22 +95,7 @@ The output image:
 ![Pixelated Image](https://github.com/muhammadalics/Image-Editor-and-Manager/blob/main/Test%20Images/Result/Pixelate/pixelate.png)
 
 Negative
-### Noise
-Currently three different types of noises can be added to the images. 
-![Noise](https://github.com/muhammadalics/Image-Editor-and-Manager/blob/main/Images%20for%20ReadMe/noise.gif)
 
-#### Gaussian Noise
-
-Noise added to the colored image:
-![Gaussian Noise](https://github.com/muhammadalics/Image-Editor-and-Manager/blob/main/Test%20Images/Result/Noise/gaussian_noise_color.jpg)
-
-![Gaussian Noise - Grayscale](https://github.com/muhammadalics/Image-Editor-and-Manager/blob/main/Test%20Images/Result/Noise/gaussian_noise_grayscale.jpg)
-#### Vertical Noise Bands
-
-![Vertical Noise Bands](https://github.com/muhammadalics/Image-Editor-and-Manager/blob/main/Test%20Images/Result/Noise/vertical%20bands.jpg)
-
-#### Horizontal Noise Bands
-![Horizontal Noise Bands](https://github.com/muhammadalics/Image-Editor-and-Manager/blob/main/Test%20Images/Result/Noise/horizontal%20bands.jpg)
 #### Salt and Pepper
 
 
@@ -107,6 +105,10 @@ Noise added to the colored image:
 
 Output image:
 ![Dithering](https://github.com/muhammadalics/Image-Editor-and-Manager/blob/main/Test%20Images/Result/Dithering/dithered_image.jpg)
+
+### Alpha blending
+
+### Adjust image brightness and contrast.
 
 Contrast Stretching
 
