@@ -24,6 +24,10 @@ Toonification output
 </p>
 
 
+Original             |  Output
+:-------------------------:|:-------------------------:
+![](https://github.com/muhammadalics/Image-Editor-and-Manager/blob/main/Test%20Images/cars.jpg)  |  ![](https://github.com/muhammadalics/Image-Editor-and-Manager/blob/main/Test%20Images/Result/Cartoonification/cartoon.jpg)
+
 ### Noise Addition
 Three different noise patterns can be added to the images. 
 ![Noise](https://github.com/muhammadalics/Image-Editor-and-Manager/blob/main/Images%20for%20ReadMe/noise.gif)
