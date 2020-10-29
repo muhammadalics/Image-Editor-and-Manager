@@ -5,18 +5,19 @@ The Image Editor and Manager aims to deliver fundamental image processing tools 
 The image editor can do the following:
 
 ### Pyramid blending
-Pyramid blending as described in A Multiresolution Spline With Application to Image Mosaics by Burt and Adelson was implemented.
+Pyramid blending as described in **A Multiresolution Spline With Application to Image Mosaics** by Burt and Adelson was implemented.
 
 ![Pyramid Blending](https://github.com/muhammadalics/Image-Editor-and-Manager/blob/main/Images%20for%20ReadMe/pyramid_blending.gif)
 
-Blended Image Ouput:
+Blended Image Ouput
+
 ![Blended Image](https://github.com/muhammadalics/Image-Editor-and-Manager/blob/main/Test%20Images/Result/Pyramid%20Blending/blended_image.png)
 
 ### Cartoonification
-The toonification algorithm as described in Toonify: Cartoon Photo Effect Application by Dade was implemented.
+The toonification algorithm as described in **Toonify: Cartoon Photo Effect Application** by Dade was implemented.
 ![Cartoonification](https://github.com/muhammadalics/Image-Editor-and-Manager/blob/main/Images%20for%20ReadMe/cartoonification.gif)
 
-Toonification output:
+Toonification output
 <p float="center">
   <img src="https://github.com/muhammadalics/Image-Editor-and-Manager/blob/main/Test%20Images/cars.jpg" width="500" /> 
   <img src="https://github.com/muhammadalics/Image-Editor-and-Manager/blob/main/Test%20Images/Result/Cartoonification/cartoon.jpg" width="500" />
@@ -24,18 +25,20 @@ Toonification output:
 
 
 ### Noise Addition
-Currently three different types of noises can be added to the images. 
+Three different noise patterns can be added to the images. 
 ![Noise](https://github.com/muhammadalics/Image-Editor-and-Manager/blob/main/Images%20for%20ReadMe/noise.gif)
 
-
+**Output Images:**
+<center>
 <p float="center">
-  <img src="https://github.com/muhammadalics/Image-Editor-and-Manager/blob/main/Test%20Images/water.jpg" width="450" />
-  <img src="https://github.com/muhammadalics/Image-Editor-and-Manager/blob/main/Test%20Images/Result/Noise/gaussian_noise_color.jpg" width="450" />
-  <img src="https://github.com/muhammadalics/Image-Editor-and-Manager/blob/main/Test%20Images/Result/Noise/vertical%20bands.jpg" width="450" /> 
-  <img src="https://github.com/muhammadalics/Image-Editor-and-Manager/blob/main/Test%20Images/Result/Noise/horizontal%20bands.jpg" width="450" />
+  <img src="https://github.com/muhammadalics/Image-Editor-and-Manager/blob/main/Test%20Images/water.jpg" width="470" />
+  <img src="https://github.com/muhammadalics/Image-Editor-and-Manager/blob/main/Test%20Images/Result/Noise/gaussian_noise_color.jpg" width="470" />
+  <img src="https://github.com/muhammadalics/Image-Editor-and-Manager/blob/main/Test%20Images/Result/Noise/vertical%20bands.jpg" width="470" /> 
+  <img src="https://github.com/muhammadalics/Image-Editor-and-Manager/blob/main/Test%20Images/Result/Noise/horizontal%20bands.jpg" width="470" />
 </p>
+</center>
 
-Top Left: Original, Top Right: Gaussian Noise, Bottom Left: Vertical Noise bands, Bottom Right: Horizontal Noise bands
+**Top Left:** Original image, **Top Right:** Gaussian Noise, **Bottom Left:** Vertical Noise bands, **Bottom Right:** Horizontal Noise bands
 
 
 ### Swap color channels
@@ -47,7 +50,7 @@ Top Left: Original, Top Right: Gaussian Noise, Bottom Left: Vertical Noise bands
   <img src="https://github.com/muhammadalics/Image-Editor-and-Manager/blob/main/Test%20Images/Result/Color%20Channel%20Swap/green-blue.jpg" width="450" /> 
   <img src="https://github.com/muhammadalics/Image-Editor-and-Manager/blob/main/Test%20Images/Result/Color%20Channel%20Swap/red-green.jpg" width="450" />
 </p>
-
+**Top Left:** Original image, **Top Right:** Blue and Red channels swapped, **Bottom Left:** Green and Blue channels swapped, **Bottom Right:** Red and Green channels swapped
 
 ### Display color histograms.
 4. Convert color image to black and white
