@@ -17,12 +17,7 @@ Blended Image Ouput
 The toonification algorithm as described in **Toonify: Cartoon Photo Effect Application** by Dade was implemented.
 ![Cartoonification](https://github.com/muhammadalics/Image-Editor-and-Manager/blob/main/Images%20for%20ReadMe/cartoonification.gif)
 
-Toonification output
-<p float="center">
-  <img src="https://github.com/muhammadalics/Image-Editor-and-Manager/blob/main/Test%20Images/cars.jpg" width="500" /> 
-  <img src="https://github.com/muhammadalics/Image-Editor-and-Manager/blob/main/Test%20Images/Result/Cartoonification/cartoon.jpg" width="500" />
-</p>
-
+**Toonification output**
 
 Original             |  Output
 :-------------------------:|:-------------------------:
@@ -32,17 +27,12 @@ Original             |  Output
 Three different noise patterns can be added to the images. 
 ![Noise](https://github.com/muhammadalics/Image-Editor-and-Manager/blob/main/Images%20for%20ReadMe/noise.gif)
 
-**Output Images:**
-<center>
-<p float="center">
-  <img src="https://github.com/muhammadalics/Image-Editor-and-Manager/blob/main/Test%20Images/water.jpg" width="470" />
-  <img src="https://github.com/muhammadalics/Image-Editor-and-Manager/blob/main/Test%20Images/Result/Noise/gaussian_noise_color.jpg" width="470" />
-  <img src="https://github.com/muhammadalics/Image-Editor-and-Manager/blob/main/Test%20Images/Result/Noise/vertical%20bands.jpg" width="470" /> 
-  <img src="https://github.com/muhammadalics/Image-Editor-and-Manager/blob/main/Test%20Images/Result/Noise/horizontal%20bands.jpg" width="470" />
-</p>
-</center>
-
-**Top Left:** Original image, **Top Right:** Gaussian Noise, **Bottom Left:** Vertical Noise bands, **Bottom Right:** Horizontal Noise bands
+**Output Images**
+Original             |  Gaussian Noise
+:-------------------------:|:-------------------------:
+![](https://github.com/muhammadalics/Image-Editor-and-Manager/blob/main/Test%20Images/water.jpg)  |  ![](https://github.com/muhammadalics/Image-Editor-and-Manager/blob/main/Test%20Images/Result/Noise/gaussian_noise_color.jpg)
+**Vertical Noise bands**             |  **Horizontal Noise bands**
+![](https://github.com/muhammadalics/Image-Editor-and-Manager/blob/main/Test%20Images/Result/Noise/vertical%20bands.jpg)  |  ![](https://github.com/muhammadalics/Image-Editor-and-Manager/blob/main/Test%20Images/Result/Noise/horizontal%20bands.jpg)
 
 
 ### Swap color channels
