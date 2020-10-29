@@ -102,3 +102,8 @@ In addition to the above the desktop app can perform the following operations:
 * Negative image
 * Convert color image to black and white
 * Adjust image brightness and contrast
+
+## Setup
+To run this app, clone the repo and run 'python main.py'.
+
+##
