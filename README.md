@@ -90,6 +90,12 @@ Noise added to the colored image:
 
 
 ### Dither
+
+![Dithering](https://github.com/muhammadalics/Image-Editor-and-Manager/blob/main/Images%20for%20ReadMe/dither.gif)
+
+Output image:
+![Dithering](https://github.com/muhammadalics/Image-Editor-and-Manager/blob/main/Test%20Images/Result/Dithering/dithered_image.jpg)
+
 Contrast Stretching
 
 The following functions are shown in the gif below:
