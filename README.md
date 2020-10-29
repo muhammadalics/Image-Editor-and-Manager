@@ -27,8 +27,7 @@ Original             |  Output
 Three different noise patterns can be added to the images. 
 ![Noise](https://github.com/muhammadalics/Image-Editor-and-Manager/blob/main/Images%20for%20ReadMe/noise.gif)
 
-**Output Images**
-Original             |  Gaussian Noise
+Original Image             |  Gaussian Noise
 :-------------------------:|:-------------------------:
 ![](https://github.com/muhammadalics/Image-Editor-and-Manager/blob/main/Test%20Images/water.jpg)  |  ![](https://github.com/muhammadalics/Image-Editor-and-Manager/blob/main/Test%20Images/Result/Noise/gaussian_noise_color.jpg)
 **Vertical Noise bands**             |  **Horizontal Noise bands**
@@ -38,13 +37,11 @@ Original             |  Gaussian Noise
 ### Swap color channels
 ![Swap Color Channels](https://github.com/muhammadalics/Image-Manager-and-Editor/blob/main/Images%20for%20ReadMe/swapcolorchannels.gif)
 
-<p float="center">
-  <img src="https://github.com/muhammadalics/Image-Editor-and-Manager/blob/main/Test%20Images/mountain.jpg" width="450" />
-  <img src="https://github.com/muhammadalics/Image-Editor-and-Manager/blob/main/Test%20Images/Result/Color%20Channel%20Swap/blue-red.jpg" width="450" />
-  <img src="https://github.com/muhammadalics/Image-Editor-and-Manager/blob/main/Test%20Images/Result/Color%20Channel%20Swap/green-blue.jpg" width="450" /> 
-  <img src="https://github.com/muhammadalics/Image-Editor-and-Manager/blob/main/Test%20Images/Result/Color%20Channel%20Swap/red-green.jpg" width="450" />
-</p>
-**Top Left:** Original image, **Top Right:** Blue and Red channels swapped, **Bottom Left:** Green and Blue channels swapped, **Bottom Right:** Red and Green channels swapped
+Original Image             |  Blue and Red swapped
+:-------------------------:|:-------------------------:
+![](https://github.com/muhammadalics/Image-Editor-and-Manager/blob/main/Test%20Images/mountain.jpg)  |  ![](https://github.com/muhammadalics/Image-Editor-and-Manager/blob/main/Test%20Images/Result/Color%20Channel%20Swap/blue-red.jpg)
+**Green and Blue swapped**             |  **Red and Green Swapped**
+![](https://github.com/muhammadalics/Image-Editor-and-Manager/blob/main/Test%20Images/Result/Color%20Channel%20Swap/green-blue.jpg)  |  ![](https://github.com/muhammadalics/Image-Editor-and-Manager/blob/main/Test%20Images/Result/Color%20Channel%20Swap/red-green.jpg)
 
 ### Display color histograms.
 4. Convert color image to black and white
