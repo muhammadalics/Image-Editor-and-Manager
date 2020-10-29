@@ -1,6 +1,6 @@
 # Image Editor and Manager
 
-The Image Editor and Manager aims to deliver fundamental image processing tools using graphical user interface. OpenCV and Numpy was used to implement the image processing operations while graphical user interface was created using PyQt5. Below are the demonstration gifs to show how to use the program. Result images are also included.
+The Image Editor and Manager aims to deliver fundamental image processing tools using graphical user interface. OpenCV and Numpy were used to implement the image processing operations while graphical user interface was created using PyQt5. Below are the demonstration gifs to show how to use the program. Result images are also included.
 
 The image editor can do the following:
 
