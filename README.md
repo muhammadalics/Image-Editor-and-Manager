@@ -1,21 +1,25 @@
 # Image Editor and Manager
 
-The Image Editor and Manager aims to deliver fundamental image processing tools using graphical user interface. Below are the demonstration gifs to show how to use the program. Result images are also included.
+The Image Editor and Manager aims to deliver fundamental image processing tools using graphical user interface. OpenCV and Numpy was used to implement the image processing operations while graphical user interface was created using PyQt5. Below are the demonstration gifs to show how to use the program. Result images are also included.
 
 The image editor can do the following:
 
-
 ### Pyramid blending
+Pyramid blending as described in A Multiresolution Spline With Application to Image Mosaics by Burt and Adelson was implemented.
 ![Pyramid Blending](https://github.com/muhammadalics/Image-Editor-and-Manager/blob/main/Images%20for%20ReadMe/pyramid_blending.gif)
 
-Blended Image:
+Blended Image Ouput:
 ![Blended Image](https://github.com/muhammadalics/Image-Editor-and-Manager/blob/main/Test%20Images/Result/Pyramid%20Blending/blended_image.png)
 
 ### Cartoonification
+The toonification algorithm as described in Toonify: Cartoon Photo Effect Application by Dade was implemented.
 ![Cartoonification](https://github.com/muhammadalics/Image-Editor-and-Manager/blob/main/Images%20for%20ReadMe/cartoonification.gif)
 
-Toonification output:
-![Cartoon Output](https://github.com/muhammadalics/Image-Editor-and-Manager/blob/main/Test%20Images/Result/Cartoonification/cartoon.jpg)
+### Toonification output:
+<p float="center">
+  <img src="https://github.com/muhammadalics/Image-Editor-and-Manager/blob/main/Test%20Images/cars.jpg" width="450" /> 
+  <img src="https://github.com/muhammadalics/Image-Editor-and-Manager/blob/main/Test%20Images/Result/Cartoonification/cartoon.jpg" width="450" />
+</p>
 
 ### Alpha blending
 
@@ -23,6 +27,14 @@ Toonification output:
 
 ### Swap color channels
 ![Swap Color Channels](https://github.com/muhammadalics/Image-Manager-and-Editor/blob/main/Images%20for%20ReadMe/swapcolorchannels.gif)
+
+<p float="center">
+  <img src="https://github.com/muhammadalics/Image-Editor-and-Manager/blob/main/Test%20Images/mountain.jpg" width="450" />
+  <img src="https://github.com/muhammadalics/Image-Editor-and-Manager/blob/main/Test%20Images/Result/Color%20Channel%20Swap/blue-red.jpg" width="450" />
+  <img src="https://github.com/muhammadalics/Image-Editor-and-Manager/blob/main/Test%20Images/Result/Color%20Channel%20Swap/green-blue.jpg" width="450" /> 
+  <img src="https://github.com/muhammadalics/Image-Editor-and-Manager/blob/main/Test%20Images/Result/Color%20Channel%20Swap/red-green.jpg" width="450" />
+</p>
+
 
 ### Display color histograms.
 4. Convert color image to black and white
