@@ -17,8 +17,8 @@ The toonification algorithm as described in Toonify: Cartoon Photo Effect Applic
 
 ### Toonification output:
 <p float="center">
-  <img src="https://github.com/muhammadalics/Image-Editor-and-Manager/blob/main/Test%20Images/cars.jpg" width="450" /> 
-  <img src="https://github.com/muhammadalics/Image-Editor-and-Manager/blob/main/Test%20Images/Result/Cartoonification/cartoon.jpg" width="450" />
+  <img src="https://github.com/muhammadalics/Image-Editor-and-Manager/blob/main/Test%20Images/cars.jpg" width="500" /> 
+  <img src="https://github.com/muhammadalics/Image-Editor-and-Manager/blob/main/Test%20Images/Result/Cartoonification/cartoon.jpg" width="500" />
 </p>
 
 ### Alpha blending
