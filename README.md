@@ -11,7 +11,17 @@ Pyramid blending as described in **A Multiresolution Spline With Application to 
 
 Blended Image Ouput
 
-![Blended Image](https://github.com/muhammadalics/Image-Editor-and-Manager/blob/main/Test%20Images/Result/Pyramid%20Blending/blended_image.png)
+Apple Image             |  Orange Image
+:-------------------------:|:-------------------------:
+![](https://github.com/muhammadalics/Image-Editor-and-Manager/blob/main/Test%20Images/Result/Pyramid%20Blending/burt_apple.png)  |  ![](https://github.com/muhammadalics/Image-Editor-and-Manager/blob/main/Test%20Images/Result/Pyramid%20Blending/burt_orange.png)
+**Mask**             |  **Blended Image**
+![](https://github.com/muhammadalics/Image-Editor-and-Manager/blob/main/Test%20Images/Result/Pyramid%20Blending/burt_matte.png)  |  ![](https://github.com/muhammadalics/Image-Editor-and-Manager/blob/main/Test%20Images/Result/Pyramid%20Blending/blended_image.png)
+
+
+
+
+
+
 
 ### Cartoonification
 The toonification algorithm as described in **Toonify: Cartoon Photo Effect Application** by Dade was implemented.
