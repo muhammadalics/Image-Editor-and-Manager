@@ -56,7 +56,7 @@ The image editor can do the following:
 Negative
 ### Noise
 Currently three different types of noises can be added to the images. 
-
+![Noise](https://github.com/muhammadalics/Image-Editor-and-Manager/blob/main/Images%20for%20ReadMe/noise.gif)
 
 #### Gaussian Noise
 
