@@ -59,6 +59,9 @@ Blended Image:
 ### Pixelate
 ![Pixelate](https://github.com/muhammadalics/Image-Manager-and-Editor/blob/main/Images%20for%20ReadMe/pixelate.gif)
 
+The output image:
+![Pixelated Image](https://github.com/muhammadalics/Image-Editor-and-Manager/blob/main/Test%20Images/Result/Pixelate/pixelate.png)
+
 Negative
 ### Noise
 Currently three different types of noises can be added to the images. 
