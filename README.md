@@ -17,12 +17,6 @@ Apple Image             |  Orange Image
 **Mask**             |  **Blended Image**
 ![](https://github.com/muhammadalics/Image-Editor-and-Manager/blob/main/Test%20Images/Result/Pyramid%20Blending/burt_matte.png)  |  ![](https://github.com/muhammadalics/Image-Editor-and-Manager/blob/main/Test%20Images/Result/Pyramid%20Blending/blended_image.png)
 
-
-
-
-
-
-
 ### Cartoonification
 The toonification algorithm as described in **Toonify: Cartoon Photo Effect Application** by Dade was implemented.
 ![Cartoonification](https://github.com/muhammadalics/Image-Editor-and-Manager/blob/main/Images%20for%20ReadMe/cartoonification.gif)
@@ -43,6 +37,12 @@ Original Image             |  Gaussian Noise
 **Vertical Noise bands**             |  **Horizontal Noise bands**
 ![](https://github.com/muhammadalics/Image-Editor-and-Manager/blob/main/Test%20Images/Result/Noise/vertical%20bands.jpg)  |  ![](https://github.com/muhammadalics/Image-Editor-and-Manager/blob/main/Test%20Images/Result/Noise/horizontal%20bands.jpg)
 
+### Dither
+![Dithering](https://github.com/muhammadalics/Image-Editor-and-Manager/blob/main/Images%20for%20ReadMe/dither.gif)
+
+Original Image             |  Dithered Image
+:-------------------------:|:-------------------------:
+![](https://github.com/muhammadalics/Image-Editor-and-Manager/blob/main/Test%20Images/mountain.jpg)  |  ![](https://github.com/muhammadalics/Image-Editor-and-Manager/blob/main/Test%20Images/Result/Dithering/dithered_image.jpg)
 
 ### Swap color channels
 ![Swap Color Channels](https://github.com/muhammadalics/Image-Manager-and-Editor/blob/main/Images%20for%20ReadMe/swapcolorchannels.gif)
@@ -53,8 +53,30 @@ Original Image             |  Blue and Red swapped
 **Green and Blue swapped**             |  **Red and Green Swapped**
 ![](https://github.com/muhammadalics/Image-Editor-and-Manager/blob/main/Test%20Images/Result/Color%20Channel%20Swap/green-blue.jpg)  |  ![](https://github.com/muhammadalics/Image-Editor-and-Manager/blob/main/Test%20Images/Result/Color%20Channel%20Swap/red-green.jpg)
 
-### Display color histograms.
-4. Convert color image to black and white
+### Display intensity map
+![Intenstity Maps](https://github.com/muhammadalics/Image-Manager-and-Editor/blob/main/Images%20for%20ReadMe/colormap.gif)
+
+Original Image             |  Jet theme
+:-------------------------:|:-------------------------:
+![](https://github.com/muhammadalics/Image-Editor-and-Manager/blob/main/Test%20Images/mountain.jpg)  |  ![](https://github.com/muhammadalics/Image-Editor-and-Manager/blob/main/Test%20Images/Result/Intensity%20Map/heatmap_jet.jpg)
+**Magma theme**             |  **Viridis theme**
+![](https://github.com/muhammadalics/Image-Editor-and-Manager/blob/main/Test%20Images/Result/Intensity%20Map/heatmap_magma.jpg)  |  ![](https://github.com/muhammadalics/Image-Editor-and-Manager/blob/main/Test%20Images/Result/Intensity%20Map/heatmap_viridis.jpg)
+
+### Pixelate
+![Pixelate](https://github.com/muhammadalics/Image-Manager-and-Editor/blob/main/Images%20for%20ReadMe/pixelate.gif)
+
+Original             |  Output
+:-------------------------:|:-------------------------:
+![](https://github.com/muhammadalics/Image-Editor-and-Manager/blob/main/Test%20Images/cars.jpg)  |  ![](https://github.com/muhammadalics/Image-Editor-and-Manager/blob/main/Test%20Images/Result/Pixelate/pixelate.png)
+
+### Histogram equalization
+![Histogram Equalization](https://github.com/muhammadalics/Image-Editor-and-Manager/blob/main/Images%20for%20ReadMe/hist_equal.gif)
+
+Original             |  Output
+:-------------------------:|:-------------------------:
+![](https://github.com/muhammadalics/Image-Editor-and-Manager/blob/main/Test%20Images/glacier.jpg)  |  ![](https://github.com/muhammadalics/Image-Editor-and-Manager/blob/main/Test%20Images/Result/Histogram%20Equalization/after_hist_equalization.jpg)
+
+
 ### Resize
 ![Resize](https://github.com/muhammadalics/Image-Manager-and-Editor/blob/main/Images%20for%20ReadMe/resize.gif)
 
@@ -64,23 +86,10 @@ Original Image             |  Blue and Red swapped
 ### Flip upside down
 ![Flip](https://github.com/muhammadalics/Image-Manager-and-Editor/blob/main/Images%20for%20ReadMe/flip.gif)
 
-8. Rotate
-9. Replace color
-10. Perform following blurs:
-  - Average
-  - Median
-  -Gaussian
+
 ### Add border
 ![Add Border](https://github.com/muhammadalics/Image-Manager-and-Editor/blob/main/Images%20for%20ReadMe/addborder.gif)
 
-### Display intensity map
-![Intenstity Maps](https://github.com/muhammadalics/Image-Manager-and-Editor/blob/main/Images%20for%20ReadMe/colormap.gif)
-
-### Histogram equalization
-![Histogram Equalization](https://github.com/muhammadalics/Image-Editor-and-Manager/blob/main/Images%20for%20ReadMe/hist_equal.gif)
-
-Output Image:
-![After Histogram Equalization](https://github.com/muhammadalics/Image-Editor-and-Manager/blob/main/Test%20Images/Result/Histogram%20Equalization/after_hist_equalization.jpg)
 
 ### Edge detection
 
@@ -90,31 +99,26 @@ Output Image:
 ### Gamma correction
 
 
-
-
-### Pixelate
-![Pixelate](https://github.com/muhammadalics/Image-Manager-and-Editor/blob/main/Images%20for%20ReadMe/pixelate.gif)
-
-The output image:
-![Pixelated Image](https://github.com/muhammadalics/Image-Editor-and-Manager/blob/main/Test%20Images/Result/Pixelate/pixelate.png)
-
 Negative
 
 #### Salt and Pepper
 
-
-### Dither
-
-![Dithering](https://github.com/muhammadalics/Image-Editor-and-Manager/blob/main/Images%20for%20ReadMe/dither.gif)
-
-Output image:
-![Dithering](https://github.com/muhammadalics/Image-Editor-and-Manager/blob/main/Test%20Images/Result/Dithering/dithered_image.jpg)
 
 ### Alpha blending
 
 ### Adjust image brightness and contrast.
 
 Contrast Stretching
+
+### Display color histograms.
+4. Convert color image to black and white
+
+8. Rotate
+9. Replace color
+10. Perform following blurs:
+  - Average
+  - Median
+  -Gaussian
 
 The following functions are shown in the gif below:
 Show image intensity histogram, convert to black and white, perform histogram equalization and then 
