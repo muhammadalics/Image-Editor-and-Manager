@@ -9,13 +9,15 @@ The image editor can do the following:
 ![Pyramid Blending](https://github.com/muhammadalics/Image-Editor-and-Manager/blob/main/Images%20for%20ReadMe/pyramid_blending.gif)
 
 Blended Image:
-
 ![Blended Image](https://github.com/muhammadalics/Image-Editor-and-Manager/blob/main/Test%20Images/Result/Pyramid%20Blending/blended_image.png)
 
+### Cartoonification
+![Cartoonification](https://github.com/muhammadalics/Image-Editor-and-Manager/blob/main/Images%20for%20ReadMe/cartoonification.gif)
+
+Toonification output:
+![Cartoon Output](https://github.com/muhammadalics/Image-Editor-and-Manager/blob/main/Test%20Images/Result/Cartoonification/cartoon.jpg)
 
 ### Alpha blending
-
-### Cartoonification
 
 ### Adjust image brightness and contrast.
 
