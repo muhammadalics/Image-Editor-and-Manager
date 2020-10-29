@@ -93,6 +93,7 @@ Original             |  Output
 In addition to the above the desktop app can perform the following operations:
 
 * Edge detection using Canny 
+* Average, Median and Gaussian blurs
 * Extract colors from images
 * Gamma correction
 * Negative image
@@ -101,4 +102,3 @@ In addition to the above the desktop app can perform the following operations:
 * Convert color image to black and white
 * Rotate image
 * Replace color
-* Average, Median and Gaussian blurs
