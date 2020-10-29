@@ -9,7 +9,7 @@ Pyramid blending as described in **A Multiresolution Spline With Application to 
 
 ![Pyramid Blending](https://github.com/muhammadalics/Image-Editor-and-Manager/blob/main/Images%20for%20ReadMe/pyramid_blending.gif)
 
-Blended Image Ouput
+Blended Image Output
 
 Apple Image             |  Orange Image
 :-------------------------:|:-------------------------:
@@ -96,9 +96,9 @@ In addition to the above the desktop app can perform the following operations:
 * Average, Median and Gaussian blurs
 * Extract colors from images
 * Gamma correction
-* Negative image
 * Alpha blending
-* Adjust image brightness and contrast
-* Convert color image to black and white
 * Rotate image
 * Replace color
+* Negative image
+* Convert color image to black and white
+* Adjust image brightness and contrast
