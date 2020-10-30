@@ -69,7 +69,7 @@ def image_histogram(image):
         canvas.draw()
         histogram_image = np.array(canvas.renderer.buffer_rgba())
 
-    cv2.imwrite('hist.png', histogram_image)
+    # cv2.imwrite('hist.png', histogram_image)
 
     return histogram_image
 
@@ -440,14 +440,14 @@ def blending_pyramids(imageA, imageB, mask, levels):
             diff = m.shape[1] - b.shape[1]
             b = cv2.copyMakeBorder(src=b, top=0, bottom=0, right=diff, left=0, borderType=cv2.BORDER_REFLECT101)
 
-        cv2.imwrite('img%s.png'%ci, a)
-
-        print('After shape of m')
-        print(m.shape)
-        print('After shape of a')
-        print(a.shape)
-        print('After shape of b')
-        print(b.shape)
+        # cv2.imwrite('img%s.png'%ci, a)
+        #
+        # print('After shape of m')
+        # print(m.shape)
+        # print('After shape of a')
+        # print(a.shape)
+        # print('After shape of b')
+        # print(b.shape)
 
 
         ma = cv2.multiply(m,a)
@@ -460,7 +460,7 @@ def blending_pyramids(imageA, imageB, mask, levels):
         ci+=1
 
     img = combined[0]
-    cv2.imwrite('img_combined.png', combined[0])
+    # cv2.imwrite('img_combined.png', combined[0])
     for i, c in enumerate(combined):
         if i !=0:
             img = cv2.pyrUp(img)
