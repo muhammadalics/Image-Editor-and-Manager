@@ -440,16 +440,6 @@ def blending_pyramids(imageA, imageB, mask, levels):
             diff = m.shape[1] - b.shape[1]
             b = cv2.copyMakeBorder(src=b, top=0, bottom=0, right=diff, left=0, borderType=cv2.BORDER_REFLECT101)
 
-        # cv2.imwrite('img%s.png'%ci, a)
-        #
-        # print('After shape of m')
-        # print(m.shape)
-        # print('After shape of a')
-        # print(a.shape)
-        # print('After shape of b')
-        # print(b.shape)
-
-
         ma = cv2.multiply(m,a)
         one_minus_m_b = cv2.multiply(1-m, b)
 
