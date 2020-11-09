@@ -12,12 +12,6 @@ np.set_printoptions(threshold=sys.maxsize)
 def brightness_contrast(image, contrast, brightness):
     return cv2.addWeighted(image, contrast, image, 0, brightness)
 
-# def brightness_up(image, contrast, brightness):
-#     return contrast * image + brightness
-#
-# def brightness_down(image, contrast, brightness):
-#     return contrast * image - brightness
-
 def swap_bg(image_):
     image = image_.copy()
     image[:,:,[0,1]] = image[:,:,[1,0]]
@@ -42,11 +36,6 @@ def image_histogram(image):
     ax.margins(x=0)
 
     if len(image.shape) == 3:
-        # hist_b, bins_b, hist_g, bins_g, hist_r, bins_r = hist_color(image)
-        # plt.plot(bins_b, hist_b, color='blue')
-        # plt.plot(bins_g, hist_g, color='green')
-        # plt.plot(bins_r, hist_r, color='red')
-        # plt.show()
         ax.hist(image[:,:,0].flatten(), np.arange(256), color='blue', label='blue', histtype='step', linewidth=1)
         ax.hist(image[:, :, 1].flatten(), np.arange(256), color='green', label='green', histtype='step', linewidth=1)
         ax.hist(image[:, :, 2].flatten(), np.arange(256), color='red', label='red', histtype='step', linewidth=1)
@@ -55,13 +44,8 @@ def image_histogram(image):
         ax.set_xticks([0,51,51*2,51*3,51*4, 51*5])
         canvas.draw()
         histogram_image = np.array(canvas.renderer.buffer_rgba())
-        print(histogram_image.shape)
-        # histogram_image[:,:, [0,2]] = histogram_image[:,:, [2,0]] #histogram_image is being converted to BGR
 
     else:
-        # hist, bins = hist_bw(image)
-        # plt.plot(bins, hist)
-        # plt.show()
         ax.hist(image.flatten(), np.arange(256), histtype='step', linewidth=1, color='black')
         ax.set_xlabel('Intensity')
         ax.set_ylabel('Count')
@@ -69,7 +53,7 @@ def image_histogram(image):
         canvas.draw()
         histogram_image = np.array(canvas.renderer.buffer_rgba())
 
-    # cv2.imwrite('hist.png', histogram_image)
+
 
     return histogram_image
 
@@ -91,15 +75,6 @@ def convert_to_bw(image):
         return cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
     else: #if image has one channel just return the same
         return image
-
-# def resize_down(image,w, h):
-#     w_step = 100 / w
-#     h_step = 100 / h
-#     image[:, :, 0] = image[::h_step,::w_step,0]
-#     image[:, :, 1] = image[::h_step, ::w_step, 1]
-#     image[:, :, 2] = image[::h_step, ::w_step, 2]
-#
-#     return image
 
 def resize_image(image, fx, fy):
     fx=float(fx)
@@ -176,7 +151,7 @@ def add_border(image_, top=0, bottom=0, left=0, right=0, bordertype=cv2.BORDER_C
                      }
     if bordertype_dict[bordertype] == cv2.BORDER_CONSTANT:
         image = cv2.copyMakeBorder(image, top, bottom, left, right, bordertype_dict[bordertype], value=value)
-        # image = cv2.copyMakeBorder(image, borderType=bordertype_dict[bordertype], value=value)
+
     else:
         image = cv2.copyMakeBorder(image, top, bottom, left, right, bordertype_dict[bordertype])
 
@@ -223,10 +198,6 @@ def histogram_equalization_bw(image):
         image[:,:,0] = cv2.equalizeHist(image[:,:,0])
         return cv2.cvtColor(image, cv2.COLOR_YUV2BGR)
 
-# def histogram_equalization_color(image):
-#     YCrCb_image  = cv2.cvtColor(image, cv2.COLOR_BGR2YCrCb)
-#     YCrCb_image[:,:,intensity channel] = cv2.equalizeHist(YCrCb_image[:,:,intensity channel])
-#     return YCrCb_image
 
 def blend_images(image1, image2, alpha):
     return cv2.addWeighted(image1, alpha, image2, (1-alpha), 0)
@@ -377,42 +348,18 @@ def blending_pyramids(imageA, imageB, mask, levels):
     print(i)
 
     while i > -1:
-        # print('i')
-        # print(i)
 
         la = cv2.pyrUp(imageA_pyr_g[i])
-        # print('la.shape')
-        # print(la.shape)
-        # print('pyr_g_img_A[i-1].shape')
-        # print(pyr_g_img_A[i-1].shape)
-
         la = la[:imageA_pyr_g[i-1].shape[0], :imageA_pyr_g[i-1].shape[1]]
-
-        # print('la.shape')
-        # print(la.shape)
-
-        # lap_pyr_a.append(imageA_pyr_g[i-1] - la) #i-1
         lap_pyr_a.append(cv2.subtract(imageA_pyr_g[i - 1],la))  # i-1
         lb = cv2.pyrUp(imageB_pyr_g[i])
         lb = lb[:imageB_pyr_g[i-1].shape[0], :imageB_pyr_g[i-1].shape[1]]
-        # lap_pyr_b.append(imageB_pyr_g[i-1] - lb) #i-1
         lap_pyr_b.append(cv2.subtract(imageB_pyr_g[i - 1], lb))  # i-1
         i-=1
-
-    # lap_pyr_a.append(pyr_g_img_A[-1])
-    # lap_pyr_b.append(pyr_g_img_B[-1])
 
     combined = []
     ci=0
     for a, b, m in zip(lap_pyr_a, lap_pyr_b, mask_pyr_g[::-1]):
-
-        print('Before shape of m')
-        print(m.shape)
-        print('Before shape of a')
-        print(a.shape)
-        print('Before shape of b')
-        print(b.shape)
-
 
         if a.shape[0] > m.shape[0]:
             a = a[:m.shape[0], :]
@@ -445,18 +392,15 @@ def blending_pyramids(imageA, imageB, mask, levels):
 
         combined.append(cv2.add(ma, one_minus_m_b))
 
-        # combined.append(m*a + (1-m)*b)
-
         ci+=1
 
     img = combined[0]
-    # cv2.imwrite('img_combined.png', combined[0])
+
     for i, c in enumerate(combined):
         if i !=0:
             img = cv2.pyrUp(img)
             img = img[:c.shape[0], :c.shape[1]]
             img = cv2.add(img,c)
-            # cv2.imwrite('img%s.png'%i, img)
 
     return img
 
@@ -527,15 +471,9 @@ def noise_bands(image_, width, period, orientation):
 
     addition_arr = np.expand_dims(addition_arr,axis=1)
 
-    # print(addition_arr)
+
 
     addition_arr = np.repeat(addition_arr, tiled.shape[1], axis=1)
-
-    print('add shape')
-    print(addition_arr.shape)
-
-    print('tiled shape')
-    print(tiled.shape)
 
     tiled = tiled + addition_arr
 
